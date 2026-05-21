@@ -18,3 +18,8 @@ Flutter 插件: https://pub.dev/publishers/17ued.top/packages
 发布服务器：8.137.176.191
 用户名：root
 密码：<我自己输入>
+
+# 个人代码仓库
+
+GitHub：https://github.com/liuhong1happy
+Gitee：https://gitee.com/liuhong1happy

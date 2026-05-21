@@ -19,10 +19,16 @@ const PROJECTS: Project[] = [
     tags: ["Flutter", "Dart", "pub.dev"],
   },
   {
-    name: "个人代码仓库",
+    name: "GitHub 个人仓库",
     description: "我的 GitHub 开源项目仓库，包含前端、Flutter 等各类项目。",
     url: "https://github.com/liuhong1happy",
     tags: ["GitHub", "开源"],
+  },
+  {
+    name: "Gitee 个人仓库",
+    description: "我的 Gitee 镜像仓库，同步开源项目代码。",
+    url: "https://gitee.com/liuhong1happy",
+    tags: ["Gitee", "开源"],
   },
 ];
 
@@ -107,6 +113,14 @@ function App() {
               className="footer-link no-underline"
             >
               GitHub
+            </a>
+            <a
+              href="https://gitee.com/liuhong1happy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-link no-underline"
+            >
+              Gitee
             </a>
           </nav>
         </div>

@@ -36,29 +36,15 @@ expect {
     eof { puts "3/4 dist 目录上传完成" }
 }
 
-# 4. 创建 Nginx 配置 + 重载 + 验证
+# 4. 重载 Nginx + 验证（不覆盖配置，SSL 由 certbot 管理）
 spawn ssh $user@$host "
-    cat > /etc/nginx/conf.d/17ued.top.conf << 'CONFEOF'
-server {
-    listen 80;
-    server_name 17ued.top www.17ued.top;
-    root /var/www/17ued.top;
-    index index.html;
-
-    location / {
-        try_files \$uri \$uri/ /index.html;
-    }
-
-    location ~* \\.(js|css|png|jpg|jpeg|gif|ico|svg)\$ {
-        expires max;
-        add_header Cache-Control \"public, immutable\";
-    }
-}
-CONFEOF
     rm -f /etc/nginx/sites-enabled/default 2>/dev/null
     nginx -t && nginx -s reload
     echo '--- 部署文件列表 ---'
     find $remoteDir -type f
+    echo ''
+    echo '--- HTTPS 状态 ---'
+    curl -sI https://17ued.top 2>&1 | head -3
 "
 expect {
     "password:" { send "$password\r"; exp_continue }

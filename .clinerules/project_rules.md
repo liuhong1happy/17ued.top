@@ -19,6 +19,8 @@ Flutter 插件: https://pub.dev/publishers/17ued.top/packages
 用户名：root
 密码：<我自己输入>
 
+密码文件在 .password 中（该文件不会上传到 GitHub 或 Gitee）
+
 # 个人代码仓库
 
 GitHub：https://github.com/liuhong1happy

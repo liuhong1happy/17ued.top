@@ -1,73 +1,49 @@
-# React + TypeScript + Vite
+# 17ued.top
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+个人项目展示网站，汇集 Flutter 插件、开源项目等。
 
-Currently, two official plugins are available:
+🌐 **在线访问**: [https://17ued.top](https://17ued.top)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 项目列表
 
-## React Compiler
+- **[Flutter 插件集合](https://pub.dev/publishers/17ued.top/packages)** — 发布在 pub.dev 上的 Flutter 和 Dart 插件集合
+- **[GitHub 个人仓库](https://github.com/liuhong1happy)** — 开源项目代码仓库
+- **[Gitee 个人仓库](https://gitee.com/liuhong1happy)** — Gitee 镜像仓库
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 技术栈
 
-## Expanding the ESLint configuration
+- [Vite](https://vitejs.dev/) — 构建工具
+- [React 19](https://react.dev/) — UI 框架
+- [TypeScript](https://www.typescriptlang.org/) — 类型安全
+- [Tailwind CSS](https://tailwindcss.com/) — 样式框架
+- [Liquid Glass](https://liquid-glass.dev/) — 毛玻璃视觉效果
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 开发
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# 安装依赖
+pnpm install
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# 启动开发服务器
+pnpm dev
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 构建生产版本
+pnpm build
+
+# 预览构建结果
+pnpm preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 部署
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+项目使用 Nginx 部署在云服务器上，通过 `deploy.sh` 脚本自动部署：
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+./deploy.sh
 ```
+
+> 注意：部署时需输入服务器密码（存储在 `.password` 文件中，已加入 `.gitignore`）
+
+## 备案
+
+蜀ICP备2026025785号-1

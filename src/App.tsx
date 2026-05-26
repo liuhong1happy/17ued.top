@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./index.css";
+import gwab from "./assets/gwab.png";
 
 // ─── Project Data ─────────────────────────────────────
 interface Project {
@@ -164,7 +165,24 @@ function App() {
               Flutter 插件
             </a>
             <span className="text-gray-600">|</span>
-            <span>蜀ICP备2026025785号-1</span>
+            <a
+              href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51152302000216"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-link no-underline flex items-center gap-2"
+            >
+              <img src={gwab} alt="蜀ICP" className="w-4 h-4" />
+              <span>川公网安备51152302000216号</span>
+            </a>
+            <span className="text-gray-600">|</span>
+            <a
+              href="https://beian.miit.gov.cn/#/Integrated/index"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-link no-underline"
+            >
+              <span>蜀ICP备2026025785号-1</span>
+            </a>
           </div>
         </div>
       </footer>

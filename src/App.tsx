@@ -1,112 +1,110 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
 import "./index.css";
 import gwab from "./assets/gwab.png";
+import Home from "./pages/Home";
+import Resume from "./pages/Resume";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 
-// ─── Project Data ─────────────────────────────────────
-interface Project {
-  name: string;
-  description: string;
-  url: string;
-  tags: string[];
-  icon?: string;
+// ─── Hash Router ───────────────────────────────────────
+type Route =
+  | { name: "home" }
+  | { name: "resume" }
+  | { name: "blog" }
+  | { name: "post"; slug: string };
+
+function parseHash(): Route {
+  const parts = window.location.hash.replace(/^#/, "").split("/").filter(Boolean);
+  if (parts[0] === "resume") return { name: "resume" };
+  if (parts[0] === "blog") {
+    if (parts[1]) return { name: "post", slug: parts[1] };
+    return { name: "blog" };
+  }
+  return { name: "home" };
 }
 
-const PROJECTS: Project[] = [
-  {
-    name: "Flutter 插件集合",
-    description:
-      "发布在 pub.dev 上的 Flutter 和 Dart 插件集合，包括 UI 组件、工具类等。",
-    url: "https://pub.dev/publishers/17ued.top/packages",
-    tags: ["Flutter", "Dart", "pub.dev"],
-  },
-  {
-    name: "GitHub 个人仓库",
-    description: "我的 GitHub 开源项目仓库，包含前端、Flutter 等各类项目。",
-    url: "https://github.com/liuhong1happy",
-    tags: ["GitHub", "开源"],
-  },
-  {
-    name: "Gitee 个人仓库",
-    description: "我的 Gitee 镜像仓库，同步开源项目代码。",
-    url: "https://gitee.com/liuhong1happy",
-    tags: ["Gitee", "开源"],
-  },
-];
+function useHashRoute(): Route {
+  const [route, setRoute] = useState<Route>(parseHash);
 
-// ─── ProjectCard Component ─────────────────────────────
-function ProjectCard({ project }: { project: Project }) {
-  const [isHovered, setIsHovered] = useState(false);
+  useEffect(() => {
+    const onChange = () => {
+      setRoute(parseHash());
+      window.scrollTo({ top: 0 });
+    };
+    window.addEventListener("hashchange", onChange);
+    return () => window.removeEventListener("hashchange", onChange);
+  }, []);
 
+  return route;
+}
+
+// ─── Nav Link ──────────────────────────────────────────
+function NavLink({
+  href,
+  active,
+  children,
+}: {
+  href: string;
+  active: boolean;
+  children: ReactNode;
+}) {
   return (
     <a
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="project-card block no-underline"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      href={href}
+      className={`no-underline transition-colors ${
+        active ? "text-indigo-300 font-medium" : "footer-link"
+      }`}
     >
-      {/* Icon */}
-      <div className="flex items-center gap-3 mb-3">
-        <div
-          className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg font-bold transition-all duration-300 ${
-            isHovered ? "scale-110" : ""
-          }`}
-          style={{
-            background: "linear-gradient(135deg, #6366f1, #a78bfa)",
-            color: "#fff",
-          }}
-        >
-          {project.name.charAt(0)}
-        </div>
-        <h3
-          className={`text-lg font-semibold text-white transition-all duration-300 ${
-            isHovered ? "translate-x-1" : ""
-          }`}
-        >
-          {project.name}
-        </h3>
-      </div>
-
-      {/* Description */}
-      <p className="text-sm text-gray-400 leading-relaxed mb-3">
-        {project.description}
-      </p>
-
-      {/* Tags */}
-      <div className="flex flex-wrap gap-2">
-        {project.tags.map((tag) => (
-          <span key={tag} className="tag">
-            {tag}
-          </span>
-        ))}
-      </div>
+      {children}
     </a>
   );
 }
 
 // ─── App Component ─────────────────────────────────────
 function App() {
+  const route = useHashRoute();
+
+  let content: ReactNode;
+  switch (route.name) {
+    case "resume":
+      content = <Resume />;
+      break;
+    case "blog":
+      content = <Blog />;
+      break;
+    case "post":
+      content = <BlogPost slug={route.slug} />;
+      break;
+    default:
+      content = <Home />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* ─── Navbar ─── */}
       <header className="glass sticky top-0 z-50 px-6 py-4">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <a
-            href="/"
+            href="#/"
             className="text-xl font-bold text-white tracking-tight no-underline"
           >
             17ued<span className="text-indigo-400">.top</span>
           </a>
           <nav className="flex items-center gap-6 text-sm">
-            <a
-              href="https://pub.dev/publishers/17ued.top/packages"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-link no-underline"
+            <NavLink href="#/" active={route.name === "home"}>
+              首页
+            </NavLink>
+            <NavLink href="#/resume" active={route.name === "resume"}>
+              个人介绍
+            </NavLink>
+            <NavLink
+              href="#/blog"
+              active={route.name === "blog" || route.name === "post"}
             >
-              Flutter 插件
-            </a>
+              技术博文
+            </NavLink>
+            <span className="text-gray-600">|</span>
             <a
               href="https://github.com/liuhong1happy"
               target="_blank"
@@ -129,26 +127,7 @@ function App() {
 
       {/* ─── Main Content ─── */}
       <main className="flex-1 px-6 py-12">
-        <div className="max-w-5xl mx-auto">
-          {/* Hero Section */}
-          <div className="text-center mb-16">
-            <h1 className="page-title mb-4">个人项目展示</h1>
-            <p className="text-gray-400 text-lg max-w-lg mx-auto leading-relaxed">
-              汇集我开发的 Flutter 插件、工具和开源项目。
-              持续更新中 🚀
-            </p>
-          </div>
-
-          {/* Project Grid */}
-          <section>
-            <h2 className="section-title mb-8">项目列表</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {PROJECTS.map((project) => (
-                <ProjectCard key={project.name} project={project} />
-              ))}
-            </div>
-          </section>
-        </div>
+        <div className="max-w-5xl mx-auto">{content}</div>
       </main>
 
       {/* ─── Footer ─── */}

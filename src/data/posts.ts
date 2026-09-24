@@ -11,6 +11,7 @@ import collaborativeEditingWopi from "../assets/posts/collaborative-editing-wopi
 import k8sGpu from "../assets/posts/k8s-gpu.md?raw";
 import rk3588BuildGuide from "../assets/posts/rk3588-build-guide.md?raw";
 import productionManagementSystem from "../assets/posts/production-management-system.md?raw";
+import vectorDatabase from "../assets/posts/vector-database.md?raw";
 
 export interface Post {
   slug: string;
@@ -139,6 +140,15 @@ export const POSTS: Post[] = [
       "生产管理系统各子系统功能划分：财务、客户关系、供应链、产品、品质、仓储、生产制造、任务管理与异常处理。",
     tags: ["生产管理", "系统设计", "MES"],
   },
+  {
+    slug: "vector-database",
+    title: "向量数据库",
+    date: "2026-09-24",
+    readTime: "约 18 分钟",
+    excerpt:
+      "面向 AI 应用的向量数据库：从 embedding 与相似性检索出发，梳理索引算法（随机投影、PQ、LSH、HNSW）、相似度度量、元数据过滤，以及分片副本、监控、访问控制等数据库能力与无服务器架构。",
+    tags: ["向量数据库", "Embedding", "向量检索", "ANN", "RAG"],
+  },
 ];
 
 export const POST_CONTENT: Record<string, string> = {
@@ -155,4 +165,5 @@ export const POST_CONTENT: Record<string, string> = {
   "server-ops": serverOps,
   "rk3588-build-guide": rk3588BuildGuide,
   "production-management-system": productionManagementSystem,
+  "vector-database": vectorDatabase,
 };

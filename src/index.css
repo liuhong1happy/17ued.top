@@ -300,6 +300,11 @@ header.glass {
   line-height: 1.6;
 }
 
+/* 锚点跳转时给吸顶导航留出空间 */
+.prose :is(h1, h2, h3, h4) {
+  scroll-margin-top: 6rem;
+}
+
 .prose h1 {
   font-size: 1.75rem;
   font-weight: 700;
@@ -357,6 +362,76 @@ header.glass {
   border: none;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   margin: 2rem 0;
+}
+
+/* ===== Blog: table of contents ===== */
+/* 正文居中且宽 48rem，目录固定贴在它左侧。
+   显隐由 BlogPost.tsx 按 window.innerWidth 控制（见那边的注释），这里不写媒体查询。 */
+.toc {
+  position: fixed;
+  top: 6rem;
+  /* 正文左边缘在 50% - 24rem，再往左让出 2rem 间距和 15rem 宽度 */
+  left: calc(50% - 41rem);
+  width: 15rem;
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+  padding: 1.25rem 0.5rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+}
+
+.toc::-webkit-scrollbar {
+  width: 4px;
+}
+
+.toc::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+}
+
+.toc-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #94a3b8;
+  margin: 0 0 0.75rem;
+  padding-left: 0.75rem;
+}
+
+.toc-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.toc-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-left: 2px solid transparent;
+  padding: 0.35rem 0.75rem 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #94a3b8;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.toc-link:hover {
+  color: #c7d2fe;
+}
+
+.toc-link.is-active {
+  color: #a5b4fc;
+  border-left-color: #818cf8;
+  background: rgba(99, 102, 241, 0.08);
 }
 
 /* ===== Tech Graph ===== */

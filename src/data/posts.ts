@@ -29,7 +29,8 @@ export interface Post {
   tags: string[];
 }
 
-export const POSTS: Post[] = [
+/** 文章源数据：新增文章**追加到末尾**即可，展示顺序交给下面的 POSTS */
+const POSTS_BY_ADDED: Post[] = [
   {
     slug: "opentcs-vda5050",
     title: "基于 OpenTCS 的智慧园区调度系统实践",
@@ -220,6 +221,18 @@ export const POSTS: Post[] = [
     tags: ["FDE", "前沿部署工程师", "AI 落地", "Palantir", "解决方案", "组织治理", "职业发展"],
   },
 ];
+
+/**
+ * 对外暴露的文章列表：按日期倒序，最新的排在最前面。
+ *
+ * date 是 YYYY-MM-DD，字典序就是时间序，不必转成 Date 再比。
+ * 同一天内用「后加入的在前」打破平局——新文章是追加到数组末尾的，不这样处理
+ * 的话，今天再补一篇同一天的文章反而会排在当天旧文后面。
+ * sort 本身是稳定的，这里的平局规则只是把「随后追加」这件事显式写出来。
+ */
+export const POSTS: Post[] = POSTS_BY_ADDED.map((post, added) => ({ post, added }))
+  .sort((a, b) => b.post.date.localeCompare(a.post.date) || b.added - a.added)
+  .map(({ post }) => post);
 
 export const POST_CONTENT: Record<string, string> = {
   "opentcs-vda5050": opentcsVda5050,

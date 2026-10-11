@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" width="760" height="360" role="img" aria-label="记忆层的三类记忆：短时记忆、长时记忆、过程记忆，以及窗口裁剪、摘要压缩等管理策略">
+  <rect width="760" height="360" fill="#0f172a"/>
+  <text x="24" y="32" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" font-weight="600" fill="#94a3b8">记忆层的三类记忆</text>
+
+  <!-- 短时记忆 -->
+  <rect x="40" y="56" width="216" height="180" rx="10" fill="#151d33" stroke="#2b3a55"/>
+  <rect x="60" y="80" width="28" height="4" rx="2" fill="#818cf8"/>
+  <text x="60" y="112" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#dbe3f0">短时记忆</text>
+  <text x="60" y="132" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12" fill="#7c8aa5">上下文窗口</text>
+  <text x="60" y="164" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#8b9bb4">· 当前对话历史</text>
+  <text x="60" y="188" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#8b9bb4">· 随轮次滚动传入 LLM</text>
+  <text x="60" y="212" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#8b9bb4">· 容量有硬上限</text>
+
+  <!-- 长时记忆 -->
+  <rect x="272" y="56" width="216" height="180" rx="10" fill="#151d33" stroke="#2b3a55"/>
+  <rect x="292" y="80" width="28" height="4" rx="2" fill="#22d3ee"/>
+  <text x="292" y="112" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#dbe3f0">长时记忆</text>
+  <text x="292" y="132" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12" fill="#7c8aa5">向量数据库</text>
+  <text x="292" y="164" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#8b9bb4">· 知识 / 任务 / 偏好</text>
+  <text x="292" y="188" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#8b9bb4">· 向量检索召回片段</text>
+  <text x="292" y="212" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#8b9bb4">· 跨会话持久保存</text>
+
+  <!-- 过程记忆 -->
+  <rect x="504" y="56" width="216" height="180" rx="10" fill="#151d33" stroke="#2b3a55"/>
+  <rect x="524" y="80" width="28" height="4" rx="2" fill="#fbbf24"/>
+  <text x="524" y="112" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="15" font-weight="700" fill="#dbe3f0">过程记忆</text>
+  <text x="524" y="132" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12" fill="#7c8aa5">任务状态</text>
+  <text x="524" y="164" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#8b9bb4">· 子任务结果与工具返回</text>
+  <text x="524" y="188" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#8b9bb4">· 当前执行到哪一步</text>
+  <text x="524" y="212" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#8b9bb4">· 中断后可恢复进度</text>
+
+  <!-- 管理策略 -->
+  <rect x="40" y="262" width="680" height="62" rx="10" fill="#94a3b8" fill-opacity="0.07" stroke="#2b3a55"/>
+  <text x="64" y="290" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" font-weight="700" fill="#cbd5e1">记忆管理策略</text>
+  <text x="64" y="312" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#8b9bb4">窗口裁剪 · 摘要压缩 · 过期遗忘 · 去重 · 值得留存的信息升格进长时记忆</text>
+</svg>

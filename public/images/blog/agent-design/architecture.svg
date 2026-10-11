@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" width="760" height="560" role="img" aria-label="Agent 分层架构：感知层、记忆层、规划推理层、工具执行层、输出层，输出结果经反馈闭环回到感知层">
+  <defs>
+    <marker id="a-slate" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#475569"/>
+    </marker>
+    <marker id="a-emerald" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#34d399"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="560" fill="#0f172a"/>
+  <text x="24" y="32" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" font-weight="600" fill="#94a3b8">分层架构与反馈闭环</text>
+
+  <!-- 用户输入 -->
+  <rect x="275" y="56" width="150" height="34" rx="17" fill="#34d399" fill-opacity="0.12" stroke="#34d399" stroke-opacity="0.45"/>
+  <text x="350" y="78" text-anchor="middle" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" font-weight="600" fill="#6ee7b7">用户输入</text>
+  <line x1="350" y1="90" x2="350" y2="114" stroke="#475569" stroke-width="1.5" marker-end="url(#a-slate)"/>
+
+  <!-- 感知层 -->
+  <rect x="90" y="118" width="520" height="62" rx="10" fill="#151d33" stroke="#2b3a55"/>
+  <circle cx="118" cy="149" r="13" fill="#6366f1" fill-opacity="0.18" stroke="#818cf8" stroke-opacity="0.5"/>
+  <text x="118" y="154" text-anchor="middle" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" font-weight="600" fill="#a5b4fc">1</text>
+  <text x="146" y="155" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="16" font-weight="700" fill="#dbe3f0">感知层</text>
+  <text x="270" y="154" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" fill="#8b9bb4">接收 Prompt、文件与外部事件，做清洗和意图识别</text>
+  <line x1="350" y1="180" x2="350" y2="198" stroke="#475569" stroke-width="1.5" marker-end="url(#a-slate)"/>
+
+  <!-- 记忆层 -->
+  <rect x="90" y="202" width="520" height="62" rx="10" fill="#151d33" stroke="#2b3a55"/>
+  <circle cx="118" cy="233" r="13" fill="#6366f1" fill-opacity="0.18" stroke="#818cf8" stroke-opacity="0.5"/>
+  <text x="118" y="238" text-anchor="middle" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" font-weight="600" fill="#a5b4fc">2</text>
+  <text x="146" y="239" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="16" font-weight="700" fill="#dbe3f0">记忆层</text>
+  <text x="270" y="238" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" fill="#8b9bb4">短时上下文 · 长时向量记忆 · 任务状态记忆</text>
+  <line x1="350" y1="264" x2="350" y2="282" stroke="#475569" stroke-width="1.5" marker-end="url(#a-slate)"/>
+
+  <!-- 规划推理层 -->
+  <rect x="90" y="286" width="520" height="62" rx="10" fill="#1b2240" stroke="#4f46e5" stroke-opacity="0.55"/>
+  <circle cx="118" cy="317" r="13" fill="#6366f1" fill-opacity="0.28" stroke="#818cf8" stroke-opacity="0.7"/>
+  <text x="118" y="322" text-anchor="middle" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" font-weight="600" fill="#c7d2fe">3</text>
+  <text x="146" y="323" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="16" font-weight="700" fill="#e6ebf5">规划推理层</text>
+  <text x="270" y="322" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" fill="#93a3bd">目标拆解 → 推理决策 → 反思校验</text>
+  <line x1="350" y1="348" x2="350" y2="366" stroke="#475569" stroke-width="1.5" marker-end="url(#a-slate)"/>
+
+  <!-- 工具执行层 -->
+  <rect x="90" y="370" width="520" height="62" rx="10" fill="#151d33" stroke="#2b3a55"/>
+  <circle cx="118" cy="401" r="13" fill="#6366f1" fill-opacity="0.18" stroke="#818cf8" stroke-opacity="0.5"/>
+  <text x="118" y="406" text-anchor="middle" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" font-weight="600" fill="#a5b4fc">4</text>
+  <text x="146" y="407" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="16" font-weight="700" fill="#dbe3f0">工具执行层</text>
+  <text x="270" y="406" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" fill="#8b9bb4">工具注册表 · 参数校验 · 结果封装</text>
+  <line x1="350" y1="432" x2="350" y2="450" stroke="#475569" stroke-width="1.5" marker-end="url(#a-slate)"/>
+
+  <!-- 输出层 -->
+  <rect x="90" y="454" width="520" height="62" rx="10" fill="#151d33" stroke="#2b3a55"/>
+  <circle cx="118" cy="485" r="13" fill="#6366f1" fill-opacity="0.18" stroke="#818cf8" stroke-opacity="0.5"/>
+  <text x="118" y="490" text-anchor="middle" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" font-weight="600" fill="#a5b4fc">5</text>
+  <text x="146" y="491" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="16" font-weight="700" fill="#dbe3f0">输出层</text>
+  <text x="270" y="490" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" fill="#8b9bb4">结果整理 · 格式渲染 · 流式输出</text>
+
+  <!-- 反馈闭环 -->
+  <path d="M610 485 H664 V149 H614" fill="none" stroke="#34d399" stroke-width="1.5" marker-end="url(#a-emerald)"/>
+  <text x="686" y="317" transform="rotate(90 686 317)" text-anchor="middle" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12" fill="#6ee7b7">结果写回记忆，形成闭环</text>
+</svg>

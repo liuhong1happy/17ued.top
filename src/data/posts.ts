@@ -12,6 +12,7 @@ import k8sGpu from "../assets/posts/k8s-gpu.md?raw";
 import rk3588BuildGuide from "../assets/posts/rk3588-build-guide.md?raw";
 import productionManagementSystem from "../assets/posts/production-management-system.md?raw";
 import vectorDatabase from "../assets/posts/vector-database.md?raw";
+import agentDesign from "../assets/posts/agent-design.md?raw";
 
 export interface Post {
   slug: string;
@@ -149,6 +150,15 @@ export const POSTS: Post[] = [
       "面向 AI 应用的向量数据库：从 embedding 与相似性检索出发，梳理索引算法（随机投影、PQ、LSH、HNSW）、相似度度量、元数据过滤，以及分片副本、监控、访问控制等数据库能力与无服务器架构。",
     tags: ["向量数据库", "Embedding", "向量检索", "ANN", "RAG"],
   },
+  {
+    slug: "agent-design",
+    title: "如何设计一个智能 Agent",
+    date: "2026-10-11",
+    readTime: "约 12 分钟",
+    excerpt:
+      "从「设计一个智能 Agent」这道高频面试题出发，拆解感知、记忆、规划推理、工具执行、输出五层架构与 ReAct 工作流程，并逐一给出幻觉、死循环、上下文溢出、工具调用错误等难点的工程解法。",
+    tags: ["Agent", "架构设计", "ReAct", "工具调用", "记忆管理"],
+  },
 ];
 
 export const POST_CONTENT: Record<string, string> = {
@@ -166,4 +176,5 @@ export const POST_CONTENT: Record<string, string> = {
   "rk3588-build-guide": rk3588BuildGuide,
   "production-management-system": productionManagementSystem,
   "vector-database": vectorDatabase,
+  "agent-design": agentDesign,
 };

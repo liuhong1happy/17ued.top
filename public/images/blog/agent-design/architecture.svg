@@ -45,7 +45,7 @@
   <circle cx="118" cy="401" r="13" fill="#6366f1" fill-opacity="0.18" stroke="#818cf8" stroke-opacity="0.5"/>
   <text x="118" y="406" text-anchor="middle" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" font-weight="600" fill="#a5b4fc">4</text>
   <text x="146" y="407" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="16" font-weight="700" fill="#dbe3f0">工具执行层</text>
-  <text x="270" y="406" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" fill="#8b9bb4">工具注册表 · 参数校验 · 结果封装</text>
+  <text x="270" y="406" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" fill="#8b9bb4">工具注册表 · 参数校验 · 重试与幂等</text>
   <line x1="350" y1="432" x2="350" y2="450" stroke="#475569" stroke-width="1.5" marker-end="url(#a-slate)"/>
 
   <!-- 输出层 -->

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" width="760" height="500" role="img" aria-label="工具调用的失败处理路径：把失败分为可重试、不可重试、部分成功、持续失败四类，分别对应退避重试、错误回传、如实回传清单、降级转人工">
+  <defs>
+    <marker id="t-slate" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="500" fill="#0f172a"/>
+  <text x="24" y="32" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" font-weight="600" fill="#94a3b8">工具调用的失败处理路径</text>
+
+  <text x="60" y="78" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12" fill="#7c8aa5">失败形态</text>
+  <text x="340" y="78" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12" fill="#7c8aa5">处理方式</text>
+
+  <!-- 可重试 -->
+  <rect x="40" y="92" width="250" height="64" rx="10" fill="#151d33" stroke="#2b3a55"/>
+  <rect x="40" y="92" width="4" height="64" rx="2" fill="#fbbf24"/>
+  <text x="62" y="118" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" font-weight="700" fill="#dbe3f0">可重试</text>
+  <text x="62" y="139" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11.5" fill="#8b9bb4">超时 · 限流 · 偶发 5xx</text>
+  <line x1="290" y1="124" x2="316" y2="124" stroke="#64748b" stroke-width="1.5" marker-end="url(#t-slate)"/>
+  <rect x="320" y="92" width="400" height="64" rx="10" fill="#94a3b8" fill-opacity="0.06" stroke="#2b3a55"/>
+  <text x="344" y="129" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#a9b7cc">指数退避重试，并受限于任务的总超时预算</text>
+
+  <!-- 不可重试 -->
+  <rect x="40" y="168" width="250" height="64" rx="10" fill="#151d33" stroke="#2b3a55"/>
+  <rect x="40" y="168" width="4" height="64" rx="2" fill="#fb7185"/>
+  <text x="62" y="194" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" font-weight="700" fill="#dbe3f0">不可重试</text>
+  <text x="62" y="215" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11.5" fill="#8b9bb4">参数非法 · 权限不足 · 不存在</text>
+  <line x1="290" y1="200" x2="316" y2="200" stroke="#64748b" stroke-width="1.5" marker-end="url(#t-slate)"/>
+  <rect x="320" y="168" width="400" height="64" rx="10" fill="#94a3b8" fill-opacity="0.06" stroke="#2b3a55"/>
+  <text x="344" y="205" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#a9b7cc">结构化错误回传模型，让它改写计划或换一条路</text>
+
+  <!-- 部分成功 -->
+  <rect x="40" y="244" width="250" height="64" rx="10" fill="#151d33" stroke="#2b3a55"/>
+  <rect x="40" y="244" width="4" height="64" rx="2" fill="#22d3ee"/>
+  <text x="62" y="270" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" font-weight="700" fill="#dbe3f0">部分成功</text>
+  <text x="62" y="291" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11.5" fill="#8b9bb4">批量操作只做了一半</text>
+  <line x1="290" y1="276" x2="316" y2="276" stroke="#64748b" stroke-width="1.5" marker-end="url(#t-slate)"/>
+  <rect x="320" y="244" width="400" height="64" rx="10" fill="#94a3b8" fill-opacity="0.06" stroke="#2b3a55"/>
+  <text x="344" y="281" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#a9b7cc">如实回传「成功 N 条 / 失败第 M 条」，或整批事务化</text>
+
+  <!-- 持续失败 -->
+  <rect x="40" y="320" width="250" height="64" rx="10" fill="#151d33" stroke="#2b3a55"/>
+  <rect x="40" y="320" width="4" height="64" rx="2" fill="#818cf8"/>
+  <text x="62" y="346" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="14" font-weight="700" fill="#dbe3f0">持续失败</text>
+  <text x="62" y="367" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="11.5" fill="#8b9bb4">超过熔断阈值</text>
+  <line x1="290" y1="352" x2="316" y2="352" stroke="#64748b" stroke-width="1.5" marker-end="url(#t-slate)"/>
+  <rect x="320" y="320" width="400" height="64" rx="10" fill="#94a3b8" fill-opacity="0.06" stroke="#2b3a55"/>
+  <text x="344" y="357" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#a9b7cc">降级备用数据源 / 标注结果不完整 / 转人工</text>
+
+  <!-- 幂等兜底 -->
+  <rect x="40" y="408" width="680" height="62" rx="10" fill="#34d399" fill-opacity="0.08" stroke="#34d399" stroke-opacity="0.35"/>
+  <text x="64" y="436" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" font-weight="700" fill="#6ee7b7">幂等兜底</text>
+  <text x="64" y="458" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12.5" fill="#8b9bb4">写操作必须带幂等键——重试与重复执行在数据层不该产生第二条记录</text>
+</svg>

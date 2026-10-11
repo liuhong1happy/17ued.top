@@ -50,6 +50,46 @@ Agent 是**具备感知、思考、规划、工具调用、记忆、执行、反
 
 工程实践里，通常是 ReAct 打底，关键节点加一次 Reflection，长任务再用 Plan-and-Solve 约束整体走向。
 
+把这三个模块落到代码，骨架大致是这样：
+
+```python
+# 模块一：目标拆解器 —— 先做意图识别，再拆成有依赖关系的子任务
+def decompose(user_query, memory):
+    intent = llm_extract(user_query, schema=Intent)
+    # Intent = {goal, deliverable, constraints, missing_slots}
+    if intent.missing_slots:                 # 缺关键参数就反问，不要替用户猜
+        return NeedInput(intent.missing_slots)
+    return llm_plan(intent, tools=tool_registry.list())
+    # 返回 [{id, goal, depends_on, done_when}]
+
+# 模块二：反思校验器 —— 拿到观察结果，回头对着子目标判一次
+def reflect(task, observation, memory):
+    verdict = llm_judge(task.done_when, observation, schema=Verdict)
+    if verdict.ok:
+        return Advance()                     # 达标，推进下一个子任务
+    if verdict.retryable and memory.retries(task.id) < 3:
+        return Retry(hint=verdict.gap)       # 把「差在哪」一起带回去，别只回一句失败
+    return RePlan(reason=verdict.reason)     # 重试也无用 → 是计划错了，不是执行错了
+
+# 模块三：子 Agent 派发 —— 依赖已满足的子任务并行跑，各自独立上下文
+def dispatch(todo, memory):
+    ready = [t for t in todo if deps_done(t, memory)]
+    if len(ready) > 1:
+        return [spawn_sub_agent(t.goal, tools=t.tool_hint,
+                                context=memory.slice_related(t))
+                for t in ready]
+    return run_task(ready[0])
+```
+
+三块拼起来，就是规划推理层的日常：**拆解产出 `done_when`，反思拿它当尺子，派发在依赖允许时把子任务摊开**。几个容易写错的地方：
+
+- **`done_when` 必须可判定**。写"查一下库存"没法校验，写"拿到 sku-123 的可用库存数值且非空"才能自动判断这一步到底完成没有。拆解质量差，多半差在这里，而不是模型不够聪明。
+- **自我迭代要区分"执行错"和"计划错"**。前者重试有用，后者重试只是浪费时间——同一件事失败三次还照原样再来，是最典型的死循环来源。分叉点就是 `Retry` 和 `RePlan` 那一行。
+- **子 Agent 之间只回传结论，不回传轨迹**。各自拿独立上下文去干活，回来只交结构化结果；把子轨迹全塞回主上下文，等于同时请进上下文爆炸和幻觉传染。
+- **意图识别缺参数时要反问**。这条路看着笨，却比让模型猜安全得多——猜错的代价通常远大于多问一句。
+
+三种范式在代码里的差别，其实只是这三个函数的调用顺序：ReAct 把拆解与反思穿插进每一轮，Plan-and-Solve 一次拆完再逐条执行，Self-Reflection 则把 `reflect` 单独拉出来多跑一轮。
+
 ### 工具执行层
 
 工具执行层是 Agent 与真实世界之间的那双手，包含三个部件：
@@ -356,7 +396,7 @@ RSI 最危险的地方不在"变聪明"，而在**目标函数被自己改写**�
 
 ## 还可以往哪走
 
-- **多 Agent 协作**：分工成规划 Agent、工具 Agent、评审 Agent，各自只对自己那一段负责。适合复杂度高、单一上下文装不下的任务，代价是通信开销与一致性成本。
+- **多 Agent 协作**：分工成规划 Agent、工具 Agent、评审 Agent，各自只对自己那一段负责。适合复杂度高、单一上下文装不下的任务，代价是通信开销与一致性成本。注意它和规划推理层里的子任务派发不是一回事：**派发是把互相独立的子任务并行摊开，多 Agent 协作是按角色做长期分工**。
 - **人在回路**：伪代码里给的是最简单的"卡一次"，生产环境还要往上加——审批流、多人会签、确认超时后自动拒绝、以及"这个用户已经批过同类操作，短期内不再重复打扰"。
 - **评测工程**：前面给的是最小可用版本。规模上来之后要补的是 case 的版本化与去重（同一条失败被回放三次，不该变成三个 case）、judge 的持续校准、以及成本归因——把每次任务的花费拆到工具和模型头上，才能回答"这笔钱花得值不值"。
 

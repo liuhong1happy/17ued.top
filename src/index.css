@@ -300,6 +300,88 @@ header.glass {
   line-height: 1.6;
 }
 
+/* ===== 代码高亮 =====
+   配色刻意对齐站点的深蓝调板（#0f172a 底 / indigo·emerald·amber 强调），
+   不复用 highlight.js 自带主题——那些主题都是纯黑底设计，贴在这里会突兀。
+   类名由 rehype-highlight 生成，见 src/lib/codeHighlight.ts。 */
+.prose .hljs-comment,
+.prose .hljs-quote {
+  /* 注释刻意压低对比度：读代码时它该退成背景，而不是和最亮的 token 抢注意力 */
+  color: #5b6b85;
+  font-style: italic;
+}
+
+.prose .hljs-keyword,
+.prose .hljs-selector-tag,
+.prose .hljs-doctag,
+.prose .hljs-formula,
+.prose .hljs-tag {
+  color: #c084fc;
+}
+
+.prose .hljs-string,
+.prose .hljs-regexp,
+.prose .hljs-addition,
+.prose .hljs-attribute,
+.prose .hljs-meta .hljs-string {
+  color: #6ee7b7;
+}
+
+.prose .hljs-number,
+.prose .hljs-literal,
+.prose .hljs-bullet,
+.prose .hljs-symbol,
+.prose .hljs-variable,
+.prose .hljs-template-variable,
+.prose .hljs-selector-attr,
+.prose .hljs-selector-pseudo {
+  color: #fbbf24;
+}
+
+.prose .hljs-title,
+.prose .hljs-section,
+.prose .hljs-name,
+.prose .hljs-selector-id {
+  color: #7dd3fc;
+}
+
+.prose .hljs-built_in,
+.prose .hljs-type,
+.prose .hljs-class .hljs-title,
+.prose .hljs-selector-class,
+.prose .hljs-params {
+  color: #5eead4;
+}
+
+.prose .hljs-attr,
+.prose .hljs-property,
+.prose .hljs-template-tag {
+  color: #f0abfc;
+}
+
+.prose .hljs-meta,
+.prose .hljs-meta .hljs-keyword {
+  color: #a5b4fc;
+}
+
+.prose .hljs-operator,
+.prose .hljs-punctuation,
+.prose .hljs-subst {
+  color: #94a3b8;
+}
+
+.prose .hljs-deletion {
+  color: #fb7185;
+}
+
+.prose .hljs-emphasis {
+  font-style: italic;
+}
+
+.prose .hljs-strong {
+  font-weight: 700;
+}
+
 /* 锚点跳转时给吸顶导航留出空间 */
 .prose :is(h1, h2, h3, h4) {
   scroll-margin-top: 6rem;

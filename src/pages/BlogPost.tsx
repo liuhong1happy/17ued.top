@@ -1,7 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import { POSTS, POST_CONTENT } from "../data/posts";
+import {
+  highlightAliases,
+  highlightLanguages,
+  rehypeWarnUnknownLanguage,
+} from "../lib/codeHighlight";
 
 interface TocItem {
   id: string;
@@ -128,7 +134,22 @@ export default function BlogPost({ slug }: { slug: string }) {
 
       {/* Body */}
       <div className="panel prose" ref={articleRef}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[
+            [
+              rehypeHighlight,
+              {
+                // 不开 detect：自动猜语言会把 ASCII 流程图里的方框箭头染成五颜六色
+                detect: false,
+                languages: highlightLanguages,
+                aliases: highlightAliases,
+              },
+            ],
+            // 必须排在高亮之后：它读的是高亮那一步留下的「这个语言不认识」消息
+            rehypeWarnUnknownLanguage,
+          ]}
+        >
           {POST_CONTENT[post.slug]}
         </ReactMarkdown>
       </div>

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" width="1200" height="660" role="img" aria-label="Kubernetes 云原生分层架构：流量入口层、工作负载层、集群控制面、节点数据面与平台底座">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .band { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.14); stroke-width: 1.2; }
+      .chip { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.45); stroke-width: 1.1; }
+      .chipText { fill: #c7d2fe; font-size: 14px; text-anchor: middle; }
+      .bandName { fill: #e2e8f0; font-size: 16px; font-weight: 600; }
+      .bandTag { fill: #a78bfa; font-size: 12px; }
+      .divider { stroke: rgba(255,255,255,0.12); stroke-width: 1; }
+    </style>
+  </defs>
+
+  <!-- 流量入口层 -->
+  <rect class="band" x="60" y="48" width="1080" height="96" rx="14" />
+  <text class="bandName" x="84" y="88">流量入口层</text>
+  <text class="bandTag" x="84" y="112">高并发 · 高可用</text>
+  <line class="divider" x1="240" y1="68" x2="240" y2="124" />
+  <rect class="chip" x="250" y="76" width="203" height="40" rx="10" />
+  <text class="chipText" x="351.5" y="101">CDN / WAF</text>
+  <rect class="chip" x="469" y="76" width="203" height="40" rx="10" />
+  <text class="chipText" x="570.5" y="101">四层负载均衡</text>
+  <rect class="chip" x="688" y="76" width="203" height="40" rx="10" />
+  <text class="chipText" x="789.5" y="101">Ingress Controller</text>
+  <rect class="chip" x="907" y="76" width="203" height="40" rx="10" />
+  <text class="chipText" x="1008.5" y="101">Service · EndpointSlice</text>
+
+  <!-- 工作负载层 -->
+  <rect class="band" x="60" y="162" width="1080" height="96" rx="14" />
+  <text class="bandName" x="84" y="202">工作负载层</text>
+  <text class="bandTag" x="84" y="226">高并发 · 高可用</text>
+  <line class="divider" x1="240" y1="182" x2="240" y2="238" />
+  <rect class="chip" x="250" y="190" width="203" height="40" rx="10" />
+  <text class="chipText" x="351.5" y="215">Deployment 无状态</text>
+  <rect class="chip" x="469" y="190" width="203" height="40" rx="10" />
+  <text class="chipText" x="570.5" y="215">StatefulSet 有状态</text>
+  <rect class="chip" x="688" y="190" width="203" height="40" rx="10" />
+  <text class="chipText" x="789.5" y="215">DaemonSet 节点级</text>
+  <rect class="chip" x="907" y="190" width="203" height="40" rx="10" />
+  <text class="chipText" x="1008.5" y="215">Job / CronJob</text>
+
+  <!-- 集群控制面 -->
+  <rect class="band" x="60" y="276" width="1080" height="96" rx="14" />
+  <text class="bandName" x="84" y="316">集群控制面</text>
+  <text class="bandTag" x="84" y="340">高可用</text>
+  <line class="divider" x1="240" y1="296" x2="240" y2="352" />
+  <rect class="chip" x="250" y="304" width="203" height="40" rx="10" />
+  <text class="chipText" x="351.5" y="329">kube-apiserver ×3</text>
+  <rect class="chip" x="469" y="304" width="203" height="40" rx="10" />
+  <text class="chipText" x="570.5" y="329">kube-scheduler</text>
+  <rect class="chip" x="688" y="304" width="203" height="40" rx="10" />
+  <text class="chipText" x="789.5" y="329">controller-manager</text>
+  <rect class="chip" x="907" y="304" width="203" height="40" rx="10" />
+  <text class="chipText" x="1008.5" y="329">etcd ×3（奇数）</text>
+
+  <!-- 节点数据面 -->
+  <rect class="band" x="60" y="390" width="1080" height="96" rx="14" />
+  <text class="bandName" x="84" y="430">节点数据面</text>
+  <text class="bandTag" x="84" y="454">高性能</text>
+  <line class="divider" x1="240" y1="410" x2="240" y2="466" />
+  <rect class="chip" x="250" y="418" width="203" height="40" rx="10" />
+  <text class="chipText" x="351.5" y="443">kubelet</text>
+  <rect class="chip" x="469" y="418" width="203" height="40" rx="10" />
+  <text class="chipText" x="570.5" y="443">kube-proxy / eBPF</text>
+  <rect class="chip" x="688" y="418" width="203" height="40" rx="10" />
+  <text class="chipText" x="789.5" y="443">CoreDNS</text>
+  <rect class="chip" x="907" y="418" width="203" height="40" rx="10" />
+  <text class="chipText" x="1008.5" y="443">CNI / CSI</text>
+
+  <!-- 平台底座 -->
+  <rect class="band" x="60" y="504" width="1080" height="96" rx="14" />
+  <text class="bandName" x="84" y="544">平台底座</text>
+  <text class="bandTag" x="84" y="568">可观测 · 可回滚</text>
+  <line class="divider" x1="240" y1="524" x2="240" y2="580" />
+  <rect class="chip" x="250" y="532" width="203" height="40" rx="10" />
+  <text class="chipText" x="351.5" y="557">Prometheus · Grafana</text>
+  <rect class="chip" x="469" y="532" width="203" height="40" rx="10" />
+  <text class="chipText" x="570.5" y="557">OpenTelemetry</text>
+  <rect class="chip" x="688" y="532" width="203" height="40" rx="10" />
+  <text class="chipText" x="789.5" y="557">Argo CD · GitOps</text>
+  <rect class="chip" x="907" y="532" width="203" height="40" rx="10" />
+  <text class="chipText" x="1008.5" y="557">HPA / KEDA / PDB</text>
+</svg>

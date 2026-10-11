@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="关系型数据库全景：语言层、执行层、存储层，以及 MySQL 与 PostgreSQL 在存储引擎和进程模型上的分叉">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .band { fill: rgba(99,102,241,0.08); stroke: rgba(129,140,248,0.28); stroke-width: 1.1; }
+      .box { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.5); stroke-width: 1.2; }
+      .boxAlt { fill: rgba(167,139,250,0.16); stroke: rgba(167,139,250,0.5); stroke-width: 1.2; }
+      .boxDim { fill: rgba(148,163,184,0.12); stroke: rgba(148,163,184,0.4); stroke-width: 1.2; }
+      .title { fill: #e2e8f0; font-size: 17px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .bandTitle { fill: #c7d2fe; font-size: 15px; font-weight: 600; }
+      .bandNote { fill: #64748b; font-size: 12px; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .flowDash { stroke: #a78bfa; stroke-width: 2; fill: none; stroke-dasharray: 7 6; }
+      .split { stroke: #f472b6; stroke-width: 2; fill: none; stroke-dasharray: 5 5; }
+      .splitLabel { fill: #f9a8d4; font-size: 12.5px; text-anchor: middle; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ahv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a78bfa" />
+    </marker>
+  </defs>
+
+  <text x="60" y="40" class="title" style="text-anchor:start;font-size:19px">一条 SQL 从语句到落盘，要穿过三层</text>
+
+  <!-- 语言层 -->
+  <rect class="band" x="40" y="66" width="1120" height="120" rx="14" />
+  <text class="bandTitle" x="60" y="94">语言层</text>
+  <text class="bandNote" x="130" y="94">语义与写法</text>
+
+  <rect class="box" x="72" y="110" width="196" height="56" rx="11" />
+  <text class="title" x="170" y="134" style="font-size:14px">DDL</text>
+  <text class="sub" x="170" y="154">CREATE / ALTER / DROP</text>
+
+  <rect class="box" x="292" y="110" width="196" height="56" rx="11" />
+  <text class="title" x="390" y="134" style="font-size:14px">DML</text>
+  <text class="sub" x="390" y="154">INSERT / UPDATE / DELETE</text>
+
+  <rect class="box" x="512" y="110" width="196" height="56" rx="11" />
+  <text class="title" x="610" y="134" style="font-size:14px">DQL</text>
+  <text class="sub" x="610" y="154">SELECT</text>
+
+  <rect class="box" x="732" y="110" width="196" height="56" rx="11" />
+  <text class="title" x="830" y="134" style="font-size:14px">DCL</text>
+  <text class="sub" x="830" y="154">GRANT / REVOKE</text>
+
+  <rect class="boxAlt" x="952" y="110" width="176" height="56" rx="11" />
+  <text class="title" x="1040" y="134" style="font-size:14px">TCL</text>
+  <text class="sub" x="1040" y="154">BEGIN / COMMIT</text>
+
+  <path class="flow" d="M600,190 L600,224" marker-end="url(#ah)" />
+  <text class="sub" x="640" y="212" style="text-anchor:start">解析 → 重写 → 优化</text>
+
+  <!-- 执行层 -->
+  <rect class="band" x="40" y="232" width="1120" height="120" rx="14" />
+  <text class="bandTitle" x="60" y="260">执行层</text>
+  <text class="bandNote" x="130" y="260">把语句变成执行计划</text>
+
+  <rect class="box" x="72" y="276" width="256" height="56" rx="11" />
+  <text class="title" x="200" y="300" style="font-size:14px">解析器 / 语法树</text>
+  <text class="sub" x="200" y="320">词法、语法、语义校验</text>
+
+  <rect class="box" x="352" y="276" width="256" height="56" rx="11" />
+  <text class="title" x="480" y="300" style="font-size:14px">查询优化器 CBO</text>
+  <text class="sub" x="480" y="320">代价模型 + 统计信息</text>
+
+  <rect class="box" x="632" y="276" width="256" height="56" rx="11" />
+  <text class="title" x="760" y="300" style="font-size:14px">执行器</text>
+  <text class="sub" x="760" y="320">算子：JOIN / SORT / AGG</text>
+
+  <rect class="boxDim" x="912" y="276" width="216" height="56" rx="11" />
+  <text class="title" x="1020" y="300" style="font-size:14px">EXPLAIN 的产物</text>
+  <text class="sub" x="1020" y="320">唯一可信的性能依据</text>
+
+  <path class="flow" d="M600,356 L600,390" marker-end="url(#ah)" />
+  <text class="sub" x="640" y="378" style="text-anchor:start">读写请求</text>
+
+  <!-- 存储层 -->
+  <rect class="band" x="40" y="398" width="1120" height="196" rx="14" />
+  <text class="bandTitle" x="60" y="426">存储层</text>
+  <text class="bandNote" x="130" y="426">这里开始，MySQL 与 PostgreSQL 走上不同的路</text>
+
+  <!-- 共性 -->
+  <rect class="boxDim" x="72" y="442" width="1056" height="52" rx="11" />
+  <text class="title" x="600" y="466" style="font-size:14px">共性：B+ 树索引 · MVCC 并发控制 · 预写日志保证持久性 · 行级锁</text>
+  <text class="sub" x="600" y="484">三者互相牵连：索引决定锁粒度，锁配合 MVCC，日志决定崩溃后能否恢复</text>
+
+  <path class="split" d="M600,498 L600,516" />
+  <text class="splitLabel" x="600" y="534">实现分叉</text>
+
+  <!-- 分叉 -->
+  <rect class="box" x="72" y="544" width="500" height="56" rx="11" />
+  <text class="title" x="322" y="568" style="font-size:15px">MySQL：单进程多线程 · 插件式存储引擎</text>
+  <text class="sub" x="322" y="588">InnoDB · redo/undo/binlog · ReadView</text>
+
+  <rect class="boxAlt" x="628" y="544" width="500" height="56" rx="11" />
+  <text class="title" x="878" y="568" style="font-size:15px">PostgreSQL：多进程 · 单一堆表引擎</text>
+  <text class="sub" x="878" y="588">WAL · xmin/xmax 版本 · VACUUM</text>
+</svg>

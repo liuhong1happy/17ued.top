@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 470" width="1200" height="470" role="img" aria-label="FDE 的位置：站在产品能做的事与客户真正需要的事之间的缝隙上，用 Builds、Embeds、Owns 三个动作把产品能力转化为客户业务结果；下方说明 FDE 不是售前、不是外包驻场、不是咨询顾问">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .left { fill: rgba(148,163,184,0.10); stroke: rgba(148,163,184,0.42); stroke-width: 1.2; }
+      .mid { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.62); stroke-width: 1.6; }
+      .right { fill: rgba(52,211,153,0.10); stroke: rgba(52,211,153,0.42); stroke-width: 1.2; }
+      .neg { fill: rgba(248,113,113,0.08); stroke: rgba(248,113,113,0.38); stroke-width: 1.2; }
+      .pill { fill: rgba(255,255,255,0.07); stroke: rgba(255,255,255,0.16); stroke-width: 1; }
+      .t { fill: #e2e8f0; font-size: 16px; font-weight: 600; text-anchor: middle; }
+      .ts { fill: #94a3b8; font-size: 12px; text-anchor: middle; }
+      .tv { fill: #cbd5e1; font-size: 12.5px; text-anchor: middle; }
+      .tk { fill: #c7d2fe; font-size: 12.5px; font-weight: 600; text-anchor: middle; }
+      .pillT { fill: #e2e8f0; font-size: 12.5px; text-anchor: middle; font-weight: 600; }
+      .negK { fill: #fca5a5; font-size: 13px; font-weight: 600; }
+      .negS { fill: #cbd5e1; font-size: 12.5px; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .flowG { stroke: #34d399; stroke-width: 2; fill: none; }
+    </style>
+    <marker id="fp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="fpg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <text class="note" x="30" y="34">FDE 站的不是某一侧，而是中间那道缝——产品按「平均客户」设计，而每个客户都不平均</text>
+
+  <!-- 左：产品 -->
+  <rect class="left" x="30" y="58" width="320" height="166" rx="16" />
+  <text class="t" x="190" y="96">产品能做的事</text>
+  <text class="ts" x="190" y="126">已经封装好的模型与平台能力</text>
+  <text class="ts" x="190" y="150">通用、标准、可复制、边际成本低</text>
+  <text class="ts" x="190" y="174">面向「平均客户」设计</text>
+  <text class="ts" x="190" y="202">问题是：没有哪个客户是平均的</text>
+
+  <!-- 中：FDE -->
+  <rect class="mid" x="390" y="44" width="420" height="194" rx="16" />
+  <text class="t" x="600" y="82">FDE</text>
+  <text class="ts" x="600" y="108">Forward Deployed Engineer · 前沿部署工程师</text>
+  <text class="tv" x="600" y="138">把「产品能做的事」变成「客户真正拿到结果」</text>
+
+  <rect class="pill" x="414" y="156" width="120" height="30" rx="9" />
+  <text class="pillT" x="474" y="176">Builds</text>
+  <rect class="pill" x="540" y="156" width="120" height="30" rx="9" />
+  <text class="pillT" x="600" y="176">Embeds</text>
+  <rect class="pill" x="666" y="156" width="120" height="30" rx="9" />
+  <text class="pillT" x="726" y="176">Owns</text>
+
+  <text class="ts" x="474" y="204">写生产级代码</text>
+  <text class="ts" x="600" y="204">嵌入客户组织</text>
+  <text class="ts" x="726" y="204">对结果负责</text>
+  <text class="tv" x="600" y="226">三个动词缺一不可</text>
+
+  <!-- 右：客户 -->
+  <rect class="right" x="850" y="58" width="320" height="166" rx="16" />
+  <text class="t" x="1010" y="96">客户真正需要的事</text>
+  <text class="ts" x="1010" y="126">需求说不清，自己也讲不明白</text>
+  <text class="ts" x="1010" y="150">数据出不了内网，权限层层设卡</text>
+  <text class="ts" x="1010" y="174">流程藏在习惯与例外处理里</text>
+  <text class="ts" x="1010" y="202">每家客户的活儿都不一样</text>
+
+  <line class="flow" x1="354" y1="140" x2="386" y2="140" marker-end="url(#fp)" />
+  <line class="flowG" x1="814" y1="140" x2="846" y2="140" marker-end="url(#fpg)" />
+
+  <!-- 底部三个「不是」 -->
+  <rect class="neg" x="30" y="262" width="370" height="180" rx="16" />
+  <text class="negK" x="56" y="296">≠ 售前</text>
+  <text class="negS" x="56" y="324">售前在签约前讲方案、做演示；</text>
+  <text class="negS" x="56" y="346">FDE 在签约后进场，为结果负责。</text>
+  <text class="negS" x="56" y="374">一个说服客户买单，</text>
+  <text class="negS" x="56" y="396">一个保证买到的东西真的转起来。</text>
+
+  <rect class="neg" x="415" y="262" width="370" height="180" rx="16" />
+  <text class="negK" x="441" y="296">≠ 外包 / 驻场</text>
+  <text class="negS" x="441" y="324">外包按人天卖人头，成果留在单一客户；</text>
+  <text class="negS" x="441" y="346">FDE 按结果验收，经验沉淀回产品。</text>
+  <text class="negS" x="441" y="374">前者交付工时，</text>
+  <text class="negS" x="441" y="396">后者交付可复用的能力。</text>
+
+  <rect class="neg" x="800" y="262" width="370" height="180" rx="16" />
+  <text class="negK" x="826" y="296">≠ 咨询顾问</text>
+  <text class="negS" x="826" y="324">顾问交出建议，希望你一直需要他；</text>
+  <text class="negS" x="826" y="346">FDE 对系统运转负责，希望你不需要他。</text>
+  <text class="negS" x="826" y="374">一份 PPT 不会让系统跑起来，</text>
+  <text class="negS" x="826" y="396">一行生产代码会。</text>
+</svg>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img" aria-label="微调显存对比：全量微调的显存大头是梯度与 Adam 优化器状态，约为权重的五倍；LoRA 冻结基座只训练低秩增量，可训练参数降到 0.1% 到 1%">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .rowTitle { fill: #e2e8f0; font-size: 16px; font-weight: 600; }
+      .total { font-size: 15px; font-weight: 600; text-anchor: end; }
+      .track { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.12); stroke-width: 1; }
+      .w { fill: #6366f1; }
+      .g { fill: #818cf8; }
+      .o { fill: #a78bfa; }
+      .frozen { fill: #475569; }
+      .lora { fill: #f472b6; }
+      .refLine { stroke: #fb7185; stroke-width: 1.4; stroke-dasharray: 6 5; }
+      .refText { fill: #fda4af; font-size: 12px; text-anchor: end; }
+      .callout { stroke: #f472b6; stroke-width: 1.2; stroke-dasharray: 4 4; }
+      .calloutText { fill: #f9a8d4; font-size: 12px; }
+      .legend { fill: #cbd5e1; font-size: 13px; }
+      .muted { fill: #94a3b8; font-size: 12px; }
+      .card { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.14); stroke-width: 1.1; }
+      .cardText { fill: #cbd5e1; font-size: 13px; text-anchor: middle; }
+      .cardKey { fill: #c7d2fe; font-weight: 600; }
+    </style>
+    <clipPath id="clipA"><rect x="60" y="94" width="1080" height="48" rx="10" /></clipPath>
+    <clipPath id="clipB"><rect x="60" y="230" width="1080" height="48" rx="10" /></clipPath>
+  </defs>
+
+  <!-- 全量微调：14 + 14 + 56 = 84 GB -->
+  <text class="rowTitle" x="60" y="78">全量微调 · 7B · 混合精度 · Adam</text>
+  <text class="total" x="1140" y="78" fill="#fecdd3">≈ 84 GB</text>
+  <rect class="track" x="60" y="94" width="1080" height="48" rx="10" />
+  <g clip-path="url(#clipA)">
+    <rect class="w" x="60" y="94" width="154" height="48" />
+    <rect class="g" x="214" y="94" width="154" height="48" />
+    <rect class="o" x="368" y="94" width="616" height="48" />
+  </g>
+  <text class="legend" x="86" y="124" fill="#eef2ff">权重</text>
+  <text class="legend" x="240" y="124" fill="#eef2ff">梯度</text>
+  <text class="legend" x="394" y="124" fill="#1e1b4b">优化器状态（Adam 一阶矩 + 二阶矩，56 GB）</text>
+
+  <!-- LoRA：14 + 0.3 ≈ 14 GB -->
+  <text class="rowTitle" x="60" y="214">LoRA · 同一基座模型</text>
+  <text class="total" x="1140" y="214" fill="#c7d2fe">≈ 14 GB</text>
+  <rect class="track" x="60" y="230" width="1080" height="48" rx="10" />
+  <g clip-path="url(#clipB)">
+    <rect class="frozen" x="60" y="230" width="154" height="48" />
+    <rect class="lora" x="214" y="230" width="4" height="48" />
+  </g>
+  <text class="legend" x="86" y="260" fill="#e2e8f0">冻结的基座权重（无梯度、无优化器状态）</text>
+
+  <!-- 参考水位与标注 -->
+  <line class="refLine" x1="1080" y1="86" x2="1080" y2="300" />
+  <text class="refText" x="1072" y="316">全量微调的显存水位</text>
+  <line class="callout" x1="216" y1="280" x2="216" y2="308" />
+  <text class="calloutText" x="224" y="324">LoRA 增量（参数 + 优化器状态）≈ 0.3 GB</text>
+  <text class="muted" x="60" y="344">同一把尺子：1 GB ≈ 11 px，数值为量级示意</text>
+
+  <!-- 图例 -->
+  <rect class="w" x="60" y="380" width="14" height="14" rx="3" />
+  <text class="legend" x="82" y="392">可训练权重</text>
+  <rect class="g" x="248" y="380" width="14" height="14" rx="3" />
+  <text class="legend" x="270" y="392">梯度</text>
+  <rect class="o" x="356" y="380" width="14" height="14" rx="3" />
+  <text class="legend" x="378" y="392">优化器状态</text>
+  <rect class="frozen" x="560" y="380" width="14" height="14" rx="3" />
+  <text class="legend" x="582" y="392">冻结的基座权重</text>
+  <rect class="lora" x="800" y="380" width="14" height="14" rx="3" />
+  <text class="legend" x="822" y="392">LoRA 增量</text>
+
+  <!-- 结论 -->
+  <rect class="card" x="60" y="424" width="1080" height="100" rx="14" />
+  <text class="cardText" x="600" y="452"><tspan class="cardKey">显存大头是梯度与优化器状态</tspan>（约 12 字节/参数，是权重的 5 倍），不是权重本身</text>
+  <text class="cardText" x="600" y="478">LoRA 冻结基座、只训练低秩增量，可训练参数降到 0.1%~1%，代价是表达能力受限</text>
+  <text class="cardText" x="600" y="504">上图为参数相关显存，未计入激活值；QLoRA 再把基座压到 4-bit，可进一步降低占用</text>
+</svg>

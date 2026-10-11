@@ -191,7 +191,121 @@ LiveKit 服务端基于 **Apache License v2\.0** 协议开源。
 
 ## LiveKit 完整生态一览
 
-表格
+| 组件 | 定位 | 解决的问题 |
+| --- | --- | --- |
+| LiveKit Server | 媒体服务端（SFU） | 多用户实时音视频与数据通信 |
+| Agents | 可编程的后端参与者 | 把 AI 接进房间，实现实时语音交互 |
+| Egress | 媒体输出 | 录制房间内容、多平台推流 |
+| Ingress | 媒体输入 | 从 RTMP、WHIP、HLS、OBS 等外部源拉流 |
+| 客户端 SDK | 多语言前端 SDK | 各端接入房间 |
+| 服务端 SDK | 令牌生成、接口调用、Webhook | 后端集成 |
+| CLI / Docker / Helm | 运维工具 | 部署、压测、本地调试 |
+
+## 智能代理（Agents）
+
+### 它解决什么问题
+
+前文讲的是「怎么把一屋子人连起来」，Agents 解决的是「**怎么让一个 AI 也坐进这间屋子**」。它让一个后端程序作为参与者加入房间，接收音频、调用模型、把合成语音推回房间——也就是把 STT、LLM、TTS 三个模型，编排成一次可用的实时对话。
+
+**为什么需要专门的编排层？** 因为"把三个模型串起来"这句话背后，藏着一堆不写代码想不到的问题：用户什么时候说完了、AI 说话时用户插话怎么办、多个房间并发时模型怎么复用、网络抖动时音频怎么补。这些都不是模型能力问题，而是**会话编排问题**——Agents 存在的价值就在这里。
+
+### 核心概念
+
+| 概念 | 作用 |
+| --- | --- |
+| `AgentServer` | 进程入口，负责生命周期与任务分发 |
+| `entrypoint` | 会话入口函数，每个房间会话触发一次 |
+| `prewarm` | 进程预热：把 VAD 这类重模型**按进程加载一次**，而不是每次会话都加载 |
+| `Agent` | 定义这个 AI 是谁：指令、工具、能力边界 |
+| `AgentSession` | 编排 STT / LLM / TTS / VAD / 轮次检测的会话对象 |
+| `JobContext` | 当前会话的上下文：房间、参与者、日志字段 |
+
+其中 **`prewarm` 是最容易被忽略、但影响最大的一个概念**。VAD 模型加载要几百毫秒到数秒，如果每个会话都重新加载，用户接进来第一句话必然卡。把它提到进程级预加载，是 LiveKit 官方快速开始里反复强调的优化。
+
+### 语音流水线
+
+```text
+用户说话 → VAD（检测语音端点）→ STT（转文字）
+        → 轮次检测（判断是否说完）→ LLM（生成回复）
+        → TTS（合成语音）→ 推流回房间
+```
+
+**轮次检测（turn detection）在这里的地位被严重低估**。单纯靠静音时长判断"说完了没有"会频繁误判——用户思考时的停顿、语气词之间的间隙，都会被当成说完了。LiveKit 支持接入语义轮次检测模型，用语义判断句子是否完整，这是对话体感自然度的主要来源。
+
+**打断（interruption）处理**同样关键：用户插话时，要立刻停止当前 TTS 播放、取消正在生成的 LLM 回复、把上下文切换回"听"。这套状态机不做好，AI 就会自说自话。
+
+### 最小示例
+
+```python
+from livekit.agents import Agent, AgentServer, AgentSession, JobContext, JobProcess, cli
+from livekit.plugins import silero
+
+server = AgentServer()
+
+
+def prewarm(proc: JobProcess):
+    # 每个进程只加载一次，避免每会话重复加载造成首句卡顿
+    proc.userdata["vad"] = silero.VAD.load()
+
+
+server.setup_fnc = prewarm
+
+
+@server.rtc_session()
+async def entrypoint(ctx: JobContext):
+    session = AgentSession(
+        vad=ctx.proc.userdata["vad"],   # 复用预热好的 VAD
+        stt=...,                        # 语音识别
+        llm=...,                        # 大模型
+        tts=...,                        # 语音合成
+    )
+
+    await session.start(
+        room=ctx.room,
+        agent=Agent(instructions="你是一个简洁、友好的中文语音助手。"),
+    )
+    await ctx.connect()
+
+
+if __name__ == "__main__":
+    cli.run_app(server)
+```
+
+**关于版本**：LiveKit Agents 的 API 演进很快，早期版本用的是 `WorkerOptions(entrypoint_fnc=..., prewarm_fnc=...)` 的写法，较新版本改成了上面这种 `AgentServer` + 装饰器的形式。**以你安装的 `livekit-agents` 版本对应的文档为准**，遇到不一致时先确认版本。
+
+### 插件体系
+
+模型接入是通过插件完成的，STT / LLM / TTS 三层各自独立：
+
+| 层 | 常见接入方式 |
+| --- | --- |
+| STT | 各家云厂商插件、自建 ASR 服务 |
+| LLM | 各家大模型插件、LangChain / LangGraph 适配器 |
+| TTS | 各家云厂商插件、自建 TTS 服务 |
+
+**对自己部署模型的团队来说，最省力的路径是"OpenAI 兼容接口"**：只要你的语音服务暴露一个 OpenAI 兼容的接口，就可以用 OpenAI 插件指向自建的 base URL，把任意一段换成自己的实现。
+
+具体到国内开源模型（FunASR、CosyVoice 等）怎么接进来，见另一篇《国内开源语音技术全景：ASR、TTS 与端到端语音大模型》。
+
+### 降级与自定义
+
+两个生产环境必备的能力：
+
+- **降级（FallbackAdapter）**：给 STT / LLM / TTS 各配一个备用提供方。主服务超时或报错时自动切换，避免"云厂商抖一下，整个语音助手不可用"。
+- **自定义流程节点**：流水线的各个节点都可以覆写，用来做文本分块、发音纠正、音频后处理（变速、加效果）等定制逻辑。
+
+### 更多形态
+
+Agents 不只能做语音：
+
+- **多模态**：可以处理视频帧，做视觉理解（比如用户举着摄像头问"这是什么"）
+- **数字人**：结合头像驱动，让 AI 有形象
+- **电话接入**：通过 SIP 接进传统电话网络，做智能客服外呼与接听
+- **工具调用**：接 MCP 或自定义函数，让语音助手真的能"办事"
+
+### 一句话总结
+
+LiveKit 解决「连起来」，Agents 解决「让 AI 参与进来」。**模型决定上限，编排决定体感**——同样三个模型，会话编排做得好不好，用户体验差得很远。
 
 
 

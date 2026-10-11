@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 740" width="1200" height="740" role="img" aria-label="存储架构对比：InnoDB 的 Buffer Pool、Change Buffer、redo/undo/binlog 与 PostgreSQL 的 shared_buffers、WAL 和堆表文件">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .zone { fill: rgba(99,102,241,0.07); stroke: rgba(129,140,248,0.3); stroke-width: 1.1; }
+      .zonePg { fill: rgba(167,139,250,0.07); stroke: rgba(167,139,250,0.3); stroke-width: 1.1; }
+      .mem { fill: rgba(56,189,248,0.15); stroke: rgba(56,189,248,0.5); stroke-width: 1.1; }
+      .disk { fill: rgba(148,163,184,0.15); stroke: rgba(148,163,184,0.45); stroke-width: 1.1; }
+      .log { fill: rgba(244,114,182,0.15); stroke: rgba(244,114,182,0.5); stroke-width: 1.1; }
+      .mTitle { fill: #e2e8f0; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .mSub { fill: #94a3b8; font-size: 11.5px; text-anchor: middle; }
+      .zoneTitle { fill: #c7d2fe; font-size: 14px; font-weight: 600; }
+      .zoneTitlePg { fill: #ddd6fe; font-size: 14px; font-weight: 600; }
+      .colHead { fill: #e2e8f0; font-size: 18px; font-weight: 600; text-anchor: middle; }
+      .colNote { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .flowPg { stroke: #a78bfa; stroke-width: 2; fill: none; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .rowHead { fill: #c7d2fe; font-size: 13.5px; font-weight: 600; }
+      .rowHeadPg { fill: #ddd6fe; font-size: 13.5px; font-weight: 600; }
+      .stepBox { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.16); stroke-width: 1; }
+      .stepText { fill: #cbd5e1; font-size: 12px; text-anchor: middle; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a78bfa" />
+    </marker>
+  </defs>
+
+  <!-- MySQL 左列 -->
+  <text class="colHead" x="300" y="40">MySQL / InnoDB</text>
+
+  <rect class="zone" x="40" y="56" width="520" height="186" rx="12" />
+  <text class="zoneTitle" x="60" y="80">内存</text>
+
+  <rect class="mem" x="56" y="94" width="240" height="62" rx="9" />
+  <text class="mTitle" x="176" y="118">Buffer Pool</text>
+  <text class="mSub" x="176" y="140">缓存数据页与索引页，LRU 变体</text>
+
+  <rect class="mem" x="304" y="94" width="240" height="62" rx="9" />
+  <text class="mTitle" x="424" y="118">Change Buffer</text>
+  <text class="mSub" x="424" y="140">非唯一二级索引的写缓冲</text>
+
+  <rect class="mem" x="56" y="166" width="240" height="62" rx="9" />
+  <text class="mTitle" x="176" y="190">自适应哈希索引</text>
+  <text class="mSub" x="176" y="212">热点的等值查找加速</text>
+
+  <rect class="log" x="304" y="166" width="240" height="62" rx="9" />
+  <text class="mTitle" x="424" y="190">Log Buffer</text>
+  <text class="mSub" x="424" y="212">redo log 的暂存区</text>
+
+  <path class="flow" d="M300,242 L300,272" marker-end="url(#ah)" />
+
+  <rect class="zone" x="40" y="276" width="520" height="186" rx="12" />
+  <text class="zoneTitle" x="60" y="300">磁盘</text>
+
+  <rect class="disk" x="56" y="314" width="240" height="62" rx="9" />
+  <text class="mTitle" x="176" y="338">表空间 .ibd</text>
+  <text class="mSub" x="176" y="360">聚簇索引 = 数据本身</text>
+
+  <rect class="log" x="304" y="314" width="240" height="62" rx="9" />
+  <text class="mTitle" x="424" y="338">redo log</text>
+  <text class="mSub" x="424" y="360">循环写，崩溃恢复用</text>
+
+  <rect class="log" x="56" y="386" width="240" height="62" rx="9" />
+  <text class="mTitle" x="176" y="410">undo 表空间</text>
+  <text class="mSub" x="176" y="432">回滚 + MVCC 版本链</text>
+
+  <rect class="disk" x="304" y="386" width="240" height="62" rx="9" />
+  <text class="mTitle" x="424" y="410">doublewrite + binlog</text>
+  <text class="mSub" x="424" y="432">防页断裂 / 复制与归档</text>
+
+  <!-- PostgreSQL 右列 -->
+  <text class="colHead" x="900" y="40">PostgreSQL</text>
+
+  <rect class="zonePg" x="640" y="56" width="520" height="186" rx="12" />
+  <text class="zoneTitlePg" x="660" y="80">共享内存</text>
+
+  <rect class="mem" x="656" y="94" width="240" height="62" rx="9" />
+  <text class="mTitle" x="776" y="118">shared_buffers</text>
+  <text class="mSub" x="776" y="140">全库共享的页缓存</text>
+
+  <rect class="log" x="904" y="94" width="240" height="62" rx="9" />
+  <text class="mTitle" x="1024" y="118">WAL buffers</text>
+  <text class="mSub" x="1024" y="140">写前日志暂存</text>
+
+  <rect class="mem" x="656" y="166" width="240" height="62" rx="9" />
+  <text class="mTitle" x="776" y="190">work_mem（每连接私有）</text>
+  <text class="mSub" x="776" y="212">排序 / 哈希连接 / 聚合</text>
+
+  <rect class="mem" x="904" y="166" width="240" height="62" rx="9" />
+  <text class="mTitle" x="1024" y="190">锁表与快照结构</text>
+  <text class="mSub" x="1024" y="212">并发控制元数据</text>
+
+  <path class="flowPg" d="M900,242 L900,272" marker-end="url(#ahp)" />
+
+  <rect class="zonePg" x="640" y="276" width="520" height="186" rx="12" />
+  <text class="zoneTitlePg" x="660" y="300">磁盘与后台进程</text>
+
+  <rect class="disk" x="656" y="314" width="240" height="62" rx="9" />
+  <text class="mTitle" x="776" y="338">堆表文件</text>
+  <text class="mSub" x="776" y="360">多版本元组，靠 ctid 定位</text>
+
+  <rect class="log" x="904" y="314" width="240" height="62" rx="9" />
+  <text class="mTitle" x="1024" y="338">WAL 段文件</text>
+  <text class="mSub" x="1024" y="360">崩溃恢复 + 物理复制</text>
+
+  <rect class="disk" x="656" y="386" width="240" height="62" rx="9" />
+  <text class="mTitle" x="776" y="410">checkpointer / walwriter</text>
+  <text class="mSub" x="776" y="432">刷脏页、落 WAL</text>
+
+  <rect class="log" x="904" y="386" width="240" height="62" rx="9" />
+  <text class="mTitle" x="1024" y="410">autovacuum</text>
+  <text class="mSub" x="1024" y="432">回收死亡元组、更新统计信息</text>
+
+  <line x1="40" y1="490" x2="1160" y2="490" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+
+  <text x="40" y="522" class="rowHead" style="font-size:16px">写入一条数据的路径</text>
+
+  <!-- MySQL path -->
+  <text class="rowHead" x="40" y="558">MySQL</text>
+  <rect class="stepBox" x="120" y="540" width="200" height="42" rx="9" />
+  <text class="stepText" x="220" y="566">改 Buffer Pool 中的页</text>
+  <path class="flow" d="M324,561 L352,561" marker-end="url(#ah)" />
+  <rect class="stepBox" x="356" y="540" width="200" height="42" rx="9" />
+  <text class="stepText" x="456" y="566">redo 写 Log Buffer</text>
+  <path class="flow" d="M560,561 L588,561" marker-end="url(#ah)" />
+  <rect class="stepBox" x="592" y="540" width="240" height="42" rx="9" />
+  <text class="stepText" x="712" y="566">提交时刷 redo + binlog</text>
+  <path class="flow" d="M836,561 L864,561" marker-end="url(#ah)" />
+  <rect class="stepBox" x="868" y="540" width="292" height="42" rx="9" />
+  <text class="stepText" x="1014" y="566">脏页留给后台线程异步刷盘</text>
+
+  <!-- PG path -->
+  <text class="rowHeadPg" x="40" y="622">PostgreSQL</text>
+  <rect class="stepBox" x="120" y="604" width="200" height="42" rx="9" />
+  <text class="stepText" x="220" y="630">改 shared_buffers 中的页</text>
+  <path class="flowPg" d="M324,625 L352,625" marker-end="url(#ahp)" />
+  <rect class="stepBox" x="356" y="604" width="200" height="42" rx="9" />
+  <text class="stepText" x="456" y="630">写 WAL record</text>
+  <path class="flowPg" d="M560,625 L588,625" marker-end="url(#ahp)" />
+  <rect class="stepBox" x="592" y="604" width="240" height="42" rx="9" />
+  <text class="stepText" x="712" y="630">提交时 flush WAL</text>
+  <path class="flowPg" d="M836,625 L864,625" marker-end="url(#ahp)" />
+  <rect class="stepBox" x="868" y="604" width="292" height="42" rx="9" />
+  <text class="stepText" x="1014" y="630">checkpoint 才把脏页刷进堆表</text>
+
+  <text x="40" y="686" class="note">两者都遵循同一条法则：先写日志、再改数据，把「随机写数据页」换成「顺序写日志」。</text>
+  <text x="40" y="710" class="note">区别在落地形式：MySQL 用 redo + undo + binlog 三份日志，PostgreSQL 只用一份 WAL，靠多版本元组承担回滚语义。</text>
+</svg>

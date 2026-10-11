@@ -13,6 +13,12 @@ import rk3588BuildGuide from "../assets/posts/rk3588-build-guide.md?raw";
 import productionManagementSystem from "../assets/posts/production-management-system.md?raw";
 import vectorDatabase from "../assets/posts/vector-database.md?raw";
 import agentDesign from "../assets/posts/agent-design.md?raw";
+import k8sCloudNative from "../assets/posts/k8s-cloud-native.md?raw";
+import aiEngineeringKnowledgeMap from "../assets/posts/ai-engineering-knowledge-map.md?raw";
+import sqlMysqlPostgresql from "../assets/posts/sql-mysql-postgresql.md?raw";
+import videoGenerationDigitalHuman from "../assets/posts/video-generation-digital-human.md?raw";
+import opensourceTtsAsr from "../assets/posts/opensource-tts-asr.md?raw";
+import forwardDeployedEngineer from "../assets/posts/forward-deployed-engineer.md?raw";
 
 export interface Post {
   slug: string;
@@ -46,10 +52,10 @@ export const POSTS: Post[] = [
     slug: "livekit",
     title: "LiveKit：为开发者打造的实时音视频与数据通信能力",
     date: "2026-09-10",
-    readTime: "约 6 分钟",
+    readTime: "约 10 分钟",
     excerpt:
-      "LiveKit 是基于 WebRTC 的开源实时音视频 SFU，介绍其核心特性、生态体系、安装部署与快速开始。",
-    tags: ["LiveKit", "WebRTC", "实时音视频", "SFU"],
+      "LiveKit 是基于 WebRTC 的开源实时音视频 SFU，介绍其核心特性、生态体系、安装部署与快速开始，并详解 Agents：如何把 STT/LLM/TTS 编排成一次可用的实时语音对话——AgentServer 与 prewarm、轮次检测与打断处理、插件体系、降级与自定义节点。",
+    tags: ["LiveKit", "WebRTC", "实时音视频", "SFU", "Agents", "语音助手"],
   },
   {
     slug: "k8s-gpu",
@@ -118,10 +124,10 @@ export const POSTS: Post[] = [
     slug: "server-ops",
     title: "服务器运维",
     date: "2026-09-10",
-    readTime: "约 5 分钟",
+    readTime: "约 10 分钟",
     excerpt:
-      "服务器日常运维速查：账号、磁盘扩容、Gitlab Runner、Docker、Nginx、证书续期、vLLM 安装等常用操作记录。",
-    tags: ["服务器运维", "Linux", "Docker", "vLLM"],
+      "服务器日常运维速查：账号、磁盘扩容、Gitlab Runner、Docker、Nginx、证书续期、vLLM 安装等常用操作记录，以及 SSH 客户端 WindTerm 与数据库管理工具 Navicat 的介绍与选型对比。",
+    tags: ["服务器运维", "Linux", "Docker", "vLLM", "WindTerm", "Navicat"],
   },
   {
     slug: "rk3588-build-guide",
@@ -136,10 +142,10 @@ export const POSTS: Post[] = [
     slug: "production-management-system",
     title: "生产管理系统",
     date: "2026-09-10",
-    readTime: "约 1 分钟",
+    readTime: "约 20 分钟",
     excerpt:
-      "生产管理系统各子系统功能划分：财务、客户关系、供应链、产品、品质、仓储、生产制造、任务管理与异常处理。",
-    tags: ["生产管理", "系统设计", "MES"],
+      "一套生产管理系统（MES）的整体设计方案：从线索到现金的经营主线出发，拆解财务、客户关系、供应链、产品、品质、仓储、生产制造、任务管理与异常处理各子系统的职责边界、核心单据与状态流转，含 MRP 净需求计算、AQL 抽样、NCR 闭环与数据权限等设计要点。",
+    tags: ["MES", "生产管理", "系统设计", "MRP", "BOM", "品质管理", "供应链"],
   },
   {
     slug: "vector-database",
@@ -159,6 +165,60 @@ export const POSTS: Post[] = [
       "从「设计一个智能 Agent」这道高频面试题出发，拆解感知、记忆、规划推理、工具执行、输出五层架构、Skill 与 ReAct 工作流程，逐一给出幻觉、死循环、上下文溢出、工具调用与执行失败、重复执行、结论失效等难点的工程解法，并延伸到监控评估回放的闭环与 RSI 自我改进的边界。",
     tags: ["Agent", "架构设计", "ReAct", "工具调用", "记忆管理"],
   },
+  {
+    slug: "k8s-cloud-native",
+    title: "Kubernetes 云原生实践：高并发、高可用、高性能",
+    date: "2026-10-11",
+    readTime: "约 25 分钟",
+    excerpt:
+      "Kubernetes 不会自动给你三高。本文只讲一件事：如何用 K8s 的原语把高并发、高可用、高性能落到实处——无状态化与 HPA/KEDA 弹性、削峰限流与熔断降级、探针与优雅停机、PDB 与跨可用区容灾、CNI/kube-proxy/eBPF 数据路径、CPU 绑核与内核调优，以及三者的取舍。",
+    tags: ["Kubernetes", "云原生", "高并发", "高可用", "高性能", "HPA", "eBPF"],
+  },
+  {
+    slug: "ai-engineering-knowledge-map",
+    title: "AI 工程落地知识地图：从机器学习到大模型，再到合规治理",
+    date: "2026-10-11",
+    readTime: "约 40 分钟",
+    excerpt:
+      "强监管行业的 AI 落地，评价标准不是刷高指标，而是可解释、可监控、可回滚、可审计。本文把四块知识串成一张地图：传统机器学习与统计（LR、GBDT、IV/PSI、AUC/KS）、Transformer 与推理优化（RoPE、KV Cache、LoRA/QLoRA）、RAG 与 Agent 的完整链路、工程化与漂移监控，以及数据安全与审计设计。",
+    tags: ["大模型", "RAG", "机器学习", "模型监控", "MLOps", "向量检索", "可解释性"],
+  },
+  {
+    slug: "sql-mysql-postgresql",
+    title: "关系型数据库详解：SQL、MySQL 与 PostgreSQL",
+    date: "2026-10-11",
+    readTime: "约 60 分钟",
+    excerpt:
+      "从关系模型与 SQL 语言出发，深入 B+ 树索引、MVCC 并发控制与预写日志，对比 MySQL InnoDB 与 PostgreSQL 在进程模型、存储引擎、复制机制上的架构差异，最后落到慢 SQL 定位、参数调优、主从复制与分库分表的工程实践。含逻辑执行顺序、索引失效清单、隔离级别对照与方言差异速查。",
+    tags: ["SQL", "MySQL", "PostgreSQL", "InnoDB", "MVCC", "索引", "事务", "数据库"],
+  },
+  {
+    slug: "video-generation-digital-human",
+    title: "视频生成与数字人：MiniMax-H3、Sol-H3 与 SoulX 实时数字人",
+    date: "2026-10-11",
+    readTime: "约 22 分钟",
+    excerpt:
+      "视频生成的评价标准已经从画质换成质量、速度、交互性三者的取舍。本文串起三个样本：MiniMax-H3 如何用单流 Omni Transformer 把音视频放进同一条序列联合去噪，Sol-H3 如何用 Sol-Attn 稀疏注意力与 Sol-Engine 系统工程把 5 秒视频压进 1.653 秒，以及 SoulX 三件套如何用 Neighbor Forcing、ConvKV Memory 与双向蒸馏把数字人做到小时级稳定。含开源边界、许可证、显存与选型清单。",
+    tags: ["视频生成", "数字人", "MiniMax-H3", "Sol-H3", "SoulX", "扩散模型", "推理加速"],
+  },
+  {
+    slug: "opensource-tts-asr",
+    title: "国内开源语音技术全景：ASR、TTS 与端到端语音大模型",
+    date: "2026-10-11",
+    readTime: "约 30 分钟",
+    excerpt:
+      "不追最新榜单，讲清这条链路的稳定结构：VAD、ASR、轮次检测、LLM、TTS 五个环节各自解决什么问题，级联式与端到端两条路线的取舍。工具链与模型两层分开看 FunASR、sherpa-onnx、WeNet、PaddleSpeech 与 Paraformer、SenseVoice、Fun-ASR-Nano；TTS 三个代际怎么看 CosyVoice、GPT-SoVITS、IndexTTS、Fish Speech；以及 PyTorch / ONNX / GGUF 三种部署形态、端侧落地与许可证注意事项。",
+    tags: ["语音识别", "语音合成", "FunASR", "CosyVoice", "TTS", "ASR", "sherpa-onnx", "开源"],
+  },
+  {
+    slug: "forward-deployed-engineer",
+    title: "前沿部署工程师（FDE）：把 AI 送进客户现场的手艺",
+    date: "2026-10-11",
+    readTime: "约 24 分钟",
+    excerpt:
+      "FDE 是这两年 AI 行业涨得最快的岗位，也最容易被误读成售前、外包或实施。本文借开源电子书《FDE 入门到精通：八堂课》梳理这套方法论：从 Palantir 的起源、Echo/Delta 分工与 Ontology，到「平台成熟度 × 客户差异度」判断框架、Ramp 的单范围控制案例，再到五层能力与「现场铺碎石路、产品修高速公路」的价值闭环；并说清它和售前、外包、咨询的三条边界，以及国内市场滑向高级驻场外包的风险。",
+    tags: ["FDE", "前沿部署工程师", "AI 落地", "Palantir", "解决方案", "组织治理", "职业发展"],
+  },
 ];
 
 export const POST_CONTENT: Record<string, string> = {
@@ -177,4 +237,10 @@ export const POST_CONTENT: Record<string, string> = {
   "production-management-system": productionManagementSystem,
   "vector-database": vectorDatabase,
   "agent-design": agentDesign,
+  "k8s-cloud-native": k8sCloudNative,
+  "ai-engineering-knowledge-map": aiEngineeringKnowledgeMap,
+  "sql-mysql-postgresql": sqlMysqlPostgresql,
+  "video-generation-digital-human": videoGenerationDigitalHuman,
+  "opensource-tts-asr": opensourceTtsAsr,
+  "forward-deployed-engineer": forwardDeployedEngineer,
 };

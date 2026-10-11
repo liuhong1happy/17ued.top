@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440" width="1200" height="440" role="img" aria-label="Sol-H3-Spark 的粗到细两阶段流水线：先用 H3 在 384p 生成四步草稿，经 latent-to-latent 适配器直接升到目标分辨率，再用 LTX-2.5 三步精炼出 768p 成品；下方是 8×B300 上的实测延迟">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .draft { fill: rgba(148,163,184,0.12); stroke: rgba(148,163,184,0.45); stroke-width: 1.2; }
+      .adapter { fill: rgba(251,191,36,0.10); stroke: rgba(251,191,36,0.45); stroke-width: 1.2; }
+      .refine { fill: rgba(99,102,241,0.14); stroke: rgba(129,140,248,0.55); stroke-width: 1.3; }
+      .out { fill: rgba(52,211,153,0.12); stroke: rgba(52,211,153,0.45); stroke-width: 1.3; }
+      .pill { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.14); stroke-width: 1.1; }
+      .flow { stroke: #818cf8; stroke-width: 2.2; fill: none; }
+      .flowY { stroke: #fbbf24; stroke-width: 2; fill: none; stroke-dasharray: 7 6; }
+      .t { fill: #e2e8f0; font-size: 15.5px; font-weight: 600; text-anchor: middle; }
+      .ts { fill: #94a3b8; font-size: 12px; text-anchor: middle; }
+      .tv { fill: #cbd5e1; font-size: 12.5px; text-anchor: middle; }
+      .ty { fill: #fcd34d; font-size: 12.5px; text-anchor: middle; }
+      .cap { fill: #a78bfa; font-size: 12.5px; text-anchor: middle; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .pk { fill: #c7d2fe; font-size: 12.5px; font-weight: 600; }
+      .pv { fill: #e2e8f0; font-size: 12.5px; }
+    </style>
+    <marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ahpy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fbbf24" />
+    </marker>
+  </defs>
+
+  <text class="pk" x="30" y="36">粗到细：先画对结构，再补细节</text>
+
+  <!-- Stage 1 -->
+  <rect class="draft" x="30" y="70" width="270" height="150" rx="14" />
+  <text class="t" x="165" y="106">Stage 1 · 草稿</text>
+  <text class="ts" x="165" y="132">MiniMax-H3（FastH3）</text>
+  <text class="ts" x="165" y="154">384p · 4 步采样</text>
+  <text class="tv" x="165" y="182">负责运动走向、构图、</text>
+  <text class="tv" x="165" y="202">大色块与音画节奏</text>
+
+  <line class="flow" x1="304" y1="145" x2="336" y2="145" marker-end="url(#ahp)" />
+
+  <!-- Adapter -->
+  <rect class="adapter" x="340" y="70" width="240" height="150" rx="14" />
+  <text class="t" x="460" y="106">latent 适配器</text>
+  <text class="ts" x="460" y="132">学到的 latent-to-latent 映射</text>
+  <text class="ty" x="460" y="162">省掉 VAE 解码 → 重编码</text>
+  <text class="ty" x="460" y="182">这一趟往返</text>
+  <text class="tv" x="460" y="206">在潜空间里直接升分辨率</text>
+
+  <line class="flow" x1="584" y1="145" x2="616" y2="145" marker-end="url(#ahp)" />
+
+  <!-- Stage 2 -->
+  <rect class="refine" x="620" y="70" width="270" height="150" rx="14" />
+  <text class="t" x="755" y="106">Stage 2 · 精炼</text>
+  <text class="ts" x="755" y="132">LTX-2.5</text>
+  <text class="ts" x="755" y="154">3 步采样 → 768p</text>
+  <text class="tv" x="755" y="182">补纹理、修细节、</text>
+  <text class="tv" x="755" y="202">提升清晰度与稳定性</text>
+
+  <line class="flow" x1="894" y1="145" x2="926" y2="145" marker-end="url(#ahp)" />
+
+  <!-- Output -->
+  <rect class="out" x="930" y="70" width="240" height="150" rx="14" />
+  <text class="t" x="1050" y="112">成品</text>
+  <text class="ts" x="1050" y="140">768p · 带立体声</text>
+  <text class="ts" x="1050" y="164">单台 DGX Spark</text>
+  <text class="ts" x="1050" y="188">约 1 分钟出 5 秒</text>
+  <text class="ts" x="1050" y="210">量化：NVFP4 Qwen + FP8 DiT</text>
+
+  <text class="cap" x="600" y="256">草稿阶段便宜、精炼阶段昂贵——把「贵的步数」花在已经定型的画面上</text>
+
+  <!-- 实测数字 -->
+  <rect class="pill" x="30" y="290" width="370" height="120" rx="14" />
+  <text class="pk" x="56" y="320">8×B300 · 5 秒 1344×768</text>
+  <text class="pv" x="56" y="348">1.653 秒生成（快于实时播放）</text>
+  <text class="pv" x="56" y="372">相对基线约 11.04× 加速</text>
+  <text class="pv" x="56" y="396">时长越长，摊薄固定开销，加速比越高</text>
+
+  <rect class="pill" x="415" y="290" width="370" height="120" rx="14" />
+  <text class="pk" x="441" y="320">时长 10s / 15s</text>
+  <text class="pv" x="441" y="348">10s：3.732 秒 · 13.57×</text>
+  <text class="pv" x="441" y="372">15s：6.612 秒 · 15.05×</text>
+  <text class="pv" x="441" y="396">批量与长序列下，稀疏与通信优化收益变大</text>
+
+  <rect class="pill" x="800" y="290" width="370" height="120" rx="14" />
+  <text class="pk" x="826" y="320">缩规模：边缘也要能跑</text>
+  <text class="pv" x="826" y="348">单 B300：5 秒 13.745 秒 · 9.45×</text>
+  <text class="pv" x="826" y="372">单台 DGX Spark：约 56–68 秒</text>
+  <text class="pv" x="826" y="396">同一套栈，靠硬件规模换延迟</text>
+  <text class="note" x="30" y="432">注：加速比是综合结果——少步采样、稀疏注意力、系统优化三者叠加，不能单独归因于任何一项。</text>
+</svg>

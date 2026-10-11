@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img" aria-label="SQL 书写顺序与逻辑执行顺序的对照：FROM、JOIN、WHERE、GROUP BY、HAVING、窗口函数、SELECT、DISTINCT、ORDER BY、LIMIT">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .write { fill: rgba(148,163,184,0.14); stroke: rgba(148,163,184,0.45); stroke-width: 1.2; }
+      .exec { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.55); stroke-width: 1.2; }
+      .execLate { fill: rgba(167,139,250,0.16); stroke: rgba(167,139,250,0.55); stroke-width: 1.2; }
+      .wText { fill: #cbd5e1; font-size: 14px; text-anchor: middle; }
+      .eText { fill: #e2e8f0; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .head { fill: #c7d2fe; font-size: 15px; font-weight: 600; text-anchor: middle; }
+      .step { fill: #a78bfa; font-size: 12px; text-anchor: middle; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .warn { fill: rgba(244,114,182,0.13); stroke: rgba(244,114,182,0.45); stroke-width: 1.2; }
+      .warnText { fill: #f9a8d4; font-size: 12.5px; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+  </defs>
+
+  <text x="600" y="38" class="head" style="font-size:19px;fill:#e2e8f0">你写的顺序 ≠ 数据库执行的顺序</text>
+
+  <text class="head" x="160" y="76">书写顺序</text>
+  <text class="head" x="700" y="76">逻辑执行顺序</text>
+
+  <!-- 书写顺序 -->
+  <rect class="write" x="40" y="94" width="240" height="44" rx="10" />
+  <text class="wText" x="160" y="122">SELECT</text>
+
+  <rect class="write" x="40" y="148" width="240" height="44" rx="10" />
+  <text class="wText" x="160" y="176">FROM / JOIN</text>
+
+  <rect class="write" x="40" y="202" width="240" height="44" rx="10" />
+  <text class="wText" x="160" y="230">WHERE</text>
+
+  <rect class="write" x="40" y="256" width="240" height="44" rx="10" />
+  <text class="wText" x="160" y="284">GROUP BY</text>
+
+  <rect class="write" x="40" y="310" width="240" height="44" rx="10" />
+  <text class="wText" x="160" y="338">HAVING</text>
+
+  <rect class="write" x="40" y="364" width="240" height="44" rx="10" />
+  <text class="wText" x="160" y="392">ORDER BY</text>
+
+  <rect class="write" x="40" y="418" width="240" height="44" rx="10" />
+  <text class="wText" x="160" y="446">LIMIT</text>
+
+  <!-- 执行顺序 -->
+  <path class="flow" d="M300,116 L420,116" marker-end="url(#ah)" />
+  <path class="flow" d="M300,170 L420,138" marker-end="url(#ah)" />
+  <path class="flow" d="M300,224 L420,182" marker-end="url(#ah)" />
+  <path class="flow" d="M300,278 L420,248" marker-end="url(#ah)" />
+  <path class="flow" d="M300,332 L420,292" marker-end="url(#ah)" />
+  <path class="flow" d="M300,386 L420,392" marker-end="url(#ah)" />
+  <path class="flow" d="M300,440 L420,424" marker-end="url(#ah)" />
+
+  <rect class="exec" x="430" y="94" width="520" height="42" rx="10" />
+  <text class="eText" x="690" y="121">① FROM / JOIN / ON　定位数据源并连接</text>
+
+  <rect class="exec" x="430" y="144" width="520" height="42" rx="10" />
+  <text class="eText" x="690" y="171">② WHERE　过滤行（此时还没有聚合）</text>
+
+  <rect class="exec" x="430" y="194" width="520" height="42" rx="10" />
+  <text class="eText" x="690" y="221">③ GROUP BY　分组</text>
+
+  <rect class="exec" x="430" y="244" width="520" height="42" rx="10" />
+  <text class="eText" x="690" y="271">④ HAVING　过滤组</text>
+
+  <rect class="execLate" x="430" y="294" width="520" height="42" rx="10" />
+  <text class="eText" x="690" y="321">⑤ 窗口函数　在结果集上开窗，不折叠行</text>
+
+  <rect class="execLate" x="430" y="344" width="520" height="42" rx="10" />
+  <text class="eText" x="690" y="371">⑥ SELECT　计算表达式、定别名</text>
+
+  <rect class="execLate" x="430" y="394" width="520" height="42" rx="10" />
+  <text class="eText" x="690" y="421">⑦ DISTINCT → ORDER BY → LIMIT</text>
+
+  <!-- 右侧结论 -->
+  <rect class="warn" x="980" y="94" width="180" height="164" rx="12" />
+  <text class="warnText" x="1070" y="124" style="text-anchor:middle;font-weight:600">三个直接推论</text>
+  <text class="warnText" x="1000" y="152">· WHERE 不能用</text>
+  <text class="warnText" x="1000" y="172">　SELECT 的别名</text>
+  <text class="warnText" x="1000" y="200">· WHERE 不能写</text>
+  <text class="warnText" x="1000" y="220">　聚合函数</text>
+  <text class="warnText" x="1000" y="248">· LIMIT 在排序</text>
+
+  <rect class="exec" x="430" y="450" width="520" height="42" rx="10" />
+  <text class="eText" x="690" y="477">⑧ 返回结果集给客户端</text>
+
+  <text class="note" x="430" y="520">理解这张图，能解释一半「为什么这条 SQL 报错」和一半「为什么它不快」。</text>
+  <text class="note" x="430" y="542">典型例子：WHERE 里写聚合函数会报错，因为 WHERE 执行时分组还没发生。</text>
+</svg>

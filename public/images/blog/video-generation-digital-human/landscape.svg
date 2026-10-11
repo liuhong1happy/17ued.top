@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 430" width="1200" height="430" role="img" aria-label="视频生成与数字人的三条技术线：基座模型 MiniMax-H3、推理加速 Sol-H3、实时数字人 SoulX，以及质量、速度、交互性三个评价维度">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .card { fill: rgba(99,102,241,0.10); stroke: rgba(129,140,248,0.45); stroke-width: 1.2; }
+      .cardAlt { fill: rgba(167,139,250,0.10); stroke: rgba(167,139,250,0.45); stroke-width: 1.2; }
+      .cardGreen { fill: rgba(52,211,153,0.10); stroke: rgba(52,211,153,0.45); stroke-width: 1.2; }
+      .pill { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.14); stroke-width: 1.1; }
+      .step { fill: #a5b4fc; font-size: 12px; }
+      .h { fill: #e2e8f0; font-size: 17px; font-weight: 600; }
+      .k { fill: #c7d2fe; font-size: 12.5px; font-weight: 600; }
+      .kGreen { fill: #6ee7b7; font-size: 12.5px; font-weight: 600; }
+      .s { fill: #94a3b8; font-size: 12.5px; }
+      .v { fill: #cbd5e1; font-size: 12.5px; }
+      .num { fill: #a78bfa; font-size: 13px; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- 卡片一：基座模型 -->
+  <rect class="card" x="30" y="26" width="370" height="272" rx="16" />
+  <text class="k" x="56" y="60">① 基座模型</text>
+  <text class="h" x="56" y="90">MiniMax-H3</text>
+  <text class="s" x="56" y="118">33B 单流 Omni Transformer（DiT）</text>
+  <text class="s" x="56" y="140">文本 / 图像 / 视频 / 音频 → 带原生音频的视频</text>
+  <line x1="56" y1="158" x2="374" y2="158" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+  <text class="v" x="56" y="184">768p → 2K · 24 FPS · 32 kHz 立体声</text>
+  <text class="v" x="56" y="208">单次最长 15 秒 · 11 种语言</text>
+  <text class="k" x="56" y="238">关键手段</text>
+  <text class="v" x="56" y="262">音视频放进同一条序列联合去噪</text>
+  <text class="num" x="56" y="286">开源范围：仅 H3-Base 权重</text>
+
+  <!-- 卡片二：推理加速 -->
+  <rect class="cardAlt" x="415" y="26" width="370" height="272" rx="16" />
+  <text class="k" x="441" y="60">② 推理加速</text>
+  <text class="h" x="441" y="90">Sol-H3</text>
+  <text class="s" x="441" y="118">NVIDIA 研究院 / SANA 团队的加速栈</text>
+  <text class="s" x="441" y="140">不改权重、不重训，压整条推理链路</text>
+  <line x1="441" y1="158" x2="759" y2="158" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+  <text class="v" x="441" y="184">8×B300：5 秒 1344×768 视频 1.653 秒</text>
+  <text class="v" x="441" y="208">约 11 倍加速，快于实时播放</text>
+  <text class="k" x="441" y="238">关键手段</text>
+  <text class="v" x="441" y="262">Sol-Attn 稀疏注意力 + Sol-Engine 系统优化</text>
+  <text class="num" x="441" y="286">单 DGX Spark 也能跑 768p（约 1 分钟）</text>
+
+  <!-- 卡片三：实时数字人 -->
+  <rect class="cardGreen" x="800" y="26" width="370" height="272" rx="16" />
+  <text class="kGreen" x="826" y="60">③ 实时数字人</text>
+  <text class="h" x="826" y="90">SoulX 三件套</text>
+  <text class="s" x="826" y="118">Soul App AI Lab 开源的音频驱动数字人</text>
+  <text class="s" x="826" y="140">口型同步 · 身份一致 · 小时级不漂移</text>
+  <line x1="826" y1="158" x2="1144" y2="158" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+  <text class="v" x="826" y="184">FlashTalk 14B：0.87s 首帧 / 32 FPS</text>
+  <text class="v" x="826" y="208">LiveAct：2×H100 上 20 FPS，小时级</text>
+  <text class="v" x="826" y="232">FlashHead 1.3B：单卡 4090 跑 96 FPS</text>
+  <text class="kGreen" x="826" y="262">关键手段</text>
+  <text class="v" x="826" y="286">定长 KV 记忆 + 蒸馏，把 AR 生成做实</text>
+
+  <!-- 底部三个评价维度 -->
+  <rect class="pill" x="30" y="322" width="370" height="80" rx="14" />
+  <text class="k" x="56" y="352">质量</text>
+  <text class="s" x="56" y="378">分辨率、时长、音画同步、身份一致性</text>
+
+  <rect class="pill" x="415" y="322" width="370" height="80" rx="14" />
+  <text class="k" x="441" y="352">速度</text>
+  <text class="s" x="441" y="378">首帧延迟、生成吞吐 FPS、是否快于实时</text>
+
+  <rect class="pill" x="800" y="322" width="370" height="80" rx="14" />
+  <text class="k" x="826" y="352">交互性</text>
+  <text class="s" x="826" y="378">离线生成 → 流式输出 → 可随时打断</text>
+</svg>

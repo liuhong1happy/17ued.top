@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="1200" height="680" role="img" aria-label="模型全生命周期闭环：数据准备、训练调参、离线评估审批、灰度发布与 AB、线上监控与漂移告警、重训与回滚，形成监控到迭代的闭环">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .node { fill: rgba(99,102,241,0.15); stroke: rgba(129,140,248,0.5); stroke-width: 1.2; }
+      .nodeAlt { fill: rgba(167,139,250,0.15); stroke: rgba(167,139,250,0.5); stroke-width: 1.2; }
+      .nt { fill: #e2e8f0; font-size: 14.5px; font-weight: 600; text-anchor: middle; }
+      .ns { fill: #94a3b8; font-size: 11.5px; text-anchor: middle; }
+      .arc { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .core { fill: rgba(99,102,241,0.10); stroke: rgba(129,140,248,0.35); stroke-width: 1.2; stroke-dasharray: 5 5; }
+      .coreT { fill: #e2e8f0; font-size: 17px; font-weight: 600; text-anchor: middle; }
+      .coreS { fill: #94a3b8; font-size: 12px; text-anchor: middle; }
+      .foot { fill: #a78bfa; font-size: 13.5px; text-anchor: middle; }
+    </style>
+    <marker id="arcArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+  </defs>
+
+  <!-- 中心 -->
+  <circle class="core" cx="600" cy="320" r="118" />
+  <text class="coreT" x="600" y="308">模型全生命周期</text>
+  <text class="coreS" x="600" y="334">监控 → 告警 → 处置 → 迭代</text>
+
+  <!-- 闭环弧 -->
+  <path class="arc" d="M600,135 A185,185 0 0 1 760.2,227.5" marker-end="url(#arcArrow)" />
+  <path class="arc" d="M760.2,227.5 A185,185 0 0 1 760.2,412.5" marker-end="url(#arcArrow)" />
+  <path class="arc" d="M760.2,412.5 A185,185 0 0 1 600,505" marker-end="url(#arcArrow)" />
+  <path class="arc" d="M600,505 A185,185 0 0 1 439.8,412.5" marker-end="url(#arcArrow)" />
+  <path class="arc" d="M439.8,412.5 A185,185 0 0 1 439.8,227.5" marker-end="url(#arcArrow)" />
+  <path class="arc" d="M439.8,227.5 A185,185 0 0 1 600,135" marker-end="url(#arcArrow)" />
+
+  <!-- ① 数据准备 -->
+  <rect class="node" x="495" y="16" width="210" height="68" rx="12" />
+  <text class="nt" x="600" y="44">① 数据准备与特征开发</text>
+  <text class="ns" x="600" y="66">训练与推理特征一致</text>
+
+  <!-- ② 训练 -->
+  <rect class="nodeAlt" x="728.8" y="151" width="210" height="68" rx="12" />
+  <text class="nt" x="833.8" y="179">② 训练与调参</text>
+  <text class="ns" x="833.8" y="201">实验追踪 MLflow</text>
+
+  <!-- ③ 评估审批 -->
+  <rect class="node" x="728.8" y="421" width="210" height="68" rx="12" />
+  <text class="nt" x="833.8" y="449">③ 离线评估与审批</text>
+  <text class="ns" x="833.8" y="471">AUC · KS · 业务指标</text>
+
+  <!-- ④ 灰度发布 -->
+  <rect class="nodeAlt" x="495" y="556" width="210" height="68" rx="12" />
+  <text class="nt" x="600" y="584">④ 灰度发布与 A/B</text>
+  <text class="ns" x="600" y="606">影子流量 · 小流量验证</text>
+
+  <!-- ⑤ 线上监控 -->
+  <rect class="node" x="261.2" y="421" width="210" height="68" rx="12" />
+  <text class="nt" x="366.2" y="449">⑤ 线上监控与漂移告警</text>
+  <text class="ns" x="366.2" y="471">特征 PSI · 预测分布</text>
+
+  <!-- ⑥ 重训回滚 -->
+  <rect class="nodeAlt" x="261.2" y="151" width="210" height="68" rx="12" />
+  <text class="nt" x="366.2" y="179">⑥ 重训与回滚</text>
+  <text class="ns" x="366.2" y="201">版本可回溯 · 流量可切换</text>
+
+  <text class="foot" x="600" y="660">没有回滚通道的监控只能发现问题，不能解决问题</text>
+</svg>

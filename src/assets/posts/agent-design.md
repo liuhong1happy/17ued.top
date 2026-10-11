@@ -80,6 +80,8 @@ Skill 与工具是**分层关系，不是替代关系**：工具是原子能力�
 
 从工程角度看，Skill 还有一层附带价值：它让 Agent 的能力变得**可版本化、可评审、可测试**。把一段 Prompt 从散落的代码里拎出来，做成一个能被人 review、能被 diff、能单独写测试的目录，这件事本身就是工程化。
 
+这套机制落到代码里长什么样，可以看后面伪代码里的第 3 支。
+
 ## 完整工作流程
 
 以 ReAct 为例，一次完整的任务执行是这样的：
@@ -174,22 +176,31 @@ def agent_run(user_query):
     max_step = 10  # 迭代上限，防止死循环
 
     for step in range(max_step):
-        # 1. 从记忆召回上下文，交给 LLM 推理
-        thought, action = llm_reason(memory.get_context())
+        # 1. 召回记忆，再拼上 Skill 的「名称 + 描述」——常驻上下文的只有这些
+        context = memory.get_context() + skill_registry.descriptions()
+        thought, action = llm_reason(context)
 
         # 2. 模型认为信息足够，直接收尾
-        if action == "answer":
+        if action.type == "answer":
             memory.save_long_term(user_query, thought)  # 沉淀进长时记忆
             return thought
 
-        # 3. 否则执行工具，把观察结果写回记忆，进入下一轮
-        obs = tool_executor.run(action)  # 内部做参数校验、权限与超时控制
+        # 3. 模型选中了一支 Skill：把它的步骤正文读进上下文。
+        #    这一支不碰外部世界，但同样吃掉一轮迭代
+        if action.type == "load_skill":
+            memory.add_skill(skill_registry.load(action.name))
+            continue
+
+        # 4. 否则执行工具，把观察结果写回记忆，进入下一轮
+        obs = tool_executor.run(action)  # Schema 校验、失败分类重试、幂等控制
         memory.add_observation(obs)
 
     return "达到最大轮次，任务终止"
 ```
 
-真正写起来比这长得多的地方，全在上面那三行注释里：`get_context()` 要做窗口裁剪与摘要压缩，`save_long_term()` 要做去重、向量化与 TTL 管理，`tool_executor.run()` 要做 Schema 校验、失败分类与重试、写操作的幂等控制、以及沙箱隔离。**骨架简单、细节吃人**，这就是 Agent 工程的真实手感。
+第 3 支最能体现 Skill 的设计意图：**加载 Skill 本身就是循环里的一个动作**。它和工具调用走同一条决策链路——由模型自己判断要不要用、用哪一支——但不产生任何外部副作用，只是把上下文的内容换掉。代价是占掉一轮迭代，所以 Skill 的步骤描述别写成一本手册，够用就行。
+
+真正写起来比这长得多的地方，全在那些注释里：`get_context()` 要做窗口裁剪与摘要压缩，`save_long_term()` 要做去重、向量化与 TTL 管理，`skill_registry.descriptions()` 要把常驻描述压在几十条的规模、`load()` 要按需读取步骤里引用的脚本与资源，`tool_executor.run()` 要做 Schema 校验、失败分类与重试、写操作的幂等控制、以及沙箱隔离。**骨架简单、细节吃人**，这就是 Agent 工程的真实手感。
 
 ## 还可以往哪走
 

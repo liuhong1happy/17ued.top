@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img" aria-label="判断一家公司需不需要 FDE 的二维框架：横轴是客户之间的差异度，纵轴是平台成熟度。平台成熟且客户差异大才是 FDE 的黄金区；平台不成熟且客户差异大是危险区，FDE 会沦为给每个客户单独写代码；客户需求都差不多时，应该由产品团队解决">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .qGood { fill: rgba(52,211,153,0.13); stroke: rgba(52,211,153,0.5); stroke-width: 1.3; }
+      .qBad { fill: rgba(248,113,113,0.10); stroke: rgba(248,113,113,0.42); stroke-width: 1.3; }
+      .qProd { fill: rgba(148,163,184,0.09); stroke: rgba(148,163,184,0.38); stroke-width: 1.2; }
+      .qWarn { fill: rgba(251,191,36,0.10); stroke: rgba(251,191,36,0.45); stroke-width: 1.3; }
+      .axis { stroke: rgba(148,163,184,0.55); stroke-width: 1.6; }
+      .t { fill: #e2e8f0; font-size: 15px; font-weight: 600; text-anchor: middle; }
+      .ts { fill: #94a3b8; font-size: 12px; text-anchor: middle; }
+      .tv { fill: #cbd5e1; font-size: 12.5px; text-anchor: middle; }
+      .gk { fill: #6ee7b7; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .bk { fill: #fca5a5; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .pk { fill: #cbd5e1; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .wk { fill: #fcd34d; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .axl { fill: #a5b4fc; font-size: 13px; font-weight: 600; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .cap { fill: #a78bfa; font-size: 12.5px; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <text class="axl" x="30" y="34">② 先别急着招人：这家公司到底需不需要 FDE？</text>
+
+  <!-- 轴 -->
+  <line class="axis" x1="230" y1="470" x2="1150" y2="470" />
+  <line class="axis" x1="230" y1="90" x2="230" y2="470" />
+  <text class="axl" x="690" y="502" text-anchor="middle">客户之间的差异度 →</text>
+  <text class="axl" x="150" y="280" text-anchor="middle" transform="rotate(-90 150 280)">平台成熟度 →</text>
+
+  <!-- 象限 -->
+  <rect class="qWarn" x="242" y="102" width="446" height="176" rx="14" />
+  <text class="wk" x="465" y="140">危险区</text>
+  <text class="tv" x="465" y="168">平台没搭好，客户又各不相同</text>
+  <text class="tv" x="465" y="192">FDE 会变成给每个客户</text>
+  <text class="tv" x="465" y="214">单独写一套代码</text>
+  <text class="ts" x="465" y="244">先补平台，再谈现场</text>
+
+  <rect class="qGood" x="700" y="102" width="446" height="176" rx="14" />
+  <text class="gk" x="923" y="140">FDE 的黄金区</text>
+  <text class="tv" x="923" y="168">平台足够成熟，但客户差异大</text>
+  <text class="tv" x="923" y="192">标准化能力 + 现场适配</text>
+  <text class="tv" x="923" y="214">这才是 FDE 该在的位置</text>
+  <text class="ts" x="923" y="244">现场经验能反哺平台</text>
+
+  <rect class="qProd" x="242" y="290" width="446" height="176" rx="14" />
+  <text class="pk" x="465" y="328">不该设这个岗</text>
+  <text class="tv" x="465" y="356">平台不成熟，客户之间也差不多</text>
+  <text class="tv" x="465" y="380">问题本来就该由产品团队解决</text>
+  <text class="ts" x="465" y="410">招 FDE 只会掩盖产品欠的债</text>
+
+  <rect class="qBad" x="700" y="290" width="446" height="176" rx="14" />
+  <text class="bk" x="923" y="328">产品团队就能搞定</text>
+  <text class="tv" x="923" y="356">平台成熟，客户需求也高度一致</text>
+  <text class="tv" x="923" y="380">把重复出现的需求做进产品</text>
+  <text class="ts" x="923" y="410">算得过账，就不该长期靠人扛</text>
+
+  <text class="cap" x="600" y="534">横轴和纵轴都不是「客户重要程度」，而是关于你自己的产品与客户的同质程度——判断的对象是业务，不是人情。</text>
+</svg>

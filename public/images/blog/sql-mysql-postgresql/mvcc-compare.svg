@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" width="1200" height="660" role="img" aria-label="MVCC 实现对比：MySQL InnoDB 用 undo log 版本链加 ReadView，PostgreSQL 用行头 xmin/xmax 加快照，旧版本靠 VACUUM 回收">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .my { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.5); stroke-width: 1.2; }
+      .myAlt { fill: rgba(99,102,241,0.10); stroke: rgba(129,140,248,0.38); stroke-width: 1.1; }
+      .pg { fill: rgba(167,139,250,0.16); stroke: rgba(167,139,250,0.5); stroke-width: 1.2; }
+      .pgAlt { fill: rgba(167,139,250,0.10); stroke: rgba(167,139,250,0.38); stroke-width: 1.1; }
+      .title { fill: #e2e8f0; font-size: 15px; font-weight: 600; text-anchor: middle; }
+      .colHead { fill: #c7d2fe; font-size: 16px; font-weight: 600; text-anchor: middle; }
+      .colHeadPg { fill: #ddd6fe; font-size: 16px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .subL { fill: #94a3b8; font-size: 12.5px; }
+      .key { fill: #c7d2fe; font-size: 12.5px; text-anchor: middle; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .flowPg { stroke: #a78bfa; stroke-width: 2; fill: none; }
+      .note { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .rowBox { fill: rgba(255,255,255,0.06); stroke: rgba(255,255,255,0.18); stroke-width: 1; }
+      .xid { fill: #f9a8d4; font-size: 11.5px; }
+      .dead { fill: rgba(244,114,182,0.14); stroke: rgba(244,114,182,0.45); stroke-width: 1.1; }
+      .deadText { fill: #f9a8d4; font-size: 12px; }
+      .good { fill: rgba(52,211,153,0.13); stroke: rgba(52,211,153,0.5); stroke-width: 1.1; }
+      .goodText { fill: #6ee7b7; font-size: 12px; }
+      .divider { stroke: rgba(255,255,255,0.12); stroke-width: 1; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a78bfa" />
+    </marker>
+  </defs>
+
+  <text x="600" y="36" class="title" style="font-size:19px">同一个 MVCC，两种实现</text>
+  <text x="600" y="60" class="note">目标一致：读不阻塞写、写不阻塞读。代价与副作用却完全不同。</text>
+
+  <line x1="600" y1="80" x2="600" y2="600" class="divider" stroke-dasharray="5 6" />
+
+  <!-- MySQL -->
+  <text class="colHead" x="300" y="104">MySQL / InnoDB</text>
+  <text class="note" x="300" y="126">原地更新 + undo 版本链</text>
+
+  <!-- 当前行 -->
+  <rect class="my" x="60" y="146" width="480" height="66" rx="10" />
+  <text class="title" x="300" y="172" style="font-size:14px">聚簇索引中的当前行</text>
+  <text class="sub" x="300" y="196">DB_TRX_ID = 90　|　DB_ROLL_PTR →</text>
+
+  <path class="flow" d="M300,212 L300,240" marker-end="url(#ah)" />
+
+  <!-- undo 链 -->
+  <rect class="myAlt" x="150" y="244" width="300" height="48" rx="9" />
+  <text class="key" x="300" y="264">undo：版本 v2（trx 80）</text>
+  <text class="sub" x="300" y="283">旧值 name = 'Bob'</text>
+
+  <path class="flow" d="M300,292 L300,318" marker-end="url(#ah)" />
+
+  <rect class="myAlt" x="150" y="322" width="300" height="48" rx="9" />
+  <text class="key" x="300" y="342">undo：版本 v1（trx 60）</text>
+  <text class="sub" x="300" y="361">更旧值 name = 'Ann'</text>
+
+  <text class="note" x="300" y="394">沿 ROLL_PTR 找到事务可见的那个版本</text>
+
+  <!-- ReadView -->
+  <rect class="my" x="60" y="412" width="480" height="112" rx="10" />
+  <text class="title" x="300" y="438" style="font-size:14px">ReadView：一张可见性名单</text>
+  <text class="sub" x="300" y="462">m_ids 活跃事务列表 · min_trx_id · max_trx_id</text>
+  <text class="sub" x="300" y="484">· creator_trx_id</text>
+
+  <rect class="myAlt" x="88" y="498" width="200" height="16" rx="4" />
+  <text class="subL" x="98" y="511" style="font-size:11.5px">RC：每条 SELECT 新建一次</text>
+  <rect class="myAlt" x="308" y="498" width="204" height="16" rx="4" />
+  <text class="subL" x="318" y="511" style="font-size:11.5px">RR：事务内首次建立后复用</text>
+
+  <rect class="good" x="60" y="540" width="480" height="52" rx="10" />
+  <text class="goodText" x="300" y="562" style="text-anchor:middle">读旧版本不改数据页，回滚几乎零成本</text>
+  <text class="goodText" x="300" y="582" style="text-anchor:middle">但 undo 链不能无限长，长事务会拖垮 purge</text>
+
+  <!-- PostgreSQL -->
+  <text class="colHeadPg" x="900" y="104">PostgreSQL</text>
+  <text class="note" x="900" y="126">写新版本 + 行头时间戳</text>
+
+  <!-- 堆表行 -->
+  <rect class="pg" x="660" y="146" width="480" height="66" rx="10" />
+  <text class="title" x="900" y="172" style="font-size:14px">堆表中的行版本（不是原地改）</text>
+  <text class="sub" x="900" y="196">每行头部带 xmin / xmax / ctid</text>
+
+  <path class="flowPg" d="M900,212 L900,240" marker-end="url(#ahp)" />
+
+  <rect class="pgAlt" x="690" y="244" width="420" height="42" rx="9" />
+  <text class="key" x="900" y="270">新版本　xmin = 90，xmax = 0</text>
+
+  <rect class="dead" x="690" y="296" width="420" height="42" rx="9" />
+  <text class="deadText" x="900" y="322" style="text-anchor:middle">旧版本　xmin = 60，xmax = 90（对当前快照已不可见）</text>
+
+  <text class="note" x="900" y="364">快照用 xmin / xmax / xip 判断每个版本的生死</text>
+
+  <!-- 快照 -->
+  <rect class="pg" x="660" y="382" width="480" height="98" rx="10" />
+  <text class="title" x="900" y="408" style="font-size:14px">快照（Snapshot）</text>
+  <text class="sub" x="900" y="432">快照建立那一刻，哪些事务在跑、哪些已提交</text>
+  <text class="sub" x="900" y="454">规则：插入事务已提交且未被删除事务覆盖 → 可见</text>
+  <text class="sub" x="900" y="472">更新 = 标旧版本 xmax + 写新版本</text>
+
+  <rect class="dead" x="660" y="496" width="480" height="96" rx="10" />
+  <text class="deadText" x="900" y="520" style="text-anchor:middle;font-weight:600">副作用：死亡元组不会自己消失</text>
+  <text class="deadText" x="900" y="544" style="text-anchor:middle">要靠 VACUUM 回收，回收不及时就是表膨胀（bloat）</text>
+  <text class="deadText" x="900" y="568" style="text-anchor:middle">长事务会挡住 VACUUM，还可能触发 XID 回卷风险</text>
+
+  <text x="40" y="632" class="subL" style="font-size:13px">一句话记住差别：MySQL 靠「回头找旧版本」实现快照读，PostgreSQL 靠「保留旧版本不动、让新事务看不见它」。</text>
+</svg>

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520" role="img" aria-label="FDE 的五层能力：事实发现、范围判断、工程落地、产品抽象、组织治理，越往下越接近技术，越往上越接近业务与组织，任何一层缺失都会导致项目失败">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .r1 { fill: rgba(52,211,153,0.11); stroke: rgba(52,211,153,0.42); stroke-width: 1.2; }
+      .r2 { fill: rgba(251,191,36,0.10); stroke: rgba(251,191,36,0.42); stroke-width: 1.2; }
+      .r3 { fill: rgba(99,102,241,0.12); stroke: rgba(129,140,248,0.5); stroke-width: 1.2; }
+      .r4 { fill: rgba(167,139,250,0.11); stroke: rgba(167,139,250,0.45); stroke-width: 1.2; }
+      .r5 { fill: rgba(148,163,184,0.10); stroke: rgba(148,163,184,0.42); stroke-width: 1.2; }
+      .badge { fill: rgba(255,255,255,0.08); stroke: rgba(255,255,255,0.2); stroke-width: 1; }
+      .bn { fill: #e2e8f0; font-size: 15px; font-weight: 600; text-anchor: middle; }
+      .h { fill: #e2e8f0; font-size: 15.5px; font-weight: 600; }
+      .v { fill: #cbd5e1; font-size: 12.5px; }
+      .tag { fill: #94a3b8; font-size: 12px; text-anchor: end; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .cap { fill: #a78bfa; font-size: 12.5px; }
+    </style>
+  </defs>
+
+  <text class="cap" x="30" y="34">③ 把 FDE 拆开看，它其实是五种能力叠在一起</text>
+
+  <rect class="r1" x="30" y="60" width="1140" height="64" rx="12" />
+  <circle class="badge" cx="78" cy="92" r="19" />
+  <text class="bn" x="78" y="97">1</text>
+  <text class="h" x="118" y="97">事实发现</text>
+  <text class="v" x="330" y="97">客户带着「自己想好的方案」来，而不是问题——要往下挖到真实问题</text>
+  <text class="tag" x="1146" y="97">业务</text>
+
+  <rect class="r2" x="30" y="140" width="1140" height="64" rx="12" />
+  <circle class="badge" cx="78" cy="172" r="19" />
+  <text class="bn" x="78" y="177">2</text>
+  <text class="h" x="118" y="177">范围判断</text>
+  <text class="v" x="330" y="177">决定这次不做什么。技术上做得到，不等于这次该做</text>
+  <text class="tag" x="1146" y="177">判断</text>
+
+  <rect class="r3" x="30" y="220" width="1140" height="64" rx="12" />
+  <circle class="badge" cx="78" cy="252" r="19" />
+  <text class="bn" x="78" y="257">3</text>
+  <text class="h" x="118" y="257">工程落地</text>
+  <text class="v" x="330" y="257">写生产级代码、接客户数据、上线、监控迭代</text>
+  <text class="tag" x="1146" y="257">技术</text>
+
+  <rect class="r4" x="30" y="300" width="1140" height="64" rx="12" />
+  <circle class="badge" cx="78" cy="332" r="19" />
+  <text class="bn" x="78" y="337">4</text>
+  <text class="h" x="118" y="337">产品抽象</text>
+  <text class="v" x="330" y="337">把现场方案抽象成可复用能力，交回产品团队</text>
+  <text class="tag" x="1146" y="337">产品</text>
+
+  <rect class="r5" x="30" y="380" width="1140" height="64" rx="12" />
+  <circle class="badge" cx="78" cy="412" r="19" />
+  <text class="bn" x="78" y="417">5</text>
+  <text class="h" x="118" y="417">组织治理</text>
+  <text class="v" x="330" y="417">让系统在自己撤场之后依然被使用——这是唯一的检验标准</text>
+  <text class="tag" x="1146" y="417">组织</text>
+
+  <text class="note" x="30" y="484">前两层决定「做对的事」，中间一层决定「把事做出来」，后两层决定「这件事有没有沉淀下来」。</text>
+  <text class="note" x="30" y="506">只做第三层，就是外包；只做第五层，就是咨询；五层都缺一层，项目就会在那一层上失败。</text>
+</svg>

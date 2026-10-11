@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 470" width="1200" height="470" role="img" aria-label="FDE 的价值闭环：在客户现场铺定制的碎石路，经抽象与回流把经验变成产品团队修的高速公路，使得下一位客户不必再为同样的问题付一次学费；这个回流机制被称为工程版的反向传播">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .site { fill: rgba(251,191,36,0.10); stroke: rgba(251,191,36,0.45); stroke-width: 1.3; }
+      .mid { fill: rgba(99,102,241,0.14); stroke: rgba(129,140,248,0.55); stroke-width: 1.3; }
+      .prod { fill: rgba(52,211,153,0.11); stroke: rgba(52,211,153,0.45); stroke-width: 1.3; }
+      .loop { stroke: #a78bfa; stroke-width: 2; fill: none; stroke-dasharray: 8 6; }
+      .flow { stroke: #818cf8; stroke-width: 2.2; fill: none; }
+      .t { fill: #e2e8f0; font-size: 16px; font-weight: 600; text-anchor: middle; }
+      .tk { fill: #fcd34d; font-size: 16px; font-weight: 600; text-anchor: middle; }
+      .tp { fill: #6ee7b7; font-size: 16px; font-weight: 600; text-anchor: middle; }
+      .ts { fill: #94a3b8; font-size: 12px; text-anchor: middle; }
+      .tv { fill: #cbd5e1; font-size: 12.5px; text-anchor: middle; }
+      .loopT { fill: #a78bfa; font-size: 12.5px; text-anchor: middle; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .cap { fill: #a78bfa; font-size: 12.5px; text-anchor: middle; }
+      .box { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.15); stroke-width: 1; }
+    </style>
+    <marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="flp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a78bfa" />
+    </marker>
+  </defs>
+
+  <text class="cap" x="600" y="34">现场铺碎石路，产品修高速公路</text>
+
+  <!-- 现场 -->
+  <rect class="site" x="30" y="80" width="330" height="190" rx="16" />
+  <text class="tk" x="195" y="118">客户现场</text>
+  <text class="ts" x="195" y="144">铺「碎石路」</text>
+  <text class="tv" x="195" y="178">为这一个客户做的定制方案</text>
+  <text class="tv" x="195" y="202">能跑通、能用起来、能验收</text>
+  <text class="tv" x="195" y="230">但换一个客户就要重来一遍</text>
+  <text class="tv" x="195" y="254">价值高，可复用性低</text>
+
+  <line class="flow" x1="364" y1="175" x2="426" y2="175" marker-end="url(#fl)" />
+
+  <!-- 抽象 -->
+  <rect class="mid" x="430" y="80" width="340" height="190" rx="16" />
+  <text class="t" x="600" y="118">抽象与回流</text>
+  <text class="ts" x="600" y="144">FDE 最容易被忽略的一半工作</text>
+  <rect class="box" x="454" y="160" width="140" height="42" rx="10" />
+  <text class="tv" x="524" y="186">哪些是个例</text>
+  <rect class="box" x="606" y="160" width="140" height="42" rx="10" />
+  <text class="tv" x="676" y="186">哪些是共性</text>
+  <text class="tv" x="600" y="230">把共性部分提炼成产品能力</text>
+  <text class="ts" x="600" y="254">做不到这一步，FDE 就退化成外包</text>
+
+  <line class="flow" x1="774" y1="175" x2="836" y2="175" marker-end="url(#fl)" />
+
+  <!-- 产品 -->
+  <rect class="prod" x="840" y="80" width="330" height="190" rx="16" />
+  <text class="tp" x="1005" y="118">产品团队</text>
+  <text class="ts" x="1005" y="144">修「高速公路」</text>
+  <text class="tv" x="1005" y="178">把共性能力泛化成通用功能</text>
+  <text class="tv" x="1005" y="202">下一位客户直接就走这条路</text>
+  <text class="tv" x="1005" y="230">边际成本随客户数下降</text>
+  <text class="tv" x="1005" y="254">这才是这门生意算得过账的原因</text>
+
+  <!-- 回流 -->
+  <path class="loop" d="M1005,274 L1005,340 L195,340 L195,276" marker-end="url(#flp)" />
+  <text class="loopT" x="600" y="332">下一位客户不必为同样的问题再付一次学费</text>
+
+  <text class="cap" x="600" y="386">这就是被称为「工程版反向传播」的机制：现场的误差信号，一路传回产品参数里</text>
+
+  <text class="note" x="30" y="428">衡量 FDE 团队的健康度，看的不是现场交付了多少个项目，而是有多少现场经验真的变成了产品里别人也能用的能力。</text>
+  <text class="note" x="30" y="450">反过来，如果一个 FDE 团队三年下来产品没有变厚，那它其实一直在做外包，只是换了个更贵的外包名字。</text>
+</svg>

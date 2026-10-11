@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 430" width="1200" height="430" role="img" aria-label="实时数字人端到端流水线：脚本文本经语音合成产生音频，驱动数字人模型逐块生成视频帧，经实时传输推给观众；下方标注首帧延迟与稳态吞吐两组互相独立的指标">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .s1 { fill: rgba(148,163,184,0.12); stroke: rgba(148,163,184,0.45); stroke-width: 1.2; }
+      .s2 { fill: rgba(251,191,36,0.10); stroke: rgba(251,191,36,0.45); stroke-width: 1.2; }
+      .s3 { fill: rgba(99,102,241,0.14); stroke: rgba(129,140,248,0.55); stroke-width: 1.3; }
+      .s4 { fill: rgba(167,139,250,0.12); stroke: rgba(167,139,250,0.5); stroke-width: 1.2; }
+      .s5 { fill: rgba(52,211,153,0.12); stroke: rgba(52,211,153,0.45); stroke-width: 1.2; }
+      .pill { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.14); stroke-width: 1.1; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .loop { stroke: #a78bfa; stroke-width: 1.8; fill: none; stroke-dasharray: 7 6; }
+      .t { fill: #e2e8f0; font-size: 14.5px; font-weight: 600; text-anchor: middle; }
+      .ts { fill: #94a3b8; font-size: 11.5px; text-anchor: middle; }
+      .tv { fill: #cbd5e1; font-size: 11.5px; text-anchor: middle; }
+      .pk { fill: #c7d2fe; font-size: 13px; font-weight: 600; }
+      .pv { fill: #cbd5e1; font-size: 12.5px; }
+      .loopT { fill: #a78bfa; font-size: 12px; text-anchor: middle; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+    </style>
+    <marker id="ahd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ahdl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a78bfa" />
+    </marker>
+  </defs>
+
+  <!-- 五段 -->
+  <rect class="s1" x="24" y="70" width="200" height="150" rx="14" />
+  <text class="t" x="124" y="112">脚本 / 文本</text>
+  <text class="ts" x="124" y="140">话术、问答、</text>
+  <text class="ts" x="124" y="160">知识库检索结果</text>
+  <text class="tv" x="124" y="192">决定内容，不决定延迟</text>
+
+  <line class="flow" x1="228" y1="145" x2="256" y2="145" marker-end="url(#ahd)" />
+
+  <rect class="s2" x="260" y="70" width="200" height="150" rx="14" />
+  <text class="t" x="360" y="112">语音合成</text>
+  <text class="ts" x="360" y="140">SoulX-Podcast 等</text>
+  <text class="ts" x="360" y="160">TTS 流式输出音频</text>
+  <text class="tv" x="360" y="192">音频要逐块给出</text>
+  <text class="tv" x="360" y="210">不能等整句合成完</text>
+
+  <line class="flow" x1="464" y1="145" x2="492" y2="145" marker-end="url(#ahd)" />
+
+  <rect class="s3" x="496" y="70" width="230" height="150" rx="14" />
+  <text class="t" x="611" y="112">数字人渲染</text>
+  <text class="ts" x="611" y="140">FlashHead / LiveAct /</text>
+  <text class="ts" x="611" y="160">FlashTalk</text>
+  <text class="tv" x="611" y="192">音频 → 逐块视频帧</text>
+  <text class="tv" x="611" y="212">块内并行、块间自回归</text>
+
+  <line class="flow" x1="730" y1="145" x2="758" y2="145" marker-end="url(#ahd)" />
+
+  <rect class="s4" x="762" y="70" width="200" height="150" rx="14" />
+  <text class="t" x="862" y="112">实时传输</text>
+  <text class="ts" x="862" y="140">LiveKit / WebRTC</text>
+  <text class="ts" x="862" y="160">SFU 转发音视频</text>
+  <text class="tv" x="862" y="192">抖动缓冲要留余量</text>
+  <text class="tv" x="862" y="212">否则卡顿先于画质暴露</text>
+
+  <line class="flow" x1="966" y1="145" x2="994" y2="145" marker-end="url(#ahd)" />
+
+  <rect class="s5" x="998" y="70" width="176" height="150" rx="14" />
+  <text class="t" x="1086" y="112">观众 / 端侧</text>
+  <text class="ts" x="1086" y="140">播放器、</text>
+  <text class="ts" x="1086" y="160">端上 SDK</text>
+  <text class="tv" x="1086" y="192">可随时打断、</text>
+  <text class="tv" x="1086" y="212">插话、切换话题</text>
+
+  <!-- 反馈回路 -->
+  <path class="loop" d="M1086,224 L1086,258 L611,258 L611,224" marker-end="url(#ahdl)" />
+  <text class="loopT" x="850" y="250">用户的打断与追问，必须能在下一块之前生效</text>
+
+  <!-- 两组指标 -->
+  <rect class="pill" x="24" y="292" width="570" height="112" rx="14" />
+  <text class="pk" x="52" y="324">指标一：首帧延迟（Time to First Frame）</text>
+  <text class="pv" x="52" y="352">从收到音频第一块，到吐出第一帧画面</text>
+  <text class="pv" x="52" y="376">决定「像不像在实时对话」，FlashTalk 压到 0.87 秒</text>
+  <text class="pv" x="52" y="396">优化手段：少步蒸馏、缓存、并行 VAE 解码</text>
+
+  <rect class="pill" x="606" y="292" width="568" height="112" rx="14" />
+  <text class="pk" x="634" y="324">指标二：稳态吞吐（Sustained FPS）</text>
+  <text class="pv" x="634" y="352">稳定生成阶段，每秒能产出多少帧</text>
+  <text class="pv" x="634" y="376">只要 ≥ 25–30 FPS 就不掉帧；LiveAct 双卡做到 20 FPS</text>
+  <text class="pv" x="634" y="396">优化手段：定长 KV 记忆、稀疏注意力、量化</text>
+
+  <text class="note" x="24" y="428">这两个指标经常被混着宣传。首帧延迟低但吞吐不够，视频会越播越落后；吞吐高但首帧慢，用户一开口就感到停顿。</text>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 460" width="1200" height="460" role="img" aria-label="HPA 扩缩容闭环：指标采集、期望副本计算、Deployment 副本调整、新 Pod 就绪分担流量">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .box { fill: rgba(99,102,241,0.14); stroke: rgba(129,140,248,0.5); stroke-width: 1.2; }
+      .boxAlt { fill: rgba(167,139,250,0.14); stroke: rgba(167,139,250,0.5); stroke-width: 1.2; }
+      .title { fill: #e2e8f0; font-size: 17px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .flowDash { stroke: #a78bfa; stroke-width: 2; fill: none; stroke-dasharray: 7 6; }
+      .flowLabel { fill: #a78bfa; font-size: 12.5px; text-anchor: middle; }
+      .pill { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.14); stroke-width: 1.1; }
+      .pillText { fill: #cbd5e1; font-size: 12.5px; text-anchor: middle; }
+      .pillKey { fill: #c7d2fe; font-weight: 600; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ahv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a78bfa" />
+    </marker>
+  </defs>
+
+  <!-- 四个环节 -->
+  <rect class="box" x="60" y="90" width="240" height="112" rx="14" />
+  <text class="title" x="180" y="136">① 指标采集</text>
+  <text class="sub" x="180" y="162">Metrics Server</text>
+  <text class="sub" x="180" y="182">Prometheus Adapter</text>
+
+  <rect class="box" x="340" y="90" width="240" height="112" rx="14" />
+  <text class="title" x="460" y="136">② 期望副本计算</text>
+  <text class="sub" x="460" y="162">HPA Controller</text>
+  <text class="sub" x="460" y="182">每 15s 一次</text>
+
+  <rect class="boxAlt" x="620" y="90" width="240" height="112" rx="14" />
+  <text class="title" x="740" y="136">③ 调整 replicas</text>
+  <text class="sub" x="740" y="162">Deployment</text>
+  <text class="sub" x="740" y="182">4 → 12 个副本</text>
+
+  <rect class="boxAlt" x="900" y="90" width="240" height="112" rx="14" />
+  <text class="title" x="1020" y="136">④ 新 Pod 就绪</text>
+  <text class="sub" x="1020" y="162">镜像拉取 → 启动 → 探针通过</text>
+  <text class="sub" x="1020" y="182">加入 Endpoints 分担流量</text>
+
+  <!-- 横向箭头 -->
+  <line class="flow" x1="304" y1="146" x2="334" y2="146" marker-end="url(#ah)" />
+  <line class="flow" x1="584" y1="146" x2="614" y2="146" marker-end="url(#ah)" />
+  <line class="flow" x1="864" y1="146" x2="894" y2="146" marker-end="url(#ah)" />
+
+  <!-- 反馈回路 -->
+  <path class="flowDash" d="M1020,202 L1020,300 L180,300 L180,208" marker-end="url(#ahv)" />
+  <text class="flowLabel" x="600" y="292">负载变化 → 下一轮调节</text>
+
+  <!-- 底部要点 -->
+  <rect class="pill" x="60" y="366" width="345" height="54" rx="12" />
+  <text class="pillText" x="232" y="390"><tspan class="pillKey">扩容要快</tspan> · scaleUp 不做窗口平滑</text>
+  <text class="pillText" x="232" y="409">目标 30s 内把容量拉起来</text>
+
+  <rect class="pill" x="427" y="366" width="345" height="54" rx="12" />
+  <text class="pillText" x="599" y="390"><tspan class="pillKey">缩容要慢</tspan> · 稳定窗口 300s</text>
+  <text class="pillText" x="599" y="409">避免副本数来回震荡</text>
+
+  <rect class="pill" x="794" y="366" width="346" height="54" rx="12" />
+  <text class="pillText" x="967" y="390"><tspan class="pillKey">指标要前置</tspan> · QPS / 队列深度</text>
+  <text class="pillText" x="967" y="409">CPU 是滞后指标，别等它涨</text>
+</svg>

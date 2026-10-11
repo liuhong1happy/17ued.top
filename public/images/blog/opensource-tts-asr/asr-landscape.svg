@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-label="国内开源语音识别生态图谱：左列为工具链框架 FunASR、sherpa-onnx、WeNet、PaddleSpeech，右列为模型谱系，底部为选型提示">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .tool { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.5); stroke-width: 1.2; }
+      .toolKey { fill: rgba(129,140,248,0.26); stroke: rgba(129,140,248,0.7); stroke-width: 1.4; }
+      .model { fill: rgba(56,189,248,0.14); stroke: rgba(56,189,248,0.45); stroke-width: 1.2; }
+      .modelStar { fill: rgba(52,211,153,0.16); stroke: rgba(52,211,153,0.55); stroke-width: 1.3; }
+      .modelAlt { fill: rgba(148,163,184,0.13); stroke: rgba(148,163,184,0.4); stroke-width: 1.1; }
+      .head { fill: #e2e8f0; font-size: 19px; font-weight: 600; text-anchor: middle; }
+      .colHead { fill: #c7d2fe; font-size: 15px; font-weight: 600; }
+      .colHeadR { fill: #7dd3fc; font-size: 15px; font-weight: 600; }
+      .t { fill: #e2e8f0; font-size: 13.5px; font-weight: 600; }
+      .tC { fill: #e2e8f0; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11.5px; }
+      .sC { fill: #94a3b8; font-size: 11.5px; text-anchor: middle; }
+      .groupLabel { fill: #a5b4fc; font-size: 12.5px; font-weight: 600; }
+      .noteBox { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.15); stroke-width: 1; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .divider { stroke: rgba(255,255,255,0.12); stroke-width: 1; }
+    </style>
+  </defs>
+
+  <text x="600" y="38" class="head">国内开源 ASR 生态：工具链与模型是两层</text>
+  <text x="600" y="62" class="sC">分清楚这两层，选型就不会乱 —— 工具链决定"怎么用"，模型决定"准不准"。</text>
+
+  <!-- 左列：工具链 -->
+  <text x="50" y="100" class="colHead">工具链 / 框架层</text>
+
+  <rect class="toolKey" x="50" y="114" width="330" height="92" rx="11" />
+  <text class="t" x="70" y="142">FunASR（阿里达摩院）</text>
+  <text class="s" x="70" y="166">统一 AutoModel 接口，把 VAD、ASR、标点、</text>
+  <text class="s" x="70" y="184">说话人分离串成流水线；MIT 协议，商用友好</text>
+
+  <rect class="tool" x="50" y="216" width="330" height="92" rx="11" />
+  <text class="t" x="70" y="244">sherpa-onnx（k2-fsa）</text>
+  <text class="s" x="70" y="268">ONNX Runtime 推理，纯离线、无 Python 依赖，</text>
+  <text class="s" x="70" y="286">12 种语言绑定，端侧部署的事实标准</text>
+
+  <rect class="tool" x="50" y="318" width="330" height="76" rx="11" />
+  <text class="t" x="70" y="346">WeNet（出门问问 + 西工大）</text>
+  <text class="s" x="70" y="370">U2/U2++ 流式与非流式统一，工业级训练框架</text>
+
+  <rect class="tool" x="50" y="404" width="330" height="76" rx="11" />
+  <text class="t" x="70" y="432">PaddleSpeech（百度）</text>
+  <text class="s" x="70" y="456">ASR / TTS / 声纹一体化，中文文档完整</text>
+
+  <rect class="tool" x="50" y="490" width="330" height="76" rx="11" />
+  <text class="t" x="70" y="518">Whisper / whisper.cpp</text>
+  <text class="s" x="70" y="542">国际方案，多语种强，中文需配 VAD 分段</text>
+
+  <!-- 右列：模型 -->
+  <text x="430" y="100" class="colHeadR">模型层</text>
+
+  <text x="430" y="128" class="groupLabel">阿里通义 / 达摩院系</text>
+  <rect class="modelStar" x="430" y="138" width="350" height="72" rx="11" />
+  <text class="t" x="450" y="166">Paraformer</text>
+  <text class="s" x="450" y="188">非自回归单步解码，比自回归快约一个量级；</text>
+  <text class="s" x="450" y="204">支持时间戳与热词，有流式版本</text>
+
+  <rect class="modelStar" x="800" y="138" width="350" height="72" rx="11" />
+  <text class="t" x="820" y="166">SenseVoice-Small</text>
+  <text class="s" x="820" y="188">中英日韩粤 + 情感识别 + 音频事件检测；</text>
+  <text class="s" x="820" y="204">极低延迟，端侧最常被选中的那一档</text>
+
+  <rect class="model" x="430" y="222" width="720" height="66" rx="11" />
+  <text class="t" x="450" y="250">Fun-ASR-Nano / MLT-Nano</text>
+  <text class="s" x="450" y="272">SenseVoice 编码器 + Qwen 系解码器的 LLM-ASR 路线，覆盖更多方言与口音；MLT 版面向多语言</text>
+
+  <line x1="430" y1="308" x2="1150" y2="308" class="divider" />
+
+  <text x="430" y="336" class="groupLabel">其他国内团队</text>
+  <rect class="modelAlt" x="430" y="346" width="350" height="66" rx="11" />
+  <text class="t" x="450" y="374">FireRedASR（小红书）</text>
+  <text class="s" x="450" y="396">公开评测里中文标准集 CER 表现突出</text>
+
+  <rect class="modelAlt" x="800" y="346" width="350" height="66" rx="11" />
+  <text class="t" x="820" y="374">Dolphin（DataoceanAI + 清华）</text>
+  <text class="s" x="820" y="396">面向东方语言，覆盖小语种与方言</text>
+
+  <rect class="modelAlt" x="430" y="424" width="350" height="66" rx="11" />
+  <text class="t" x="450" y="452">TeleSpeech-CTC（TeleAI）</text>
+  <text class="s" x="450" y="474">运营商场景积累，中文与方言覆盖广</text>
+
+  <rect class="modelAlt" x="800" y="424" width="350" height="66" rx="11" />
+  <text class="t" x="820" y="452">Zipformer / Conformer 系</text>
+  <text class="s" x="820" y="474">k2 生态的流式骨干，sherpa-onnx 主力模型</text>
+
+  <!-- 底部选型 -->
+  <rect class="noteBox" x="50" y="570" width="1100" height="128" rx="12" />
+  <text class="note" x="80" y="600" style="font-weight:600;fill:#c7d2fe">选型速查</text>
+  <text class="note" x="80" y="626">· 服务端要精度、要多语言方言 → <tspan style="fill:#cbd5e1">Fun-ASR-Nano 一类 LLM-ASR</tspan></text>
+  <text class="note" x="80" y="650">· 端侧、要快、要省 → <tspan style="fill:#cbd5e1">SenseVoice</tspan>（量化后约 250MB 级别，纯 CPU 可跑）</text>
+  <text class="note" x="620" y="626">· 纯中文 + 要时间戳/热词 → <tspan style="fill:#cbd5e1">Paraformer</tspan></text>
+  <text class="note" x="620" y="650">· 要跨平台装到手机/开发板 → <tspan style="fill:#cbd5e1">sherpa-onnx</tspan></text>
+  <text class="note" x="80" y="680">· 通用离线多语种基线 → <tspan style="fill:#cbd5e1">Whisper large-v3 / turbo</tspan>，但中文场景通常不如上面几档，且需要配 VAD</text>
+</svg>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520" role="img" aria-label="FDE 的起源时间线：Palantir 早期服务情报与国防客户时需求说不清、数据出不了内网，于是把工程师派驻现场六到十二个月，逐步演化出 Echo 与 Delta 双角色和 Ontology 本体，这套模式后来被 OpenAI、Anthropic 等公司在 AI 落地中复用">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .axis { stroke: rgba(148,163,184,0.5); stroke-width: 2; }
+      .node { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.6); stroke-width: 1.4; }
+      .nodeLate { fill: rgba(52,211,153,0.14); stroke: rgba(52,211,153,0.5); stroke-width: 1.4; }
+      .echo { fill: rgba(251,191,36,0.10); stroke: rgba(251,191,36,0.45); stroke-width: 1.2; }
+      .delta { fill: rgba(99,102,241,0.12); stroke: rgba(129,140,248,0.5); stroke-width: 1.2; }
+      .onto { fill: rgba(167,139,250,0.10); stroke: rgba(167,139,250,0.45); stroke-width: 1.2; }
+      .yr { fill: #a5b4fc; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+      .yt { fill: #94a3b8; font-size: 12px; text-anchor: middle; }
+      .h { fill: #e2e8f0; font-size: 15px; font-weight: 600; }
+      .hk { fill: #fcd34d; font-size: 15px; font-weight: 600; }
+      .hd { fill: #c7d2fe; font-size: 15px; font-weight: 600; }
+      .ho { fill: #c4b5fd; font-size: 15px; font-weight: 600; }
+      .s { fill: #94a3b8; font-size: 12.5px; }
+      .v { fill: #cbd5e1; font-size: 12.5px; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .cap { fill: #a78bfa; font-size: 12.5px; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <text class="hk" x="30" y="34">① 起点不是「岗位设计」，而是一组做不到的约束</text>
+  <text class="note" x="30" y="58">客户说不清需求 · 数据不能出内网 · 流程天天在变 —— 三条同时成立时，传统软件交付方式直接失效</text>
+
+  <!-- 时间线 -->
+  <line class="axis" x1="80" y1="128" x2="1120" y2="128" />
+
+  <circle class="node" cx="140" cy="128" r="9" />
+  <text class="yr" x="140" y="104">约 2003</text>
+  <text class="yt" x="140" y="158">Palantir 成立</text>
+  <text class="yt" x="140" y="176">情报与国防客户起步</text>
+
+  <circle class="node" cx="400" cy="128" r="9" />
+  <text class="yr" x="400" y="104">约 2009</text>
+  <text class="yt" x="400" y="158">把工程师直接派驻现场</text>
+  <text class="yt" x="400" y="176">6–12 个月，边观察边编码</text>
+
+  <circle class="node" cx="660" cy="128" r="9" />
+  <text class="yr" x="660" y="104">约 2011</text>
+  <text class="yt" x="660" y="158">FDE 成为制度化岗位</text>
+  <text class="yt" x="660" y="176">Echo / Delta 分工成型</text>
+
+  <circle class="node" cx="920" cy="128" r="9" />
+  <text class="yr" x="920" y="104">约 2016</text>
+  <text class="yt" x="920" y="158">Delta 人数一度超过</text>
+  <text class="yt" x="920" y="176">传统平台工程师</text>
+
+  <circle class="nodeLate" cx="1076" cy="128" r="9" />
+  <text class="yr" x="1076" y="104">2024–2026</text>
+  <text class="yt" x="1076" y="158">被 AI 行业整体复用</text>
+  <text class="yt" x="1076" y="176">OpenAI / Anthropic / AWS</text>
+
+  <text class="cap" x="600" y="212">军事隐喻：Forward Deployed 指的是「部署在前线」，而不是待在后方总部</text>
+
+  <!-- Echo / Delta -->
+  <rect class="echo" x="30" y="240" width="545" height="150" rx="16" />
+  <text class="hk" x="56" y="274">Echo · 回响</text>
+  <text class="s" x="56" y="302">驻场分析师 / 部署策略</text>
+  <text class="v" x="56" y="328">理解客户、挖掘真实需求</text>
+  <text class="v" x="56" y="350">设计工作流，画出业务地图</text>
+  <text class="v" x="56" y="372">名字取意「反映客户的声音」</text>
+
+  <rect class="delta" x="625" y="240" width="545" height="150" rx="16" />
+  <text class="hd" x="651" y="274">Delta · 增量</text>
+  <text class="s" x="651" y="302">驻场工程师</text>
+  <text class="v" x="651" y="328">写代码、做快速原型</text>
+  <text class="v" x="651" y="350">搭 Ontology，接入客户数据</text>
+  <text class="v" x="651" y="372">名字取意「一步步交付增量」</text>
+
+  <!-- Ontology -->
+  <rect class="onto" x="30" y="412" width="1140" height="84" rx="16" />
+  <text class="ho" x="56" y="444">Ontology · 本体</text>
+  <text class="v" x="56" y="470">本体论上，它是把企业数据、权限与流程做成一套结构化、全局统一的建模，用面向对象的实体替代传统关系表。</text>
+  <text class="s" x="56" y="490">工程上，它是 FDE 在现场最值钱的产出物：客户看着是自己的业务地图，产品团队拿到的是一套可复用的抽象。</text>
+</svg>

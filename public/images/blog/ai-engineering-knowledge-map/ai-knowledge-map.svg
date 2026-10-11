@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" width="1200" height="660" role="img" aria-label="AI 工程落地知识地图：算法与统计层、模型与推理层、工程与平台层、治理与合规层，共同指向可解释、可监控、可回滚、可审计">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .band { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.14); stroke-width: 1.2; }
+      .chip { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.45); stroke-width: 1.1; }
+      .chipWarm { fill: rgba(251,113,133,0.14); stroke: rgba(251,113,133,0.45); stroke-width: 1.1; }
+      .chipText { fill: #c7d2fe; font-size: 13.5px; text-anchor: middle; }
+      .chipTextWarm { fill: #fecdd3; font-size: 13.5px; text-anchor: middle; }
+      .bandName { fill: #e2e8f0; font-size: 16px; font-weight: 600; }
+      .bandTag { fill: #a78bfa; font-size: 12px; }
+      .divider { stroke: rgba(255,255,255,0.12); stroke-width: 1; }
+      .goal { fill: rgba(167,139,250,0.14); stroke: rgba(167,139,250,0.5); stroke-width: 1.2; }
+      .goalText { fill: #ddd6fe; font-size: 15px; font-weight: 600; text-anchor: middle; }
+      .note { fill: #a78bfa; font-size: 13.5px; text-anchor: middle; }
+      .goalLabel { fill: #94a3b8; font-size: 12.5px; }
+    </style>
+  </defs>
+
+  <!-- 算法与统计层 -->
+  <rect class="band" x="60" y="48" width="1080" height="96" rx="14" />
+  <text class="bandName" x="84" y="88">算法与统计层</text>
+  <text class="bandTag" x="84" y="112">决定效果上限</text>
+  <line class="divider" x1="240" y1="68" x2="240" y2="124" />
+  <rect class="chip" x="250" y="76" width="203" height="40" rx="10" />
+  <text class="chipText" x="351.5" y="101">线性模型与评分卡</text>
+  <rect class="chip" x="469" y="76" width="203" height="40" rx="10" />
+  <text class="chipText" x="570.5" y="101">GBDT · 集成学习</text>
+  <rect class="chip" x="688" y="76" width="203" height="40" rx="10" />
+  <text class="chipText" x="789.5" y="101">特征工程 IV · PSI</text>
+  <rect class="chip" x="907" y="76" width="203" height="40" rx="10" />
+  <text class="chipText" x="1008.5" y="101">评估 AUC · KS</text>
+
+  <!-- 模型与推理层 -->
+  <rect class="band" x="60" y="162" width="1080" height="96" rx="14" />
+  <text class="bandName" x="84" y="202">模型与推理层</text>
+  <text class="bandTag" x="84" y="226">能力主战场</text>
+  <line class="divider" x1="240" y1="182" x2="240" y2="238" />
+  <rect class="chip" x="250" y="190" width="203" height="40" rx="10" />
+  <text class="chipText" x="351.5" y="215">Transformer 架构</text>
+  <rect class="chip" x="469" y="190" width="203" height="40" rx="10" />
+  <text class="chipText" x="570.5" y="215">SFT · LoRA · QLoRA</text>
+  <rect class="chip" x="688" y="190" width="203" height="40" rx="10" />
+  <text class="chipText" x="789.5" y="215">推理加速 KV Cache</text>
+  <rect class="chip" x="907" y="190" width="203" height="40" rx="10" />
+  <text class="chipText" x="1008.5" y="215">RAG · 向量检索</text>
+
+  <!-- 工程与平台层 -->
+  <rect class="band" x="60" y="276" width="1080" height="96" rx="14" />
+  <text class="bandName" x="84" y="316">工程与平台层</text>
+  <text class="bandTag" x="84" y="340">决定效果下限</text>
+  <line class="divider" x1="240" y1="296" x2="240" y2="352" />
+  <rect class="chip" x="250" y="304" width="203" height="40" rx="10" />
+  <text class="chipText" x="351.5" y="329">服务化 vLLM · Triton</text>
+  <rect class="chip" x="469" y="304" width="203" height="40" rx="10" />
+  <text class="chipText" x="570.5" y="329">K8s 调度与弹性</text>
+  <rect class="chip" x="688" y="304" width="203" height="40" rx="10" />
+  <text class="chipText" x="789.5" y="329">数据流水线 · MQ</text>
+  <rect class="chip" x="907" y="304" width="203" height="40" rx="10" />
+  <text class="chipText" x="1008.5" y="329">实验追踪 MLflow</text>
+
+  <!-- 治理与合规层 -->
+  <rect class="band" x="60" y="390" width="1080" height="96" rx="14" />
+  <text class="bandName" x="84" y="430">治理与合规层</text>
+  <text class="bandTag" x="84" y="454">决定能否上线</text>
+  <line class="divider" x1="240" y1="410" x2="240" y2="466" />
+  <rect class="chipWarm" x="250" y="418" width="203" height="40" rx="10" />
+  <text class="chipTextWarm" x="351.5" y="443">可解释 SHAP · LIME</text>
+  <rect class="chipWarm" x="469" y="418" width="203" height="40" rx="10" />
+  <text class="chipTextWarm" x="570.5" y="443">漂移监控与告警</text>
+  <rect class="chipWarm" x="688" y="418" width="203" height="40" rx="10" />
+  <text class="chipTextWarm" x="789.5" y="443">权限 · 脱敏 · 审计</text>
+  <rect class="chipWarm" x="907" y="418" width="203" height="40" rx="10" />
+  <text class="chipTextWarm" x="1008.5" y="443">回滚与灰度发布</text>
+
+  <!-- 目标 -->
+  <rect class="band" x="60" y="522" width="1080" height="76" rx="14" />
+  <text class="goalLabel" x="84" y="567">共同指向</text>
+  <line class="divider" x1="180" y1="542" x2="180" y2="578" />
+  <rect class="goal" x="200" y="540" width="215" height="40" rx="10" />
+  <text class="goalText" x="307.5" y="566">可解释</text>
+  <rect class="goal" x="437" y="540" width="215" height="40" rx="10" />
+  <text class="goalText" x="544.5" y="566">可监控</text>
+  <rect class="goal" x="674" y="540" width="215" height="40" rx="10" />
+  <text class="goalText" x="781.5" y="566">可回滚</text>
+  <rect class="goal" x="911" y="540" width="215" height="40" rx="10" />
+  <text class="goalText" x="1018.5" y="566">可审计</text>
+
+  <text class="note" x="600" y="634">算法决定上限，工程决定下限，治理决定能不能上线</text>
+</svg>

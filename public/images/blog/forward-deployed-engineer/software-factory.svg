@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440" width="1200" height="440" role="img" aria-label="从编码 Agent 到软件工厂的四个前提条件：任务有边界、环境稳定、结果可验证、出错可回滚。Agent 能自主工作多久取决于这四个条件的乘积，模型本身只是其中一个零件">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .c1 { fill: rgba(52,211,153,0.11); stroke: rgba(52,211,153,0.42); stroke-width: 1.3; }
+      .c2 { fill: rgba(99,102,241,0.12); stroke: rgba(129,140,248,0.5); stroke-width: 1.3; }
+      .c3 { fill: rgba(167,139,250,0.11); stroke: rgba(167,139,250,0.45); stroke-width: 1.3; }
+      .c4 { fill: rgba(251,191,36,0.10); stroke: rgba(251,191,36,0.45); stroke-width: 1.3; }
+      .bar { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.15); stroke-width: 1.1; }
+      .badge { fill: rgba(255,255,255,0.08); stroke: rgba(255,255,255,0.2); stroke-width: 1; }
+      .bn { fill: #e2e8f0; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .h { fill: #e2e8f0; font-size: 15.5px; font-weight: 600; text-anchor: middle; }
+      .ts { fill: #94a3b8; font-size: 12px; text-anchor: middle; }
+      .tv { fill: #cbd5e1; font-size: 12.5px; text-anchor: middle; }
+      .cap { fill: #a78bfa; font-size: 12.5px; text-anchor: middle; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+    </style>
+  </defs>
+
+  <text class="cap" x="600" y="34">Agent 能自主工作多久，不取决于模型多聪明，而取决于这四个条件</text>
+
+  <rect class="c1" x="30" y="68" width="270" height="220" rx="16" />
+  <circle class="badge" cx="165" cy="104" r="19" />
+  <text class="bn" x="165" y="109">1</text>
+  <text class="h" x="165" y="152">任务有边界</text>
+  <text class="tv" x="165" y="184">说清楚做什么，</text>
+  <text class="tv" x="165" y="206">也写清楚不做什么</text>
+  <text class="tv" x="165" y="236">边界含糊的任务，</text>
+  <text class="tv" x="165" y="258">人来写也会失控</text>
+
+  <rect class="c2" x="320" y="68" width="270" height="220" rx="16" />
+  <circle class="badge" cx="455" cy="104" r="19" />
+  <text class="bn" x="455" y="109">2</text>
+  <text class="h" x="455" y="152">环境稳定</text>
+  <text class="tv" x="455" y="184">依赖、数据、权限</text>
+  <text class="tv" x="455" y="206">都能被确定地复现</text>
+  <text class="tv" x="455" y="236">环境一变，</text>
+  <text class="tv" x="455" y="258">昨天的成功就不可重放</text>
+
+  <rect class="c3" x="610" y="68" width="270" height="220" rx="16" />
+  <circle class="badge" cx="745" cy="104" r="19" />
+  <text class="bn" x="745" y="109">3</text>
+  <text class="h" x="745" y="152">结果可验证</text>
+  <text class="tv" x="745" y="184">有生产环境评测集，</text>
+  <text class="tv" x="745" y="206">而不只是跑通编译</text>
+  <text class="tv" x="745" y="236">无法验证的事，</text>
+  <text class="tv" x="745" y="258">就不敢让它自主做</text>
+
+  <rect class="c4" x="900" y="68" width="270" height="220" rx="16" />
+  <circle class="badge" cx="1035" cy="104" r="19" />
+  <text class="bn" x="1035" y="109">4</text>
+  <text class="h" x="1035" y="152">出错可回滚</text>
+  <text class="tv" x="1035" y="184">改坏了能一键退回，</text>
+  <text class="tv" x="1035" y="206">代价足够低</text>
+  <text class="tv" x="1035" y="236">回滚越贵，</text>
+  <text class="tv" x="1035" y="258">允许的自主度就越低</text>
+
+  <rect class="bar" x="30" y="312" width="1140" height="70" rx="14" />
+  <text class="h" x="600" y="344">自主工作时长 ≈ 边界清晰度 × 环境稳定度 × 可验证性 × 可回滚性</text>
+  <text class="ts" x="600" y="368">四个条件是乘法关系：任何一项接近零，整体就接近零</text>
+
+  <text class="note" x="30" y="418">这也是 FDE 在 AI 时代的新位置：不再是替客户写代码的人，而是替客户把这四个条件搭起来的人。</text>
+</svg>

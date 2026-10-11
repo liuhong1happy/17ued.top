@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="主从复制与高可用拓扑：应用经代理层分流到主库与只读从库，复制链路可同步或异步，故障时由仲裁组件触发主从切换">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .app { fill: rgba(148,163,184,0.15); stroke: rgba(148,163,184,0.45); stroke-width: 1.2; }
+      .proxy { fill: rgba(56,189,248,0.15); stroke: rgba(56,189,248,0.5); stroke-width: 1.2; }
+      .primary { fill: rgba(99,102,241,0.20); stroke: rgba(129,140,248,0.65); stroke-width: 1.4; }
+      .replica { fill: rgba(167,139,250,0.15); stroke: rgba(167,139,250,0.5); stroke-width: 1.2; }
+      .arb { fill: rgba(52,211,153,0.14); stroke: rgba(52,211,153,0.5); stroke-width: 1.2; }
+      .title { fill: #e2e8f0; font-size: 15px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12px; text-anchor: middle; }
+      .head { fill: #c7d2fe; font-size: 19px; font-weight: 600; text-anchor: middle; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .flowRead { stroke: #38bdf8; stroke-width: 2; fill: none; }
+      .flowDash { stroke: #f472b6; stroke-width: 2; fill: none; stroke-dasharray: 7 6; }
+      .fail { stroke: #fb7185; stroke-width: 2.2; fill: none; }
+      .label { fill: #a78bfa; font-size: 12px; text-anchor: middle; }
+      .labelRead { fill: #7dd3fc; font-size: 12px; text-anchor: middle; }
+      .labelFail { fill: #fda4af; font-size: 12px; text-anchor: middle; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .tag { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.15); stroke-width: 1; }
+      .tagText { fill: #cbd5e1; font-size: 11.5px; text-anchor: middle; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8" />
+    </marker>
+    <marker id="ahf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f472b6" />
+    </marker>
+    <marker id="ahx" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fb7185" />
+    </marker>
+  </defs>
+
+  <text x="600" y="38" class="head">复制解决可用性，不解决一致性</text>
+  <text x="600" y="62" class="note" style="text-anchor:middle">这张图要盯住的不是「有几个副本」，而是「写完之后立刻读，会读到什么」。</text>
+
+  <!-- 应用 -->
+  <rect class="app" x="80" y="96" width="180" height="60" rx="10" />
+  <text class="title" x="170" y="122">应用</text>
+  <text class="sub" x="170" y="142">写走主 · 读走从</text>
+
+  <path class="flow" d="M264,126 L340,126" marker-end="url(#ah)" />
+
+  <!-- 代理 -->
+  <rect class="proxy" x="344" y="96" width="180" height="60" rx="10" />
+  <text class="title" x="434" y="122">代理 / 中间件</text>
+  <text class="sub" x="434" y="142">读写分离 + 健康检查</text>
+
+  <!-- 主库 -->
+  <rect class="primary" x="640" y="88" width="220" height="76" rx="11" />
+  <text class="title" x="750" y="118">主库 Primary</text>
+  <text class="sub" x="750" y="140">唯一可写节点</text>
+
+  <path class="flow" d="M528,110 L636,110" marker-end="url(#ah)" />
+  <text class="label" x="582" y="100">写</text>
+
+  <path class="flowRead" d="M528,146 L560,146 L560,300 L476,300" marker-end="url(#ahr)" />
+  <text class="labelRead" x="600" y="230">读</text>
+
+  <!-- 从库 1 -->
+  <rect class="replica" x="344" y="272" width="200" height="70" rx="11" />
+  <text class="title" x="444" y="300">从库 A</text>
+  <text class="sub" x="444" y="322">只读，承担读流量</text>
+
+  <!-- 从库 2 -->
+  <rect class="replica" x="640" y="272" width="200" height="70" rx="11" />
+  <text class="title" x="740" y="300">从库 B</text>
+  <text class="sub" x="740" y="322">跨可用区 / 异地</text>
+
+  <path class="flow" d="M690,168 L520,272" marker-end="url(#ah)" />
+  <text class="label" x="560" y="220">复制流</text>
+  <path class="flow" d="M740,168 L740,272" marker-end="url(#ah)" />
+  <text class="label" x="790" y="220">复制流</text>
+
+  <path class="fail" d="M544,307 L636,307" marker-end="url(#ahx)" />
+  <text class="labelFail" x="590" y="332">级联复制</text>
+
+  <!-- 仲裁 -->
+  <rect class="arb" x="904" y="88" width="200" height="76" rx="11" />
+  <text class="title" x="1004" y="118">仲裁 / 选主</text>
+  <text class="sub" x="1004" y="140">etcd · Consul · 多数派</text>
+
+  <path class="flowDash" d="M900,126 L864,126" marker-end="url(#ahf)" />
+  <text class="labelFail" x="884" y="106">探活</text>
+
+  <!-- 切换 -->
+  <rect class="tag" x="904" y="272" width="200" height="70" rx="11" />
+  <text class="title" x="1004" y="300" style="font-size:14px">主库故障</text>
+  <text class="sub" x="1004" y="322">提升从库 → VIP 漂移</text>
+
+  <path class="fail" d="M860,126 L960,126 L960,272" marker-end="url(#ahx)" stroke-dasharray="6 5" />
+  <text class="labelFail" x="1090" y="200" style="text-anchor:middle">自动故障转移</text>
+
+  <line x1="40" y1="382" x2="1160" y2="382" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+
+  <!-- 延迟与读一致性 -->
+  <rect class="tag" x="60" y="404" width="520" height="188" rx="12" />
+  <text class="title" x="320" y="432" style="font-size:14px">复制延迟从哪来</text>
+  <text class="note" x="84" y="460">· 主库写入速率超过从库回放速率（大事务、DDL、批量导入）</text>
+  <text class="note" x="84" y="486">· MySQL 传统复制是单线程回放，5.7+ 才有基于组提交的并行复制</text>
+  <text class="note" x="84" y="512">· 从库上有长查询 / 大排序，争抢资源拖慢回放</text>
+  <text class="note" x="84" y="538">· 网络抖动、跨地域链路 RTT</text>
+  <text class="note" x="84" y="564">· PostgreSQL 物理复制是块级回放，通常延迟更小；逻辑复制按事务回放</text>
+
+  <rect class="tag" x="620" y="404" width="520" height="188" rx="12" />
+  <text class="title" x="880" y="432" style="font-size:14px">写后读不一致怎么解</text>
+  <text class="note" x="644" y="460">1. 关键路径强制走主库：下单后立即跳转的订单详情页</text>
+  <text class="note" x="644" y="486">2. 半同步复制：至少一个从库确认收到日志，主库才提交</text>
+  <text class="note" x="644" y="512">3. 位置等待：读到写之后的位点（GTID / LSN）才返回</text>
+  <text class="note" x="644" y="538">4. 客户端粘性：同一用户在短时间内固定路由到同一节点</text>
+  <text class="note" x="644" y="564">共同点：都是用「可用性/延迟」换「一致性」，没有免费的方案</text>
+
+  <text x="60" y="620" class="note">先确认业务能接受什么程度的读延迟，再决定复制模式 —— 顺序反了就会在故障切换时付出代价。</text>
+</svg>

@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" width="1200" height="660" role="img" aria-label="开源语音模型的三种部署形态：PyTorch 原生服务、ONNX Runtime 端侧推理、GGUF 单二进制，以及各自适配的目标平台">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .route1 { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.55); stroke-width: 1.3; }
+      .route2 { fill: rgba(56,189,248,0.15); stroke: rgba(56,189,248,0.5); stroke-width: 1.3; }
+      .route3 { fill: rgba(52,211,153,0.15); stroke: rgba(52,211,153,0.5); stroke-width: 1.3; }
+      .cell { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.13); stroke-width: 1; }
+      .chip { fill: rgba(167,139,250,0.14); stroke: rgba(167,139,250,0.4); stroke-width: 1; }
+      .head { fill: #e2e8f0; font-size: 19px; font-weight: 600; text-anchor: middle; }
+      .rTitle { fill: #e2e8f0; font-size: 16px; font-weight: 600; text-anchor: middle; }
+      .rSub { fill: #94a3b8; font-size: 12px; text-anchor: middle; }
+      .rowLabel { fill: #94a3b8; font-size: 12px; text-anchor: end; }
+      .cellText { fill: #cbd5e1; font-size: 12px; text-anchor: middle; }
+      .cellKey { fill: #c7d2fe; font-size: 12px; text-anchor: middle; font-weight: 600; }
+      .noteBox { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.15); stroke-width: 1; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .chipText { fill: #ddd6fe; font-size: 12px; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <text x="600" y="38" class="head">同一个模型，三种跑法</text>
+  <text x="600" y="62" class="rSub">选型时先问"跑在哪"，再问"哪个模型准" —— 顺序反了会白折腾。</text>
+
+  <!-- 三条路线 -->
+  <rect class="route1" x="60" y="92" width="340" height="86" rx="12" />
+  <text class="rTitle" x="230" y="126">① PyTorch 原生服务</text>
+  <text class="rSub" x="230" y="150">模型作者发布什么，就跑什么</text>
+
+  <rect class="route2" x="430" y="92" width="340" height="86" rx="12" />
+  <text class="rTitle" x="600" y="126">② ONNX Runtime（sherpa-onnx）</text>
+  <text class="rSub" x="600" y="150">图优化 + 量化 + 硬件 EP 卸载</text>
+
+  <rect class="route3" x="800" y="92" width="340" height="86" rx="12" />
+  <text class="rTitle" x="970" y="126">③ GGUF 单二进制</text>
+  <text class="rSub" x="970" y="150">量化权重 + 自带头文件运行时</text>
+
+  <!-- 对照表 -->
+  <text class="rowLabel" x="200" y="216">依赖</text>
+  <text class="rowLabel" x="200" y="256">模型体积</text>
+  <text class="rowLabel" x="200" y="296">目标平台</text>
+  <text class="rowLabel" x="200" y="336">典型用途</text>
+  <text class="rowLabel" x="200" y="376">运维成本</text>
+
+  <!-- 列1 -->
+  <rect class="cell" x="60" y="196" width="340" height="36" rx="7" />
+  <text class="cellText" x="230" y="219">Python + GPU + CUDA</text>
+  <rect class="cell" x="60" y="236" width="340" height="36" rx="7" />
+  <text class="cellText" x="230" y="259">完整精度，通常数百 MB ~ 数 GB</text>
+  <rect class="cell" x="60" y="276" width="340" height="36" rx="7" />
+  <text class="cellText" x="230" y="299">服务器 / 云 GPU</text>
+  <rect class="cell" x="60" y="316" width="340" height="36" rx="7" />
+  <text class="cellKey" x="230" y="339">追求精度的服务端推理</text>
+  <rect class="cell" x="60" y="356" width="340" height="36" rx="7" />
+  <text class="cellText" x="230" y="379">重：要管环境、显存、并发</text>
+
+  <!-- 列2 -->
+  <rect class="cell" x="430" y="196" width="340" height="36" rx="7" />
+  <text class="cellText" x="600" y="219">onnxruntime（可有可无 Python）</text>
+  <rect class="cell" x="430" y="236" width="340" height="36" rx="7" />
+  <text class="cellText" x="600" y="259">INT8 量化后约 200~300MB 级</text>
+  <rect class="cell" x="430" y="276" width="340" height="36" rx="7" />
+  <text class="cellText" x="600" y="299">x86 / ARM / RISC-V / Android / iOS / 鸿蒙</text>
+  <rect class="cell" x="430" y="316" width="340" height="36" rx="7" />
+  <text class="cellKey" x="600" y="339">端侧与嵌入式，手机、开发板</text>
+  <rect class="cell" x="430" y="356" width="340" height="36" rx="7" />
+  <text class="cellText" x="600" y="379">中：要管模型转换与算子兼容</text>
+
+  <!-- 列3 -->
+  <rect class="cell" x="800" y="196" width="340" height="36" rx="7" />
+  <text class="cellText" x="970" y="219">无（单文件，不需要 Python）</text>
+  <rect class="cell" x="800" y="236" width="340" height="36" rx="7" />
+  <text class="cellText" x="970" y="259">量化后约 250MB 级</text>
+  <rect class="cell" x="800" y="276" width="340" height="36" rx="7" />
+  <text class="cellText" x="970" y="299">x86 / ARM CPU，纯 CPU 推理</text>
+  <rect class="cell" x="800" y="316" width="340" height="36" rx="7" />
+  <text class="cellKey" x="970" y="339">不想碰深度学习环境的最简部署</text>
+  <rect class="cell" x="800" y="356" width="340" height="36" rx="7" />
+  <text class="cellText" x="970" y="379">轻：一个可执行文件 + 一个模型</text>
+
+  <line x1="40" y1="424" x2="1160" y2="424" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+
+  <!-- 目标平台 -->
+  <text x="50" y="458" class="rowLabel" style="text-anchor:start;fill:#c7d2fe;font-size:14px;font-weight:600">端侧能跑在哪</text>
+
+  <rect class="chip" x="50" y="476" width="170" height="48" rx="10" />
+  <text class="chipText" x="135" y="506">服务器 x86 / GPU</text>
+
+  <rect class="chip" x="238" y="476" width="170" height="48" rx="10" />
+  <text class="chipText" x="323" y="506">树莓派 / 香橙派</text>
+
+  <rect class="chip" x="426" y="476" width="170" height="48" rx="10" />
+  <text class="chipText" x="511" y="506">RK3588 / RV1126</text>
+
+  <rect class="chip" x="614" y="476" width="170" height="48" rx="10" />
+  <text class="chipText" x="699" y="506">Android / iOS</text>
+
+  <rect class="chip" x="802" y="476" width="170" height="48" rx="10" />
+  <text class="chipText" x="887" y="506">开源鸿蒙 / openKylin</text>
+
+  <rect class="chip" x="990" y="476" width="170" height="48" rx="10" />
+  <text class="chipText" x="1075" y="506">ESP32（唤醒 + 前端）</text>
+
+  <!-- 注意事项 -->
+  <rect class="noteBox" x="50" y="548" width="1110" height="94" rx="12" />
+  <text class="note" x="80" y="578" style="font-weight:600;fill:#c7d2fe">上端侧前必须想清楚的两件事</text>
+  <text class="note" x="80" y="602">· <tspan style="fill:#cbd5e1">跨平台路线（sherpa-onnx）能把算子卸载到厂商 NPU</tspan>，这是纯 ggml 路线做不到的 —— 高通板子上差距明显。</text>
+  <text class="note" x="80" y="626">· 端侧通常只跑前端（唤醒、VAD）与轻量 ASR/TTS，<tspan style="fill:#cbd5e1">大模型仍放服务端</tspan>；把两者粘起来的那层协议，才是工程难点。</text>
+</svg>

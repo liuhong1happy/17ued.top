@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="MiniMax-H3 三段式系统：多模态输入经 H3-Context-IR 解析成结构化中间表示，交给开源的 H3-Base 生成 768p 音视频，再由 H3-Regenerate-2K 回灌生成 2K 成品">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .open { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.6); stroke-width: 1.4; }
+      .closed { fill: rgba(148,163,184,0.10); stroke: rgba(148,163,184,0.45); stroke-width: 1.2; stroke-dasharray: 6 5; }
+      .io { fill: rgba(52,211,153,0.10); stroke: rgba(52,211,153,0.45); stroke-width: 1.2; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .flowDash { stroke: #94a3b8; stroke-width: 1.8; fill: none; stroke-dasharray: 6 5; }
+      .t { fill: #e2e8f0; font-size: 15.5px; font-weight: 600; text-anchor: middle; }
+      .ts { fill: #94a3b8; font-size: 12px; text-anchor: middle; }
+      .tv { fill: #cbd5e1; font-size: 12.5px; text-anchor: middle; }
+      .badgeOpen { fill: #a5b4fc; font-size: 11.5px; text-anchor: middle; font-weight: 600; }
+      .badgeClosed { fill: #94a3b8; font-size: 11.5px; text-anchor: middle; }
+      .cap { fill: #a78bfa; font-size: 12.5px; text-anchor: middle; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <text class="note" x="30" y="42">输入：文本提示 / 首尾帧图像 / 参考视频 / 参考音频</text>
+
+  <!-- 输入 -->
+  <rect class="io" x="30" y="140" width="140" height="110" rx="14" />
+  <text class="t" x="100" y="182">多模态</text>
+  <text class="t" x="100" y="204">输入</text>
+  <text class="ts" x="100" y="228">≤12 个文件</text>
+
+  <line class="flow" x1="174" y1="195" x2="196" y2="195" marker-end="url(#ah)" />
+
+  <!-- Context-IR -->
+  <rect class="closed" x="200" y="135" width="250" height="120" rx="14" />
+  <text class="t" x="325" y="172">H3-Context-IR</text>
+  <text class="ts" x="325" y="196">多模态指令解析</text>
+  <text class="ts" x="325" y="218">产出结构化中间表示</text>
+  <text class="badgeClosed" x="325" y="242">闭源 · 仅 API</text>
+
+  <line class="flow" x1="454" y1="195" x2="486" y2="195" marker-end="url(#ah)" />
+
+  <!-- H3-Base -->
+  <rect class="open" x="490" y="130" width="250" height="130" rx="14" />
+  <text class="t" x="615" y="166">H3-Base</text>
+  <text class="ts" x="615" y="190">33B · 50 层单流 DiT</text>
+  <text class="ts" x="615" y="212">视频 + 音频联合去噪</text>
+  <text class="tv" x="615" y="236">输出 768p 带音频视频</text>
+  <text class="badgeOpen" x="615" y="254">开源权重</text>
+
+  <line class="flow" x1="744" y1="195" x2="776" y2="195" marker-end="url(#ah)" />
+
+  <!-- Regenerate-2K -->
+  <rect class="closed" x="780" y="135" width="250" height="120" rx="14" />
+  <text class="t" x="905" y="172">H3-Regenerate-2K</text>
+  <text class="ts" x="905" y="196">把 768p 结果回灌 base</text>
+  <text class="ts" x="905" y="218">做 in-context 再生成</text>
+  <text class="badgeClosed" x="905" y="242">闭源 · 仅 API</text>
+
+  <line class="flow" x1="1034" y1="195" x2="1060" y2="195" marker-end="url(#ah)" />
+
+  <!-- 输出 -->
+  <rect class="io" x="1064" y="140" width="106" height="110" rx="14" />
+  <text class="t" x="1117" y="182">2K</text>
+  <text class="t" x="1117" y="204">成品</text>
+  <text class="ts" x="1117" y="228">24 FPS</text>
+
+  <!-- 说明 -->
+  <line class="flowDash" x1="905" y1="259" x2="905" y2="300" marker-end="url(#ahg)" />
+  <line class="flowDash" x1="905" y1="300" x2="615" y2="300" />
+  <line class="flowDash" x1="615" y1="300" x2="615" y2="266" marker-end="url(#ahg)" />
+  <text class="cap" x="760" y="322">2K 不是外挂超分：模型看过自己的 768p 草稿再重画一遍</text>
+
+  <text class="note" x="30" y="368">工程含义：本地部署只能拿到三段中的一段。做端到端 2K，轻则自建 IR 与重生成环节，重则回落到官方 API。</text>
+</svg>

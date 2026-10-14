@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600" role="img" aria-label="Pipecat 1.3 的多 Worker 框架：WorkerRunner 装配多个 Worker，各 Worker 作为对等节点挂在共享的 WorkerBus 上，通过类型化消息协作">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .boxRunner { fill: rgba(251,191,36,0.16); stroke: rgba(251,191,36,0.55); stroke-width: 1.3; }
+      .runnerTx { fill: #fcd34d; font-size: 16px; font-weight: 700; text-anchor: middle; }
+      .runnerSub { fill: #d6d3d1; font-size: 11px; text-anchor: middle; }
+      .boxW1 { fill: rgba(99,102,241,0.20); stroke: rgba(129,140,248,0.6); stroke-width: 1.2; }
+      .boxW2 { fill: rgba(167,139,250,0.20); stroke: rgba(167,139,250,0.6); stroke-width: 1.2; }
+      .boxW3 { fill: rgba(56,189,248,0.17); stroke: rgba(56,189,248,0.55); stroke-width: 1.2; }
+      .t { fill: #e2e8f0; font-size: 14.5px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11px; text-anchor: middle; }
+      .bus { fill: rgba(52,211,153,0.13); stroke: rgba(52,211,153,0.5); stroke-width: 1.4; }
+      .busTx { fill: #6ee7b7; font-size: 16px; font-weight: 700; }
+      .busSub { fill: #94a3b8; font-size: 11.5px; }
+      .aUp { stroke: #64748b; stroke-width: 1.7; fill: none; }
+      .aBus { stroke: #34d399; stroke-width: 2; fill: none; }
+      .dash { stroke: rgba(148,163,184,0.45); stroke-width: 1.3; stroke-dasharray: 5 5; fill: none; }
+      .secTx { fill: #cbd5e1; font-size: 13px; font-weight: 600; }
+      .chip { fill: rgba(255,255,255,0.07); stroke: rgba(255,255,255,0.17); stroke-width: 1; }
+      .chipTx { fill: #e2e8f0; font-size: 12.5px; font-weight: 600; text-anchor: middle; }
+      .chipSub { fill: #94a3b8; font-size: 10.5px; text-anchor: middle; }
+      .noteBox { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.14); stroke-width: 1; }
+      .note { fill: #94a3b8; font-size: 12px; text-anchor: middle; }
+    </style>
+    <marker id="wAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b" />
+    </marker>
+    <marker id="wBus" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">Pipecat 1.3 多 Worker 框架</text>
+
+  <!-- Runner -->
+  <rect class="boxRunner" x="350" y="54" width="500" height="70" rx="12" />
+  <text class="runnerTx" x="600" y="84">WorkerRunner</text>
+  <text class="runnerSub" x="600" y="107">生命周期管理 · 自动创建总线 · 装配 Worker</text>
+
+  <line class="aUp" x1="600" y1="126" x2="600" y2="146" marker-end="url(#wAr)" />
+  <line class="dash" x1="250" y1="150" x2="950" y2="150" />
+  <line class="aUp" x1="250" y1="150" x2="250" y2="164" marker-end="url(#wAr)" />
+  <line class="aUp" x1="600" y1="150" x2="600" y2="164" marker-end="url(#wAr)" />
+  <line class="aUp" x1="950" y1="150" x2="950" y2="164" marker-end="url(#wAr)" />
+
+  <!-- Workers -->
+  <rect class="boxW1" x="110" y="170" width="280" height="92" rx="11" />
+  <text class="t" x="250" y="202">PipelineWorker</text>
+  <text class="s" x="250" y="224">接待 Agent</text>
+  <text class="s" x="250" y="244">一条流水线 = 一个 Agent</text>
+
+  <rect class="boxW2" x="460" y="170" width="280" height="92" rx="11" />
+  <text class="t" x="600" y="202">LLMWorker</text>
+  <text class="s" x="600" y="224">订票 Agent</text>
+  <text class="s" x="600" y="244">流水线 + @tool 自动注册</text>
+
+  <rect class="boxW3" x="810" y="170" width="280" height="92" rx="11" />
+  <text class="t" x="950" y="202">UIWorker</text>
+  <text class="s" x="950" y="224">前端界面</text>
+  <text class="s" x="950" y="244">通过 RTVI UI 通道驱动</text>
+
+  <!-- 连到总线 -->
+  <line class="aBus" x1="250" y1="266" x2="250" y2="294" marker-end="url(#wBus)" />
+  <line class="aBus" x1="600" y1="266" x2="600" y2="294" marker-end="url(#wBus)" />
+  <line class="aBus" x1="950" y1="266" x2="950" y2="294" marker-end="url(#wBus)" />
+
+  <!-- 总线 -->
+  <rect class="bus" x="60" y="300" width="1080" height="84" rx="14" />
+  <text class="busTx" x="110" y="336">WorkerBus</text>
+  <text class="busSub" x="110" y="360">Worker 之间是对等节点，通过总线通信，而不是直接持有引用</text>
+  <text class="busSub" x="1120" y="336" text-anchor="end">AsyncQueueBus（进程内）</text>
+  <text class="busSub" x="1120" y="360" text-anchor="end">RedisBus / PgmqBus（分布式）</text>
+
+  <!-- 消息 -->
+  <text class="secTx" x="60" y="422">总线上流动的是类型化消息</text>
+
+  <rect class="chip" x="60" y="434" width="340" height="58" rx="10" />
+  <text class="chipTx" x="230" y="458">TranscriptionUpdate</text>
+  <text class="chipSub" x="230" y="477">转写更新</text>
+
+  <rect class="chip" x="430" y="434" width="340" height="58" rx="10" />
+  <text class="chipTx" x="600" y="458">HandoffRequest</text>
+  <text class="chipSub" x="600" y="477">转接请求</text>
+
+  <rect class="chip" x="800" y="434" width="340" height="58" rx="10" />
+  <text class="chipTx" x="970" y="458">UIEvent</text>
+  <text class="chipSub" x="970" y="477">界面事件</text>
+
+  <rect class="noteBox" x="50" y="516" width="1100" height="62" rx="12" />
+  <text class="note" x="600" y="542">API 细节：先 runner.add_workers([...]) 再 runner.run()；不要给 Worker 构造函数传 bus=</text>
+  <text class="note" x="600" y="564">旧写法 WorkerRunner.run(worker=...) 已废弃 —— 同一套 Agent 代码可切到 RedisBus 变成分布式</text>
+</svg>

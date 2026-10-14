@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 740" width="1200" height="740" role="img" aria-label="一次典型 SIP 呼叫的完整信令时序：注册与认证、INVITE 三次握手建立会话、RTP 双向媒体传输、BYE 拆除会话">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .lifeHead { fill: #e2e8f0; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .lifeSub { fill: #94a3b8; font-size: 11px; text-anchor: middle; }
+      .boxA { fill: rgba(99,102,241,0.18); stroke: rgba(129,140,248,0.55); stroke-width: 1.2; }
+      .boxB { fill: rgba(56,189,248,0.16); stroke: rgba(56,189,248,0.5); stroke-width: 1.2; }
+      .boxC { fill: rgba(52,211,153,0.15); stroke: rgba(52,211,153,0.5); stroke-width: 1.2; }
+      .life { stroke: rgba(148,163,184,0.35); stroke-width: 1; stroke-dasharray: 4 5; }
+      .msg { font-size: 13px; }
+      .reg { fill: #c7d2fe; } .inv { fill: #7dd3fc; } .med { fill: #6ee7b7; } .end { fill: #f9a8d4; }
+      .bold { font-weight: 600; }
+      .phase { fill: #64748b; font-size: 12.5px; font-weight: 600; text-anchor: middle; }
+      .divider { stroke: rgba(148,163,184,0.28); stroke-width: 1; stroke-dasharray: 6 6; }
+      .divTx { fill: #64748b; font-size: 11.5px; text-anchor: middle; }
+      .aReg { stroke: #818cf8; stroke-width: 1.8; fill: none; }
+      .aInv { stroke: #38bdf8; stroke-width: 1.8; fill: none; }
+      .aMed { stroke: #34d399; stroke-width: 2.4; fill: none; }
+      .aEnd { stroke: #f9a8d4; stroke-width: 1.8; fill: none; }
+      .note { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+    </style>
+    <marker id="mReg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="mInv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8" />
+    </marker>
+    <marker id="mMed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+    <marker id="mEnd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f9a8d4" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">一次典型呼叫的信令时序</text>
+
+  <!-- 三条生命线 -->
+  <rect class="boxA" x="70" y="52" width="200" height="50" rx="10" />
+  <text class="lifeHead" x="170" y="74">主叫 UA</text>
+  <text class="lifeSub" x="170" y="92">软电话 / 话机</text>
+
+  <rect class="boxB" x="500" y="52" width="200" height="50" rx="10" />
+  <text class="lifeHead" x="600" y="74">SIP 代理 / 注册服务器</text>
+  <text class="lifeSub" x="600" y="92">Kamailio / SBC</text>
+
+  <rect class="boxC" x="930" y="52" width="200" height="50" rx="10" />
+  <text class="lifeHead" x="1030" y="74">被叫 UA</text>
+  <text class="lifeSub" x="1030" y="92">软电话 / 网关</text>
+
+  <line class="life" x1="170" y1="102" x2="170" y2="700" />
+  <line class="life" x1="600" y1="102" x2="600" y2="700" />
+  <line class="life" x1="1030" y1="102" x2="1030" y2="700" />
+
+  <!-- 阶段标签 -->
+  <text class="phase" transform="translate(28,196) rotate(-90)">注册与认证</text>
+  <text class="phase" transform="translate(28,422) rotate(-90)">呼叫建立</text>
+  <text class="phase" transform="translate(28,578) rotate(-90)">媒体传输</text>
+  <text class="phase" transform="translate(28,640) rotate(-90)">拆除会话</text>
+
+  <!-- 注册 -->
+  <line class="aReg" x1="170" y1="146" x2="592" y2="146" marker-end="url(#mReg)" />
+  <text class="msg reg bold" x="180" y="140">REGISTER（绑定 AOR 到 Contact）</text>
+
+  <line class="aReg" x1="600" y1="178" x2="178" y2="178" marker-end="url(#mReg)" />
+  <text class="msg reg" x="592" y="172" text-anchor="end">401 Unauthorized + WWW-Authenticate</text>
+
+  <line class="aReg" x1="170" y1="210" x2="592" y2="210" marker-end="url(#mReg)" />
+  <text class="msg reg bold" x="180" y="204">REGISTER + Authorization（摘要认证应答）</text>
+
+  <line class="aReg" x1="600" y1="242" x2="178" y2="242" marker-end="url(#mReg)" />
+  <text class="msg reg" x="592" y="236" text-anchor="end">200 OK（注册成功，Expires 生效）</text>
+
+  <line class="divider" x1="60" y1="272" x2="1140" y2="272" />
+  <text class="divTx" x="600" y="267">注册完成 · 之后需要按 Expires 周期刷新，否则位置绑定失效</text>
+
+  <!-- 呼叫建立 -->
+  <line class="aInv" x1="170" y1="306" x2="592" y2="306" marker-end="url(#mInv)" />
+  <text class="msg inv bold" x="180" y="300">INVITE（SDP offer：我的编解码与收流地址）</text>
+
+  <line class="aInv" x1="600" y1="338" x2="1022" y2="338" marker-end="url(#mInv)" />
+  <text class="msg inv" x="610" y="332">INVITE（按注册位置转发到被叫）</text>
+
+  <line class="aInv" x1="600" y1="378" x2="178" y2="378" marker-end="url(#mInv)" />
+  <text class="msg inv" x="592" y="372" text-anchor="end">100 Trying（抑制主叫重传）</text>
+
+  <line class="aInv" x1="1030" y1="410" x2="608" y2="410" marker-end="url(#mInv)" />
+  <text class="msg inv" x="1022" y="404" text-anchor="end">180 Ringing（振铃）</text>
+
+  <line class="aInv" x1="600" y1="442" x2="178" y2="442" marker-end="url(#mInv)" />
+  <text class="msg inv" x="592" y="436" text-anchor="end">180 Ringing</text>
+
+  <line class="aInv" x1="1030" y1="474" x2="608" y2="474" marker-end="url(#mInv)" />
+  <text class="msg inv bold" x="1022" y="468" text-anchor="end">200 OK（SDP answer：确立对话，打上 To tag）</text>
+
+  <line class="aInv" x1="600" y1="506" x2="178" y2="506" marker-end="url(#mInv)" />
+  <text class="msg inv" x="592" y="500" text-anchor="end">200 OK</text>
+
+  <line class="aInv" x1="170" y1="538" x2="1022" y2="538" marker-end="url(#mInv)" />
+  <text class="msg inv bold" x="180" y="532">ACK（2xx 的 ACK 是新事务，必须走对话内路由）</text>
+
+  <!-- 媒体 -->
+  <line class="aMed" x1="170" y1="578" x2="1022" y2="578" marker-end="url(#mMed)" marker-start="url(#mMed)" />
+  <text class="msg med bold" x="600" y="572" text-anchor="middle">RTP / RTCP 双向媒体流（信令不承载语音）</text>
+
+  <!-- 拆除 -->
+  <line class="aEnd" x1="170" y1="622" x2="1022" y2="622" marker-end="url(#mEnd)" />
+  <text class="msg end bold" x="180" y="616">BYE（只能结束已建立的对话）</text>
+
+  <line class="aEnd" x1="1030" y1="654" x2="178" y2="654" marker-end="url(#mEnd)" />
+  <text class="msg end" x="1022" y="648" text-anchor="end">200 OK（对话结束）</text>
+
+  <text class="note" x="600" y="708">注：CANCEL 只能取消尚未收到最终响应的 INVITE，一旦收到 200 OK 就只能用 BYE 结束</text>
+</svg>

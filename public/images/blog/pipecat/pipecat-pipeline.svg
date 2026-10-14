@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600" role="img" aria-label="Pipecat 流水线结构：音频帧依次经过传输层输入、STT、用户上下文聚合、LLM、TTS、传输层输出与助手上下文聚合；下方是 SystemFrame、DataFrame、ControlFrame 三类帧的分层">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .boxIo { fill: rgba(148,163,184,0.16); stroke: rgba(148,163,184,0.5); stroke-width: 1.2; }
+      .boxStt { fill: rgba(99,102,241,0.20); stroke: rgba(129,140,248,0.6); stroke-width: 1.2; }
+      .boxCtx { fill: rgba(56,189,248,0.17); stroke: rgba(56,189,248,0.55); stroke-width: 1.2; }
+      .boxLlm { fill: rgba(167,139,250,0.20); stroke: rgba(167,139,250,0.6); stroke-width: 1.2; }
+      .boxTts { fill: rgba(52,211,153,0.18); stroke: rgba(52,211,153,0.58); stroke-width: 1.2; }
+      .t { fill: #e2e8f0; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 10.5px; text-anchor: middle; }
+      .flow { stroke: #64748b; stroke-width: 1.8; fill: none; }
+      .anno { fill: #94a3b8; font-size: 13px; text-anchor: middle; }
+      .laneSys { fill: rgba(249,168,212,0.10); stroke: rgba(249,168,212,0.42); stroke-width: 1.2; }
+      .laneData { fill: rgba(99,102,241,0.10); stroke: rgba(129,140,248,0.42); stroke-width: 1.2; }
+      .laneCtrl { fill: rgba(56,189,248,0.10); stroke: rgba(56,189,248,0.42); stroke-width: 1.2; }
+      .laneTitleSys { fill: #f9a8d4; font-size: 14px; font-weight: 700; }
+      .laneTitleData { fill: #c7d2fe; font-size: 14px; font-weight: 700; }
+      .laneTitleCtrl { fill: #7dd3fc; font-size: 14px; font-weight: 700; }
+      .laneSub { fill: #94a3b8; font-size: 10.5px; }
+      .chip { fill: rgba(255,255,255,0.07); stroke: rgba(255,255,255,0.17); stroke-width: 1; }
+      .chipTx { fill: #e2e8f0; font-size: 11.5px; font-weight: 600; text-anchor: middle; }
+      .chipSub { fill: #94a3b8; font-size: 10px; text-anchor: middle; }
+      .note { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+    </style>
+    <marker id="kAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">Pipecat 流水线：一切都在流动</text>
+
+  <!-- 流水线 -->
+  <rect class="boxIo" x="50" y="64" width="140" height="96" rx="10" />
+  <text class="t" x="120" y="98">transport</text>
+  <text class="t" x="120" y="116">.input()</text>
+  <text class="s" x="120" y="140">音频进</text>
+
+  <rect class="boxStt" x="210" y="64" width="140" height="96" rx="10" />
+  <text class="t" x="280" y="108">STT</text>
+  <text class="s" x="280" y="132">语音转文字</text>
+
+  <rect class="boxCtx" x="370" y="64" width="140" height="96" rx="10" />
+  <text class="t" x="440" y="100">user</text>
+  <text class="t" x="440" y="118">aggregator</text>
+  <text class="s" x="440" y="140">攒用户轮次</text>
+
+  <rect class="boxLlm" x="530" y="64" width="140" height="96" rx="10" />
+  <text class="t" x="600" y="108">LLM</text>
+  <text class="s" x="600" y="132">流式生成</text>
+
+  <rect class="boxTts" x="690" y="64" width="140" height="96" rx="10" />
+  <text class="t" x="760" y="108">TTS</text>
+  <text class="s" x="760" y="132">流式合成</text>
+
+  <rect class="boxIo" x="850" y="64" width="140" height="96" rx="10" />
+  <text class="t" x="920" y="98">transport</text>
+  <text class="t" x="920" y="116">.output()</text>
+  <text class="s" x="920" y="140">音频出</text>
+
+  <rect class="boxCtx" x="1010" y="64" width="140" height="96" rx="10" />
+  <text class="t" x="1080" y="100">assistant</text>
+  <text class="t" x="1080" y="118">aggregator</text>
+  <text class="s" x="1080" y="140">记助手回复</text>
+
+  <line class="flow" x1="190" y1="112" x2="206" y2="112" marker-end="url(#kAr)" />
+  <line class="flow" x1="350" y1="112" x2="366" y2="112" marker-end="url(#kAr)" />
+  <line class="flow" x1="510" y1="112" x2="526" y2="112" marker-end="url(#kAr)" />
+  <line class="flow" x1="670" y1="112" x2="686" y2="112" marker-end="url(#kAr)" />
+  <line class="flow" x1="830" y1="112" x2="846" y2="112" marker-end="url(#kAr)" />
+  <line class="flow" x1="990" y1="112" x2="1006" y2="112" marker-end="url(#kAr)" />
+
+  <text class="anno" x="600" y="196">每个处理器各自异步运行：LLM 边生成、TTS 边合成、音频边播 —— 延迟重叠而非累加</text>
+
+  <!-- 帧分类 -->
+  <text class="anno" x="600" y="228" style="font-weight:600;fill:#cbd5e1">帧分三类，处理语义完全不同</text>
+
+  <rect class="laneSys" x="50" y="244" width="1100" height="80" rx="12" />
+  <text class="laneTitleSys" x="72" y="276">SystemFrame</text>
+  <text class="laneSub" x="72" y="296">高优先级 · 打断时不丢弃</text>
+
+  <rect class="chip" x="250" y="262" width="200" height="44" rx="8" />
+  <text class="chipTx" x="350" y="282">InterruptionFrame</text>
+  <text class="chipSub" x="350" y="298">打断信号</text>
+  <rect class="chip" x="468" y="262" width="200" height="44" rx="8" />
+  <text class="chipTx" x="568" y="282">UserStartedSpeaking</text>
+  <text class="chipSub" x="568" y="298">用户开始说话</text>
+  <rect class="chip" x="686" y="262" width="200" height="44" rx="8" />
+  <text class="chipTx" x="786" y="282">InputAudioRawFrame</text>
+  <text class="chipSub" x="786" y="298">输入音频</text>
+  <rect class="chip" x="904" y="262" width="200" height="44" rx="8" />
+  <text class="chipTx" x="1004" y="282">ErrorFrame</text>
+  <text class="chipSub" x="1004" y="298">错误</text>
+
+  <rect class="laneData" x="50" y="336" width="1100" height="80" rx="12" />
+  <text class="laneTitleData" x="72" y="368">DataFrame</text>
+  <text class="laneSub" x="72" y="388">按序排队 · 顺序即语义</text>
+
+  <rect class="chip" x="250" y="354" width="160" height="44" rx="8" />
+  <text class="chipTx" x="330" y="374">OutputAudio</text>
+  <text class="chipSub" x="330" y="390">输出音频</text>
+  <rect class="chip" x="426" y="354" width="160" height="44" rx="8" />
+  <text class="chipTx" x="506" y="374">TextFrame</text>
+  <text class="chipSub" x="506" y="390">文本</text>
+  <rect class="chip" x="602" y="354" width="160" height="44" rx="8" />
+  <text class="chipTx" x="682" y="374">Transcription</text>
+  <text class="chipSub" x="682" y="390">转写结果</text>
+  <rect class="chip" x="778" y="354" width="160" height="44" rx="8" />
+  <text class="chipTx" x="858" y="374">LLMTextFrame</text>
+  <text class="chipSub" x="858" y="390">LLM 输出</text>
+  <rect class="chip" x="954" y="354" width="160" height="44" rx="8" />
+  <text class="chipTx" x="1034" y="374">TTSTextFrame</text>
+  <text class="chipSub" x="1034" y="390">送 TTS 文本</text>
+
+  <rect class="laneCtrl" x="50" y="428" width="1100" height="80" rx="12" />
+  <text class="laneTitleCtrl" x="72" y="460">ControlFrame</text>
+  <text class="laneSub" x="72" y="480">按序处理 · 阶段边界</text>
+
+  <rect class="chip" x="250" y="446" width="220" height="44" rx="8" />
+  <text class="chipTx" x="360" y="466">EndFrame</text>
+  <text class="chipSub" x="360" y="482">结束</text>
+  <rect class="chip" x="490" y="446" width="220" height="44" rx="8" />
+  <text class="chipTx" x="600" y="466">TTSStartedFrame</text>
+  <text class="chipSub" x="600" y="482">TTS 开始</text>
+  <rect class="chip" x="730" y="446" width="260" height="44" rx="8" />
+  <text class="chipTx" x="860" y="466">LLMFullResponseStartFrame</text>
+  <text class="chipSub" x="860" y="482">LLM 响应开始</text>
+
+  <text class="note" x="600" y="552">打断信号属于 SystemFrame，不会被正在清空的音频队列挡住 —— 这是打断能「立刻」生效的关键</text>
+  <text class="note" x="600" y="576">三类帧的分层，是 Pipecat 与「用 asyncio 队列手工串服务」最本质的区别</text>
+</svg>

@@ -19,6 +19,9 @@ import sqlMysqlPostgresql from "../assets/posts/sql-mysql-postgresql.md?raw";
 import videoGenerationDigitalHuman from "../assets/posts/video-generation-digital-human.md?raw";
 import opensourceTtsAsr from "../assets/posts/opensource-tts-asr.md?raw";
 import forwardDeployedEngineer from "../assets/posts/forward-deployed-engineer.md?raw";
+import sipProtocol from "../assets/posts/sip-protocol.md?raw";
+import gb28181 from "../assets/posts/gb28181.md?raw";
+import pipecat from "../assets/posts/pipecat.md?raw";
 
 export interface Post {
   slug: string;
@@ -220,6 +223,33 @@ const POSTS_BY_ADDED: Post[] = [
       "FDE 是这两年 AI 行业涨得最快的岗位，也最容易被误读成售前、外包或实施。本文借开源电子书《FDE 入门到精通：八堂课》梳理这套方法论：从 Palantir 的起源、Echo/Delta 分工与 Ontology，到「平台成熟度 × 客户差异度」判断框架、Ramp 的单范围控制案例，再到五层能力与「现场铺碎石路、产品修高速公路」的价值闭环；并说清它和售前、外包、咨询的三条边界，以及国内市场滑向高级驻场外包的风险。",
     tags: ["FDE", "前沿部署工程师", "AI 落地", "Palantir", "解决方案", "组织治理", "职业发展"],
   },
+  {
+    slug: "sip-protocol",
+    title: "SIP 协议详解：把电话网的控制面搬到 IP 上",
+    date: "2026-10-14",
+    readTime: "约 32 分钟",
+    excerpt:
+      "SIP 不传语音——它只负责回答谁找谁、用什么地址收发、用什么编解码、什么时候结束。本文从三层分工讲起，拆解消息骨架（Via/Contact/CSeq 的坑）、事务与对话的状态机、INVITE 三次握手与 CANCEL/BYE 的边界，再落到 NAT 穿透的五种手段、代理与 B2BUA 的选型分水岭、WebRTC 互通的三处硬性差异，最后给出一份症状到病因的排障对照表。",
+    tags: ["SIP", "VoIP", "WebRTC", "NAT", "Kamailio", "FreeSWITCH", "信令协议"],
+  },
+  {
+    slug: "gb28181",
+    title: "GB/T 28181 国标协议详解：视频监控联网的信令与媒体",
+    date: "2026-10-14",
+    readTime: "约 30 分钟",
+    excerpt:
+      "安防行业能不能做国标，决定了能不能进这个市场。本文拆解 GB/T 28181 的完整骨架：20 位设备编码的五段规则与类型编码表、SIP 之上的 MANSCDP/MANSRTSP 扩展、注册鉴权与心跳、目录分页、INVITE 点播中 SSRC 的十位生成规则与 TCP 主动/被动模式、历史回放与云台报警、PS 封装的媒体传输，以及 2022 版相对 2016 的十二项关键变化与开源平台部署排障清单。",
+    tags: ["GB28181", "国标", "安防监控", "SIP", "ZLMediaKit", "WVP-PRO", "视频联网"],
+  },
+  {
+    slug: "pipecat",
+    title: "Pipecat：构建实时语音 AI Agent 的开源编排框架",
+    date: "2026-10-14",
+    readTime: "约 28 分钟",
+    excerpt:
+      "实时语音 Agent 的难点从来不是模型，而是并发、打断与上下文一致性。本文讲清 Pipecat 的四层抽象——Frame、FrameProcessor、Pipeline、Worker，SystemFrame/DataFrame/ControlFrame 的分层为何是打断能立刻生效的关键，一条最小可用流水线怎么写，500-800ms 延迟预算怎么挤，以及 1.3 的多 Worker 框架、电话网接入的三条路径与 LiveKit Agents 的选型对比。",
+    tags: ["Pipecat", "语音 Agent", "实时语音", "STT", "TTS", "WebRTC", "开源框架"],
+  },
 ];
 
 /**
@@ -256,4 +286,7 @@ export const POST_CONTENT: Record<string, string> = {
   "video-generation-digital-human": videoGenerationDigitalHuman,
   "opensource-tts-asr": opensourceTtsAsr,
   "forward-deployed-engineer": forwardDeployedEngineer,
+  "sip-protocol": sipProtocol,
+  "gb28181": gb28181,
+  "pipecat": pipecat,
 };

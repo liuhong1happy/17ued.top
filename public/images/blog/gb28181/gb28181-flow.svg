@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" width="1200" height="860" role="img" aria-label="GB/T 28181 核心信令时序：注册与鉴权、心跳保活、目录查询、INVITE 点播与 PS 媒体推流、历史录像检索与回放控制">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .lifeHead { fill: #e2e8f0; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .lifeSub { fill: #94a3b8; font-size: 11px; text-anchor: middle; }
+      .boxDev { fill: rgba(148,163,184,0.15); stroke: rgba(148,163,184,0.45); stroke-width: 1.2; }
+      .boxSig { fill: rgba(99,102,241,0.18); stroke: rgba(129,140,248,0.55); stroke-width: 1.2; }
+      .boxMed { fill: rgba(52,211,153,0.15); stroke: rgba(52,211,153,0.5); stroke-width: 1.2; }
+      .life { stroke: rgba(148,163,184,0.35); stroke-width: 1; stroke-dasharray: 4 5; }
+      .msg { font-size: 12.5px; }
+      .reg { fill: #c7d2fe; } .sky { fill: #7dd3fc; } .vio { fill: #c4b5fd; }
+      .med { fill: #6ee7b7; } .pb { fill: #f9a8d4; }
+      .bold { font-weight: 600; }
+      .phase { fill: #64748b; font-size: 12.5px; font-weight: 600; text-anchor: middle; }
+      .divider { stroke: rgba(148,163,184,0.28); stroke-width: 1; stroke-dasharray: 6 6; }
+      .divTx { fill: #64748b; font-size: 11.5px; text-anchor: middle; }
+      .aReg { stroke: #818cf8; stroke-width: 1.8; fill: none; }
+      .aSky { stroke: #38bdf8; stroke-width: 1.8; fill: none; }
+      .aVio { stroke: #a78bfa; stroke-width: 1.8; fill: none; }
+      .aMed { stroke: #34d399; stroke-width: 2.6; fill: none; }
+      .aPb { stroke: #f9a8d4; stroke-width: 1.8; fill: none; }
+      .note { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+    </style>
+    <marker id="qReg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="qSky" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8" />
+    </marker>
+    <marker id="qVio" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a78bfa" />
+    </marker>
+    <marker id="qMed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+    <marker id="qPb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f9a8d4" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">GB/T 28181 核心信令时序</text>
+
+  <rect class="boxDev" x="70" y="52" width="200" height="50" rx="10" />
+  <text class="lifeHead" x="170" y="74">前端设备</text>
+  <text class="lifeSub" x="170" y="92">IPC / NVR / 编码器</text>
+
+  <rect class="boxSig" x="500" y="52" width="200" height="50" rx="10" />
+  <text class="lifeHead" x="600" y="74">平台（SIP 信令）</text>
+  <text class="lifeSub" x="600" y="92">注册 · 目录 · 点播</text>
+
+  <rect class="boxMed" x="930" y="52" width="200" height="50" rx="10" />
+  <text class="lifeHead" x="1030" y="74">流媒体服务器</text>
+  <text class="lifeSub" x="1030" y="92">接收 PS 流并分发</text>
+
+  <line class="life" x1="170" y1="102" x2="170" y2="800" />
+  <line class="life" x1="600" y1="102" x2="600" y2="800" />
+  <line class="life" x1="1030" y1="102" x2="1030" y2="800" />
+
+  <text class="phase" transform="translate(28,187) rotate(-90)">注册与鉴权</text>
+  <text class="phase" transform="translate(28,303) rotate(-90)">心跳保活</text>
+  <text class="phase" transform="translate(28,389) rotate(-90)">目录同步</text>
+  <text class="phase" transform="translate(28,508) rotate(-90)">实时点播</text>
+  <text class="phase" transform="translate(28,693) rotate(-90)">历史回放</text>
+
+  <!-- 注册 -->
+  <line class="aReg" x1="170" y1="142" x2="592" y2="142" marker-end="url(#qReg)" />
+  <text class="msg reg bold" x="180" y="136">REGISTER（携带设备编码与 Contact）</text>
+
+  <line class="aReg" x1="600" y1="172" x2="178" y2="172" marker-end="url(#qReg)" />
+  <text class="msg reg" x="592" y="166" text-anchor="end">401 Unauthorized + WWW-Authenticate</text>
+
+  <line class="aReg" x1="170" y1="202" x2="592" y2="202" marker-end="url(#qReg)" />
+  <text class="msg reg bold" x="180" y="196">REGISTER + Authorization（摘要认证）</text>
+
+  <line class="aReg" x1="600" y1="232" x2="178" y2="232" marker-end="url(#qReg)" />
+  <text class="msg reg" x="592" y="226" text-anchor="end">200 OK（Expires 通常 3600s）</text>
+
+  <line class="divider" x1="60" y1="258" x2="1140" y2="258" />
+  <text class="divTx" x="600" y="253">注册维持位置绑定，心跳维持在线状态 —— 两个独立机制</text>
+
+  <!-- 心跳 -->
+  <line class="aSky" x1="170" y1="288" x2="592" y2="288" marker-end="url(#qSky)" />
+  <text class="msg sky bold" x="180" y="282">Notify / Keepalive（MESSAGE + XML，周期发送）</text>
+
+  <line class="aSky" x1="600" y1="318" x2="178" y2="318" marker-end="url(#qSky)" />
+  <text class="msg sky" x="592" y="312" text-anchor="end">200 OK</text>
+
+  <line class="divider" x1="60" y1="344" x2="1140" y2="344" />
+  <text class="divTx" x="600" y="339">连续 3 次心跳失败即判定离线</text>
+
+  <!-- 目录 -->
+  <line class="aSky" x1="600" y1="374" x2="178" y2="374" marker-end="url(#qSky)" />
+  <text class="msg sky bold" x="592" y="368" text-anchor="end">Catalog Query（SN 配对 + DeviceID）</text>
+
+  <line class="aSky" x1="170" y1="404" x2="592" y2="404" marker-end="url(#qSky)" />
+  <text class="msg sky" x="180" y="398">Catalog Response（SumNum 总数 + DeviceList 分页）</text>
+
+  <line class="divider" x1="60" y1="430" x2="1140" y2="430" />
+  <text class="divTx" x="600" y="425">通道数多时必须分页，否则 UDP 分片会截断 XML</text>
+
+  <!-- 点播 -->
+  <line class="aVio" x1="600" y1="460" x2="178" y2="460" marker-end="url(#qVio)" />
+  <text class="msg vio bold" x="592" y="454" text-anchor="end">INVITE（SDP：s=Play，y=SSRC，收流地址）</text>
+
+  <line class="aVio" x1="170" y1="490" x2="592" y2="490" marker-end="url(#qVio)" />
+  <text class="msg vio" x="180" y="484">200 OK（SDP answer：设备的媒体参数）</text>
+
+  <line class="aVio" x1="600" y1="520" x2="178" y2="520" marker-end="url(#qVio)" />
+  <text class="msg vio" x="592" y="514" text-anchor="end">ACK</text>
+
+  <line class="aMed" x1="170" y1="556" x2="1022" y2="556" marker-end="url(#qMed)" />
+  <text class="msg med bold" x="600" y="550" text-anchor="middle">PS over RTP：设备主动向媒体服务器推流，SSRC 标识这一路点播</text>
+
+  <line class="divider" x1="60" y1="588" x2="1140" y2="588" />
+  <text class="divTx" x="600" y="583">媒体流方向是「设备推给媒体服务器」，不是平台去拉</text>
+
+  <!-- 回放 -->
+  <line class="aPb" x1="600" y1="618" x2="178" y2="618" marker-end="url(#qPb)" />
+  <text class="msg pb bold" x="592" y="612" text-anchor="end">RecordInfo Query（按时间段检索录像）</text>
+
+  <line class="aPb" x1="170" y1="648" x2="592" y2="648" marker-end="url(#qPb)" />
+  <text class="msg pb" x="180" y="642">RecordInfo Response（文件列表）</text>
+
+  <line class="aPb" x1="600" y1="678" x2="178" y2="678" marker-end="url(#qPb)" />
+  <text class="msg pb bold" x="592" y="672" text-anchor="end">INVITE（s=Playback，t=起止时间 UNIX 时间戳）</text>
+
+  <line class="aPb" x1="170" y1="708" x2="592" y2="708" marker-end="url(#qPb)" />
+  <text class="msg pb" x="180" y="702">200 OK</text>
+
+  <line class="aPb" x1="600" y1="738" x2="178" y2="738" marker-end="url(#qPb)" />
+  <text class="msg pb" x="592" y="732" text-anchor="end">INFO + MANSRTSP（PLAY / PAUSE / 倍速 / 拖动）</text>
+
+  <line class="aPb" x1="600" y1="768" x2="178" y2="768" marker-end="url(#qPb)" />
+  <text class="msg pb" x="592" y="762" text-anchor="end">BYE（结束回放）</text>
+
+  <text class="note" x="600" y="834">设备与平台时钟必须 NTP 同步，否则录像检索的时间段完全对不上</text>
+</svg>

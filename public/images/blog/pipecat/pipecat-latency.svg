@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 540" width="1200" height="540" role="img" aria-label="实时语音的延迟预算对比：串行实现需要约 1200 毫秒用户才听到第一个字，并行流式实现约 750 毫秒即可出声，其余内容在播放中继续生成">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .barTitle { fill: #cbd5e1; font-size: 14px; font-weight: 600; }
+      .segNet { fill: rgba(148,163,184,0.35); stroke: rgba(148,163,184,0.5); stroke-width: 1; }
+      .segVad { fill: rgba(249,168,212,0.35); stroke: rgba(249,168,212,0.55); stroke-width: 1; }
+      .segStt { fill: rgba(99,102,241,0.45); stroke: rgba(129,140,248,0.6); stroke-width: 1; }
+      .segLlm { fill: rgba(167,139,250,0.45); stroke: rgba(167,139,250,0.65); stroke-width: 1; }
+      .segTts { fill: rgba(52,211,153,0.40); stroke: rgba(52,211,153,0.6); stroke-width: 1; }
+      .segMore { fill: rgba(52,211,153,0.12); stroke: rgba(52,211,153,0.45); stroke-width: 1; stroke-dasharray: 5 4; }
+      .segTx { fill: #f1f5f9; font-size: 12px; font-weight: 600; text-anchor: middle; }
+      .segSub { fill: #cbd5e1; font-size: 10.5px; text-anchor: middle; }
+      .segMoreTx { fill: #6ee7b7; font-size: 11.5px; font-weight: 600; text-anchor: middle; }
+      .mark { stroke: #f8fafc; stroke-width: 1.4; stroke-dasharray: 5 4; }
+      .markTx { fill: #e2e8f0; font-size: 12.5px; font-weight: 600; }
+      .axis { stroke: rgba(148,163,184,0.35); stroke-width: 1; }
+      .axisTx { fill: #64748b; font-size: 11px; text-anchor: middle; }
+      .note { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <text x="600" y="32" class="head">延迟预算：串行 vs 流式并行</text>
+
+  <!-- 串行 -->
+  <text class="barTitle" x="80" y="86">串行实现：等每一段跑完再进入下一段</text>
+
+  <rect class="segNet" x="80" y="100" width="27" height="76" rx="6" />
+  <rect class="segVad" x="107" y="100" width="108" height="76" />
+  <rect class="segStt" x="215" y="100" width="225" height="76" />
+  <rect class="segLlm" x="440" y="100" width="450" height="76" />
+  <rect class="segTts" x="890" y="100" width="225" height="76" />
+  <rect class="segNet" x="1115" y="100" width="45" height="76" rx="6" />
+
+  <text class="segTx" x="161" y="132">VAD</text>
+  <text class="segSub" x="161" y="150">120ms</text>
+  <text class="segTx" x="327" y="132">STT</text>
+  <text class="segSub" x="327" y="150">250ms</text>
+  <text class="segTx" x="665" y="132">LLM 生成完整回复</text>
+  <text class="segSub" x="665" y="150">500ms</text>
+  <text class="segTx" x="1002" y="132">TTS 合成</text>
+  <text class="segSub" x="1002" y="150">250ms</text>
+
+  <line class="mark" x1="1160" y1="92" x2="1160" y2="184" />
+  <text class="markTx" x="1160" y="200" text-anchor="end">用户听到第一个字 ≈ 1200ms（要等整段合成完）</text>
+
+  <!-- 流式并行 -->
+  <text class="barTitle" x="80" y="250">流式并行实现：首字优先出声，其余内容边播边生成</text>
+
+  <rect class="segNet" x="80" y="264" width="27" height="76" rx="6" />
+  <rect class="segVad" x="107" y="264" width="108" height="76" />
+  <rect class="segStt" x="215" y="264" width="225" height="76" />
+  <rect class="segLlm" x="440" y="264" width="180" height="76" />
+  <rect class="segTts" x="620" y="264" width="90" height="76" />
+  <rect class="segNet" x="710" y="264" width="45" height="76" />
+  <rect class="segMore" x="755" y="264" width="405" height="76" rx="6" />
+
+  <text class="segTx" x="161" y="296">VAD</text>
+  <text class="segSub" x="161" y="314">120ms</text>
+  <text class="segTx" x="327" y="296">STT</text>
+  <text class="segSub" x="327" y="314">250ms</text>
+  <text class="segTx" x="530" y="296">LLM 首 token</text>
+  <text class="segSub" x="530" y="314">200ms</text>
+  <text class="segTx" x="665" y="296">TTS 首字节</text>
+  <text class="segSub" x="665" y="314">100ms</text>
+  <text class="segMoreTx" x="957" y="308">其余内容在播放中继续生成（用户此时已经在听了）</text>
+
+  <line class="mark" x1="755" y1="256" x2="755" y2="348" />
+  <text class="markTx" x="755" y="364" text-anchor="middle">用户听到第一个字 ≈ 750ms</text>
+
+  <!-- 时间轴 -->
+  <line class="axis" x1="80" y1="396" x2="1160" y2="396" />
+  <line class="axis" x1="80" y1="391" x2="80" y2="401" />
+  <text class="axisTx" x="80" y="416">0</text>
+  <line class="axis" x1="260" y1="391" x2="260" y2="401" />
+  <text class="axisTx" x="260" y="416">200</text>
+  <line class="axis" x1="440" y1="391" x2="440" y2="401" />
+  <text class="axisTx" x="440" y="416">400</text>
+  <line class="axis" x1="620" y1="391" x2="620" y2="401" />
+  <text class="axisTx" x="620" y="416">600</text>
+  <line class="axis" x1="800" y1="391" x2="800" y2="401" />
+  <text class="axisTx" x="800" y="416">800</text>
+  <line class="axis" x1="980" y1="391" x2="980" y2="401" />
+  <text class="axisTx" x="980" y="416">1000</text>
+  <line class="axis" x1="1160" y1="391" x2="1160" y2="401" />
+  <text class="axisTx" x="1160" y="416">1200 ms</text>
+
+  <text class="note" x="600" y="466">灰色为上下行网络（各 30 / 50ms），粉色为 VAD 端点检测 —— 这两段最容易被忽略，却常是延迟大头</text>
+  <text class="note" x="600" y="492">实时语音的体验门槛约 800ms，超过 1.5 秒就会明显觉得对方反应慢</text>
+</svg>

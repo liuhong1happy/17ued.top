@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="SIP 的三层分工：信令层用 SIP 建立和拆除会话，会话描述层用 SDP 协商媒体，媒体层用 RTP 与 RTCP 传输音视频">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .sub  { fill: #94a3b8; font-size: 13px; text-anchor: middle; }
+      .bandSig { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.5); stroke-width: 1.3; }
+      .bandSdp { fill: rgba(56,189,248,0.15); stroke: rgba(56,189,248,0.5); stroke-width: 1.3; }
+      .bandRtp { fill: rgba(52,211,153,0.14); stroke: rgba(52,211,153,0.5); stroke-width: 1.3; }
+      .bandTitleSig { fill: #c7d2fe; font-size: 21px; font-weight: 700; }
+      .bandTitleSdp { fill: #7dd3fc; font-size: 21px; font-weight: 700; }
+      .bandTitleRtp { fill: #6ee7b7; font-size: 21px; font-weight: 700; }
+      .bandDesc { fill: #94a3b8; font-size: 12.5px; }
+      .chip { fill: rgba(255,255,255,0.07); stroke: rgba(255,255,255,0.18); stroke-width: 1; }
+      .chipTx { fill: #e2e8f0; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .chipSub { fill: #94a3b8; font-size: 11px; text-anchor: middle; }
+      .lbl { fill: #64748b; font-size: 12px; font-weight: 600; }
+      .note { fill: #94a3b8; font-size: 13px; text-anchor: middle; }
+      .noteBox { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.14); stroke-width: 1; }
+      .arrow { stroke: #64748b; stroke-width: 1.6; fill: none; }
+    </style>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <text x="600" y="36" class="head">一次 IP 通话的三层分工</text>
+
+  <!-- 信令层 -->
+  <rect class="bandSig" x="40" y="62" width="1120" height="132" rx="14" />
+  <text class="bandTitleSig" x="70" y="102">信令层</text>
+  <text class="bandDesc" x="70" y="126">SIP</text>
+  <text class="bandDesc" x="70" y="146">谁找谁 · 建立会话</text>
+  <text class="bandDesc" x="70" y="166">修改 / 结束会话</text>
+
+  <rect class="chip" x="300" y="98" width="130" height="46" rx="8" />
+  <text class="chipTx" x="365" y="127">INVITE</text>
+  <rect class="chip" x="446" y="98" width="130" height="46" rx="8" />
+  <text class="chipTx" x="511" y="127">ACK</text>
+  <rect class="chip" x="592" y="98" width="130" height="46" rx="8" />
+  <text class="chipTx" x="657" y="127">BYE</text>
+  <rect class="chip" x="738" y="98" width="130" height="46" rx="8" />
+  <text class="chipTx" x="803" y="127">CANCEL</text>
+  <rect class="chip" x="884" y="98" width="130" height="46" rx="8" />
+  <text class="chipTx" x="949" y="127">REGISTER</text>
+  <rect class="chip" x="1030" y="98" width="130" height="46" rx="8" />
+  <text class="chipTx" x="1095" y="127">OPTIONS</text>
+
+  <text class="chipSub" x="365" y="170">发起会话</text>
+  <text class="chipSub" x="511" y="170">确认响应</text>
+  <text class="chipSub" x="657" y="170">结束会话</text>
+  <text class="chipSub" x="803" y="170">取消未完成</text>
+  <text class="chipSub" x="949" y="170">注册位置</text>
+  <text class="chipSub" x="1095" y="170">能力探测</text>
+
+  <!-- 会话描述层 -->
+  <rect class="bandSdp" x="40" y="222" width="1120" height="132" rx="14" />
+  <text class="bandTitleSdp" x="70" y="262">会话描述层</text>
+  <text class="bandDesc" x="70" y="286">SDP</text>
+  <text class="bandDesc" x="70" y="306">用什么编解码</text>
+  <text class="bandDesc" x="70" y="326">在哪个地址收发</text>
+
+  <rect class="chip" x="300" y="258" width="204" height="60" rx="8" />
+  <text class="chipTx" x="402" y="282">c= 媒体地址</text>
+  <text class="chipSub" x="402" y="303">收发 IP 与网段</text>
+  <rect class="chip" x="518" y="258" width="204" height="60" rx="8" />
+  <text class="chipTx" x="620" y="282">m= 媒体行</text>
+  <text class="chipSub" x="620" y="303">类型 端口 载荷类型</text>
+  <rect class="chip" x="736" y="258" width="204" height="60" rx="8" />
+  <text class="chipTx" x="838" y="282">a=rtpmap 编解码</text>
+  <text class="chipSub" x="838" y="303">G.711 / Opus / DTMF</text>
+  <rect class="chip" x="954" y="258" width="176" height="60" rx="8" />
+  <text class="chipTx" x="1042" y="282">a=sendrecv</text>
+  <text class="chipSub" x="1042" y="303">媒体方向</text>
+
+  <!-- 媒体层 -->
+  <rect class="bandRtp" x="40" y="382" width="1120" height="132" rx="14" />
+  <text class="bandTitleRtp" x="70" y="422">媒体层</text>
+  <text class="bandDesc" x="70" y="446">RTP / RTCP</text>
+  <text class="bandDesc" x="70" y="466">真正传输语音</text>
+  <text class="bandDesc" x="70" y="486">与视频</text>
+
+  <rect class="chip" x="300" y="418" width="204" height="60" rx="8" />
+  <text class="chipTx" x="402" y="442">RTP</text>
+  <text class="chipSub" x="402" y="463">序列号 时间戳 载荷</text>
+  <rect class="chip" x="518" y="418" width="204" height="60" rx="8" />
+  <text class="chipTx" x="620" y="442">RTCP</text>
+  <text class="chipSub" x="620" y="463">丢包 抖动 质量反馈</text>
+  <rect class="chip" x="736" y="418" width="204" height="60" rx="8" />
+  <text class="chipTx" x="838" y="442">SRTP</text>
+  <text class="chipSub" x="838" y="463">媒体加密</text>
+  <rect class="chip" x="954" y="418" width="176" height="60" rx="8" />
+  <text class="chipTx" x="1042" y="442">DTLS-SRTP</text>
+  <text class="chipSub" x="1042" y="463">WebRTC 强制</text>
+
+  <!-- 底部说明 -->
+  <rect class="noteBox" x="40" y="540" width="1120" height="56" rx="12" />
+  <text class="note" x="600" y="565">三层正交：信令通 ≠ 媒体通</text>
+  <text class="note" x="600" y="586">排障时先分层定位，能排除掉一大类原因</text>
+</svg>

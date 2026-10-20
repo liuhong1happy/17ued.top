@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-label="设计模式全景：创建型五种解决对象创建，结构型七种解决对象组合，行为型十一种解决对象协作">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 13px; text-anchor: middle; }
+      .colTitle { font-size: 16px; font-weight: 600; text-anchor: middle; }
+      .create { fill: rgba(251,191,36,0.15); stroke: rgba(251,191,36,0.55); stroke-width: 1.3; }
+      .struct { fill: rgba(56,189,248,0.14); stroke: rgba(56,189,248,0.5); stroke-width: 1.3; }
+      .behav { fill: rgba(167,139,250,0.15); stroke: rgba(167,139,250,0.55); stroke-width: 1.3; }
+      .chipC { fill: rgba(251,191,36,0.10); stroke: rgba(251,191,36,0.32); stroke-width: 1; }
+      .chipS { fill: rgba(56,189,248,0.10); stroke: rgba(56,189,248,0.30); stroke-width: 1; }
+      .chipB { fill: rgba(167,139,250,0.10); stroke: rgba(167,139,250,0.32); stroke-width: 1; }
+      .cTitle { fill: #fcd34d; }
+      .sTitle { fill: #7dd3fc; }
+      .bTitle { fill: #c4b5fd; }
+      .name { fill: #e2e8f0; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .desc { fill: #94a3b8; font-size: 11px; text-anchor: middle; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .noteBox { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.13); stroke-width: 1; }
+      .core { fill: #c7d2fe; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <text x="600" y="34" class="head">23 种设计模式：按「变化点」分类</text>
+  <text x="600" y="58" class="sub">模式不是模板，而是对反复出现的变化的命名</text>
+
+  <!-- CORE -->
+  <rect class="noteBox" x="360" y="78" width="480" height="54" rx="10" />
+  <text class="core" x="600" y="102">先找变化点，再选模式</text>
+  <text class="note" x="600" y="122" style="text-anchor: middle;">没有变化点的抽象，都是成本</text>
+
+  <!-- columns -->
+  <rect class="create" x="40" y="158" width="350" height="470" rx="14" />
+  <rect class="struct" x="425" y="158" width="350" height="470" rx="14" />
+  <rect class="behav" x="810" y="158" width="350" height="470" rx="14" />
+
+  <text class="colTitle cTitle" x="215" y="190">创建型 · 5</text>
+  <text class="colTitle sTitle" x="600" y="190">结构型 · 7</text>
+  <text class="colTitle bTitle" x="985" y="190">行为型 · 11</text>
+
+  <text class="desc" x="215" y="212">对象怎么产生</text>
+  <text class="desc" x="600" y="212">对象怎么组合</text>
+  <text class="desc" x="985" y="212">对象怎么协作</text>
+
+  <!-- creational chips -->
+  <rect class="chipC" x="60" y="230" width="310" height="56" rx="8" />
+  <text class="name" x="215" y="254">单例 Singleton</text>
+  <text class="desc" x="215" y="273">全局唯一实例</text>
+
+  <rect class="chipC" x="60" y="296" width="310" height="56" rx="8" />
+  <text class="name" x="215" y="320">工厂方法 Factory Method</text>
+  <text class="desc" x="215" y="339">子类决定创建哪个产品</text>
+
+  <rect class="chipC" x="60" y="362" width="310" height="56" rx="8" />
+  <text class="name" x="215" y="386">抽象工厂 Abstract Factory</text>
+  <text class="desc" x="215" y="405">创建一整套相关产品</text>
+
+  <rect class="chipC" x="60" y="428" width="310" height="56" rx="8" />
+  <text class="name" x="215" y="452">建造者 Builder</text>
+  <text class="desc" x="215" y="471">分步组装复杂对象</text>
+
+  <rect class="chipC" x="60" y="494" width="310" height="56" rx="8" />
+  <text class="name" x="215" y="518">原型 Prototype</text>
+  <text class="desc" x="215" y="537">克隆现有对象</text>
+
+  <rect class="noteBox" x="60" y="566" width="310" height="46" rx="8" />
+  <text class="note" x="215" y="584" style="text-anchor: middle;">判断：创建逻辑复杂、需要隔离</text>
+  <text class="note" x="215" y="602" style="text-anchor: middle;">「创建哪个 / 怎么创建」时使用</text>
+
+  <!-- structural chips -->
+  <rect class="chipS" x="445" y="230" width="310" height="48" rx="8" />
+  <text class="name" x="600" y="251">适配器 Adapter</text>
+  <text class="desc" x="600" y="269">转换接口</text>
+
+  <rect class="chipS" x="445" y="288" width="310" height="48" rx="8" />
+  <text class="name" x="600" y="309">桥接 Bridge</text>
+  <text class="desc" x="600" y="327">抽象与实现分离</text>
+
+  <rect class="chipS" x="445" y="346" width="310" height="48" rx="8" />
+  <text class="name" x="600" y="367">组合 Composite</text>
+  <text class="desc" x="600" y="385">树形整体-部分</text>
+
+  <rect class="chipS" x="445" y="404" width="310" height="48" rx="8" />
+  <text class="name" x="600" y="425">装饰器 Decorator</text>
+  <text class="desc" x="600" y="443">动态叠加职责</text>
+
+  <rect class="chipS" x="445" y="462" width="310" height="48" rx="8" />
+  <text class="name" x="600" y="483">外观 Facade</text>
+  <text class="desc" x="600" y="501">子系统统一入口</text>
+
+  <rect class="chipS" x="445" y="520" width="310" height="48" rx="8" />
+  <text class="name" x="600" y="541">享元 Flyweight</text>
+  <text class="desc" x="600" y="559">共享内部状态</text>
+
+  <rect class="chipS" x="445" y="578" width="310" height="48" rx="8" />
+  <text class="name" x="600" y="599">代理 Proxy</text>
+  <text class="desc" x="600" y="617">控制访问</text>
+
+  <!-- behavioral chips, two columns -->
+  <rect class="chipB" x="830" y="230" width="150" height="46" rx="8" />
+  <text class="name" x="905" y="250">责任链</text>
+  <text class="desc" x="905" y="267">请求沿链传递</text>
+
+  <rect class="chipB" x="990" y="230" width="150" height="46" rx="8" />
+  <text class="name" x="1065" y="250">命令</text>
+  <text class="desc" x="1065" y="267">请求对象化</text>
+
+  <rect class="chipB" x="830" y="286" width="150" height="46" rx="8" />
+  <text class="name" x="905" y="306">解释器</text>
+  <text class="desc" x="905" y="323">解释文法</text>
+
+  <rect class="chipB" x="990" y="286" width="150" height="46" rx="8" />
+  <text class="name" x="1065" y="306">迭代器</text>
+  <text class="desc" x="1065" y="323">顺序访问</text>
+
+  <rect class="chipB" x="830" y="342" width="150" height="46" rx="8" />
+  <text class="name" x="905" y="362">中介者</text>
+  <text class="desc" x="905" y="379">星形解耦</text>
+
+  <rect class="chipB" x="990" y="342" width="150" height="46" rx="8" />
+  <text class="name" x="1065" y="362">备忘录</text>
+  <text class="desc" x="1065" y="379">保存与恢复</text>
+
+  <rect class="chipB" x="830" y="398" width="150" height="46" rx="8" />
+  <text class="name" x="905" y="418">观察者</text>
+  <text class="desc" x="905" y="435">一对多通知</text>
+
+  <rect class="chipB" x="990" y="398" width="150" height="46" rx="8" />
+  <text class="name" x="1065" y="418">状态</text>
+  <text class="desc" x="1065" y="435">状态决定行为</text>
+
+  <rect class="chipB" x="830" y="454" width="150" height="46" rx="8" />
+  <text class="name" x="905" y="474">策略</text>
+  <text class="desc" x="905" y="491">算法可替换</text>
+
+  <rect class="chipB" x="990" y="454" width="150" height="46" rx="8" />
+  <text class="name" x="1065" y="474">模板方法</text>
+  <text class="desc" x="1065" y="491">父类定骨架</text>
+
+  <rect class="chipB" x="830" y="510" width="150" height="46" rx="8" />
+  <text class="name" x="905" y="530">访问者</text>
+  <text class="desc" x="905" y="547">稳定结构 + 多变操作</text>
+
+  <rect class="noteBox" x="830" y="566" width="310" height="46" rx="8" />
+  <text class="note" x="985" y="584" style="text-anchor: middle;">行为型数量最多，但高频的只有</text>
+  <text class="note" x="985" y="602" style="text-anchor: middle;">策略、状态、责任链、观察者、模板方法</text>
+
+  <!-- bottom -->
+  <rect class="noteBox" x="40" y="650" width="1120" height="52" rx="10" />
+  <text class="note" x="600" y="672" style="text-anchor: middle;">先记住「隔离了什么变化」，再记名字。最常用的其实只有七八种，其余多是特定场景的解法。</text>
+  <text class="note" x="600" y="691" style="text-anchor: middle;">判断标准：不用它，新增一种实现是否需要修改已稳定的代码？</text>
+</svg>

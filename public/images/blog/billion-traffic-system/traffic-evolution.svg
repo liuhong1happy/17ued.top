@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-label="亿级访问系统架构演进：从单机、应用与数据库分离、缓存与读写分离，到无状态水平扩展、分库分表和多活单元化，每一步由当前瓶颈驱动">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .stage0 { fill: rgba(148,163,184,0.14); stroke: rgba(148,163,184,0.45); stroke-width: 1.2; }
+      .stage1 { fill: rgba(56,189,248,0.13); stroke: rgba(56,189,248,0.45); stroke-width: 1.2; }
+      .stage2 { fill: rgba(52,211,153,0.13); stroke: rgba(52,211,153,0.45); stroke-width: 1.2; }
+      .stage3 { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.5); stroke-width: 1.2; }
+      .stage4 { fill: rgba(167,139,250,0.16); stroke: rgba(167,139,250,0.52); stroke-width: 1.2; }
+      .stage5 { fill: rgba(251,191,36,0.14); stroke: rgba(251,191,36,0.5); stroke-width: 1.2; }
+      .tag { font-size: 11px; font-weight: 600; text-anchor: middle; }
+      .qps { fill: #e2e8f0; font-size: 17px; font-weight: 700; text-anchor: middle; }
+      .do { fill: #c7d2fe; font-size: 11px; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 10.5px; text-anchor: middle; }
+      .bottleneck { fill: #fca5a5; font-size: 10.5px; text-anchor: middle; }
+      .axis { stroke: #475569; stroke-width: 1.4; fill: none; }
+      .step { stroke: #818cf8; stroke-width: 1.6; fill: none; stroke-dasharray: 5 4; }
+      .note { fill: #94a3b8; font-size: 12px; }
+      .noteBox { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.13); stroke-width: 1; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">架构演进：每一步都由当前瓶颈驱动</text>
+  <text x="600" y="56" class="sub">不要跳级：在 1000 QPS 上分库分表，只会增加故障面</text>
+
+  <!-- stage 0 -->
+  <rect class="stage0" x="35" y="430" width="170" height="130" rx="10" />
+  <text class="tag" x="120" y="454" fill="#cbd5e1">阶段 0 · 单机</text>
+  <text class="qps" x="120" y="482">&lt; 1k QPS</text>
+  <text class="do" x="120" y="508">应用 + 数据库</text>
+  <text class="do" x="120" y="526">一台服务器</text>
+  <text class="s" x="120" y="546">先跑起来</text>
+  <text class="bottleneck" x="120" y="586">瓶颈：CPU / 磁盘 / 单点</text>
+
+  <!-- stage 1 -->
+  <rect class="stage1" x="220" y="390" width="170" height="130" rx="10" />
+  <text class="tag" x="305" y="414" fill="#7dd3fc">阶段 1 · 分离</text>
+  <text class="qps" x="305" y="442">1k–5k QPS</text>
+  <text class="do" x="305" y="468">应用 / 数据库分离</text>
+  <text class="do" x="305" y="486">负载均衡 · 会话外置</text>
+  <text class="s" x="305" y="506">消除应用单点</text>
+  <text class="bottleneck" x="305" y="586">瓶颈：DB 连接 / 应用单点</text>
+
+  <!-- stage 2 -->
+  <rect class="stage2" x="405" y="345" width="170" height="130" rx="10" />
+  <text class="tag" x="490" y="369" fill="#6ee7b7">阶段 2 · 缓存</text>
+  <text class="qps" x="490" y="397">5k–2 万 QPS</text>
+  <text class="do" x="490" y="423">Redis · CDN</text>
+  <text class="do" x="490" y="441">读写分离 · 从库</text>
+  <text class="s" x="490" y="461">挡住热点读</text>
+  <text class="bottleneck" x="490" y="586">瓶颈：缓存一致性 / 主从延迟</text>
+
+  <!-- stage 3 -->
+  <rect class="stage3" x="590" y="295" width="170" height="130" rx="10" />
+  <text class="tag" x="675" y="319" fill="#a5b4fc">阶段 3 · 水平扩展</text>
+  <text class="qps" x="675" y="347">2 万–10 万 QPS</text>
+  <text class="do" x="675" y="373">无状态多实例</text>
+  <text class="do" x="675" y="391">网关 · MQ · 服务拆分</text>
+  <text class="s" x="675" y="411">应用层可线性扩展</text>
+  <text class="bottleneck" x="675" y="586">瓶颈：数据库写入 / 服务治理</text>
+
+  <!-- stage 4 -->
+  <rect class="stage4" x="775" y="240" width="170" height="130" rx="10" />
+  <text class="tag" x="860" y="264" fill="#c4b5fd">阶段 4 · 分片</text>
+  <text class="qps" x="860" y="292">10 万–100 万</text>
+  <text class="do" x="860" y="318">分库分表</text>
+  <text class="do" x="860" y="336">多级缓存 · ES / OLAP</text>
+  <text class="s" x="860" y="356">突破单库上限</text>
+  <text class="bottleneck" x="860" y="586">瓶颈：跨分片 / 热点 / 运维复杂度</text>
+
+  <!-- stage 5 -->
+  <rect class="stage5" x="960" y="185" width="200" height="130" rx="10" />
+  <text class="tag" x="1060" y="209" fill="#fcd34d">阶段 5 · 多活</text>
+  <text class="qps" x="1060" y="237">100 万+ QPS</text>
+  <text class="do" x="1060" y="263">多地域 · 单元化</text>
+  <text class="do" x="1060" y="281">流量调度 · 数据同步</text>
+  <text class="s" x="1060" y="301">故障隔离与就近接入</text>
+  <text class="bottleneck" x="1060" y="586">瓶颈：数据一致性 / 成本</text>
+
+  <!-- ascending path -->
+  <path class="step" d="M120 430 L120 410 L305 410 L305 370 L490 370 L490 320 L675 320 L675 265 L860 265 L860 210 L1060 210 L1060 185" />
+  <line class="axis" x1="35" y1="600" x2="1165" y2="600" marker-end="url(#a)" />
+  <text class="note" x="1120" y="624">规模</text>
+
+  <!-- bottom note -->
+  <rect class="noteBox" x="35" y="636" width="1125" height="48" rx="10" />
+  <text class="note" x="60" y="658">演进顺序：单机 → 应用/DB 分离 → 缓存 + 读写分离 → 无状态 + 水平扩展 + MQ → 分库分表 + 多级缓存 + ES/OLAP → 多活/单元化。</text>
+  <text class="note" x="60" y="676">每一阶段先解决当前最大瓶颈；能靠索引、缓存、归档解决的，不要用分片和多活解决。</text>
+</svg>

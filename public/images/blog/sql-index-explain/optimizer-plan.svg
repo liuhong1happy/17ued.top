@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="优化器如何选择执行计划：SQL 经过解析、成本估算、访问路径与连接顺序选择后生成执行计划；右侧是 type 访问类型等级，底部对比估算行数与实际行数">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .t { fill: #e2e8f0; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11.5px; text-anchor: middle; }
+      .sectionHead { fill: #c7d2fe; font-size: 15px; font-weight: 600; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .box1 { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.5); stroke-width: 1.2; }
+      .box2 { fill: rgba(56,189,248,0.14); stroke: rgba(56,189,248,0.5); stroke-width: 1.2; }
+      .box3 { fill: rgba(52,211,153,0.14); stroke: rgba(52,211,153,0.5); stroke-width: 1.2; }
+      .box4 { fill: rgba(251,191,36,0.13); stroke: rgba(251,191,36,0.5); stroke-width: 1.2; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .lbl { fill: #a5b4fc; font-size: 11.5px; }
+      .good { fill: rgba(52,211,153,0.16); stroke: rgba(52,211,153,0.5); stroke-width: 1; }
+      .mid { fill: rgba(99,102,241,0.14); stroke: rgba(129,140,248,0.45); stroke-width: 1; }
+      .bad { fill: rgba(248,113,113,0.15); stroke: rgba(248,113,113,0.5); stroke-width: 1; }
+      .g { fill: #6ee7b7; font-size: 12.5px; }
+      .b { fill: #fca5a5; font-size: 12.5px; }
+      .y { fill: #fcd34d; font-size: 12.5px; }
+      .mono { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">执行计划是怎么被选出来的</text>
+
+  <!-- pipeline -->
+  <text x="60" y="72" class="sectionHead">优化器：从 SQL 到访问路径</text>
+
+  <rect class="box1" x="60" y="94" width="150" height="66" rx="9" />
+  <text class="t" x="135" y="122">SQL 文本</text>
+  <text class="s" x="135" y="142">语法树</text>
+
+  <line class="flow" x1="210" y1="127" x2="256" y2="127" marker-end="url(#a)" />
+
+  <rect class="box1" x="260" y="94" width="170" height="66" rx="9" />
+  <text class="t" x="345" y="122">解析 / 重写</text>
+  <text class="s" x="345" y="142">谓词下推、子查询展开</text>
+
+  <line class="flow" x1="430" y1="127" x2="476" y2="127" marker-end="url(#a)" />
+
+  <rect class="box4" x="480" y="94" width="210" height="66" rx="9" />
+  <text class="t" x="585" y="122">成本估算</text>
+  <text class="s" x="585" y="142">统计信息 · 基数 · 选择性</text>
+
+  <line class="flow" x1="690" y1="127" x2="736" y2="127" marker-end="url(#a)" />
+
+  <rect class="box2" x="740" y="94" width="200" height="66" rx="9" />
+  <text class="t" x="840" y="122">候选访问路径</text>
+  <text class="s" x="840" y="142">索引扫描 / 全表 / 连接顺序</text>
+
+  <line class="flow" x1="940" y1="127" x2="986" y2="127" marker-end="url(#a)" />
+
+  <rect class="box3" x="990" y="94" width="150" height="66" rx="9" />
+  <text class="t" x="1065" y="122">执行计划</text>
+  <text class="s" x="1065" y="142">交给执行器</text>
+
+  <!-- cost formula -->
+  <rect class="box1" x="60" y="196" width="520" height="126" rx="10" />
+  <text class="sectionHead" x="82" y="226">成本 = 页读取 + CPU + 回表代价</text>
+  <text class="note mono" x="82" y="252">index_cost  ≈ 索引页数 × 1.0 + 行数 × CPU</text>
+  <text class="note mono" x="82" y="276">table_cost  ≈ 数据页数 × 1.0</text>
+  <text class="note mono" x="82" y="300">回表代价    ≈ 命中行数 × random_page_cost</text>
+
+  <rect class="box2" x="610" y="196" width="530" height="126" rx="10" />
+  <text class="sectionHead" x="632" y="226">优化器最容易错在哪</text>
+  <text class="note" x="632" y="252">· 统计信息过期：估算 10 行，实际 100 万行</text>
+  <text class="note" x="632" y="276">· 列之间相关：city='杭州' AND district='西湖' 被当成独立</text>
+  <text class="note" x="632" y="300">· 硬件模型不符：SSD 上仍按机械盘的 random_page_cost 估算</text>
+
+  <!-- type ladder -->
+  <text x="60" y="374" class="sectionHead">EXPLAIN type：从最好到最差</text>
+
+  <rect class="good" x="60" y="392" width="270" height="30" rx="6" />
+  <text class="g" x="76" y="412">system / const / eq_ref</text>
+  <text class="g" x="400" y="412">唯一索引等值命中，最多一行</text>
+
+  <rect class="good" x="60" y="428" width="270" height="30" rx="6" />
+  <text class="g" x="76" y="448">ref</text>
+  <text class="g" x="400" y="448">非唯一索引等值命中，一批行</text>
+
+  <rect class="mid" x="60" y="464" width="270" height="30" rx="6" />
+  <text class="lbl" x="76" y="484">range</text>
+  <text class="lbl" x="400" y="484">索引范围扫描：BETWEEN / IN / &gt; / LIKE 'x%'</text>
+
+  <rect class="bad" x="60" y="500" width="270" height="30" rx="6" />
+  <text class="b" x="76" y="520">index</text>
+  <text class="b" x="400" y="520">扫整棵索引树，比 ALL 略好</text>
+
+  <rect class="bad" x="60" y="536" width="270" height="30" rx="6" />
+  <text class="b" x="76" y="556">ALL</text>
+  <text class="b" x="400" y="556">全表扫描，大表上必须处理</text>
+
+  <text class="note" x="760" y="420">实务底线：至少 range，最好 ref。</text>
+  <text class="note" x="760" y="444">Extra 再补一刀：</text>
+  <text class="note" x="780" y="468">Using index        → 覆盖索引，理想</text>
+  <text class="note" x="780" y="492">Using index cond.  → 索引下推，正常</text>
+  <text class="note" x="780" y="516">Using filesort     → 额外排序，看 rows</text>
+  <text class="note" x="780" y="540">Using temporary    → 临时表，看 rows</text>
+
+  <text x="600" y="600" class="note" style="text-anchor: middle;">判断标准不是「有没有走索引」，而是「估算和实际差多少、扫了多少行、回了多少次表」。</text>
+</svg>

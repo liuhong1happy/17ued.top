@@ -22,6 +22,11 @@ import forwardDeployedEngineer from "../assets/posts/forward-deployed-engineer.m
 import sipProtocol from "../assets/posts/sip-protocol.md?raw";
 import gb28181 from "../assets/posts/gb28181.md?raw";
 import pipecat from "../assets/posts/pipecat.md?raw";
+import seckillSystem from "../assets/posts/seckill-system.md?raw";
+import designPatterns from "../assets/posts/design-patterns.md?raw";
+import sqlIndexExplain from "../assets/posts/sql-index-explain.md?raw";
+import billionTrafficSystem from "../assets/posts/billion-traffic-system.md?raw";
+import millionRowQuery from "../assets/posts/million-row-query.md?raw";
 
 export interface Post {
   slug: string;
@@ -250,6 +255,51 @@ const POSTS_BY_ADDED: Post[] = [
       "实时语音 Agent 的难点从来不是模型，而是并发、打断与上下文一致性。本文讲清 Pipecat 的四层抽象——Frame、FrameProcessor、Pipeline、Worker，SystemFrame/DataFrame/ControlFrame 的分层为何是打断能立刻生效的关键，一条最小可用流水线怎么写，500-800ms 延迟预算怎么挤，以及 1.3 的多 Worker 框架、电话网接入的三条路径与 LiveKit Agents 的选型对比。",
     tags: ["Pipecat", "语音 Agent", "实时语音", "STT", "TTS", "WebRTC", "开源框架"],
   },
+  {
+    slug: "seckill-system",
+    title: "如何实现一套秒杀系统：从前端到数据库的完整设计",
+    date: "2026-10-20",
+    readTime: "约 45 分钟",
+    excerpt:
+      "秒杀不是「加个 Redis」：它要在瞬时洪峰下同时守住不超卖、不少卖、不被刷、不被打垮。本文按前端与 CDN、网关限流风控、服务端令牌与幂等、Redis Lua 原子扣减与分段库存、MQ 削峰与延迟关单、数据库条件更新与对账的完整链路展开，含 20 道高频追问与落地检查清单。",
+    tags: ["秒杀", "高并发", "Redis", "消息队列", "分布式", "库存", "系统设计"],
+  },
+  {
+    slug: "design-patterns",
+    title: "常见设计模式：23 种模式的意图、取舍与误用",
+    date: "2026-10-20",
+    readTime: "约 40 分钟",
+    excerpt:
+      "背下 23 个名字不难，难的是回答「它解决了什么变化、不用会怎样、什么时候不该用」。本文按创建型、结构型、行为型逐组拆解意图、代码与代价，重点厘清策略与状态、代理与装饰、适配器与外观、观察者与发布订阅等易混边界，并落到 Spring、JDK 与前端框架中的真实形态，附 15 道面试题。",
+    tags: ["设计模式", "面向对象", "SOLID", "架构", "Java", "面试"],
+  },
+  {
+    slug: "sql-index-explain",
+    title: "SQL 索引与执行计划：从 B+ 树到 EXPLAIN，附 30 道高频面试题",
+    date: "2026-10-20",
+    readTime: "约 45 分钟",
+    excerpt:
+      "索引决定「有哪些路可以走」，执行计划决定「这次走了哪条」。本文讲清 B+ 树为什么胜出、聚簇索引与二级索引如何回表、联合索引的最左前缀与索引下推、索引失效的完整清单，以及 MySQL EXPLAIN 与 PostgreSQL EXPLAIN 的逐列读法、优化器选错索引的原因和深分页、COUNT 等实战优化，最后给出 30 道面试题。",
+    tags: ["SQL", "索引", "执行计划", "EXPLAIN", "B+ 树", "MySQL", "PostgreSQL", "面试"],
+  },
+  {
+    slug: "billion-traffic-system",
+    title: "如何实现支持亿级次访问的系统：从单机到多活的架构演进",
+    date: "2026-10-20",
+    readTime: "约 50 分钟",
+    excerpt:
+      "亿级访问不是靠某个中间件撑起来的，而是分层、无状态、缓存、异步、分片和可观测的组合。本文先把访问量翻译成 QPS、带宽、存储与连接数，再按单机、应用与数据库分离、缓存与读写分离、无状态水平扩展、分库分表、多活单元化的路径逐级演进，讲清接入层、服务层、多级缓存、数据库、消息队列、容灾与容量规划的取舍，附 20 道高频面试题。",
+    tags: ["亿级访问", "高并发", "系统设计", "架构演进", "缓存", "分库分表", "高可用"],
+  },
+  {
+    slug: "million-row-query",
+    title: "如何优化百万数据查询：从慢 SQL 到分库分表的完整路径",
+    date: "2026-10-20",
+    readTime: "约 45 分钟",
+    excerpt:
+      "百万行本身不是问题，一次扫掉百万行才是。本文按「先测量、再改 SQL、再改索引、再改表结构、最后改架构」的成本顺序，讲清扫描行数/回表/排序的诊断方法、深分页与 JOIN 改写、覆盖索引与联合索引、冷热分离与分区、分库分表的时机，以及缓存、读写分离、ES、OLAP 的选型，附 20 道面试题和检查清单。",
+    tags: ["SQL 优化", "百万数据", "慢查询", "索引", "分页", "分库分表", "系统设计"],
+  },
 ];
 
 /**
@@ -289,4 +339,9 @@ export const POST_CONTENT: Record<string, string> = {
   "sip-protocol": sipProtocol,
   "gb28181": gb28181,
   "pipecat": pipecat,
+  "seckill-system": seckillSystem,
+  "design-patterns": designPatterns,
+  "sql-index-explain": sqlIndexExplain,
+  "billion-traffic-system": billionTrafficSystem,
+  "million-row-query": millionRowQuery,
 };

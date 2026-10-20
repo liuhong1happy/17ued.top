@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="多级缓存层次：浏览器、CDN、Nginx、应用本地缓存、Redis 和数据库，越靠近用户越快、容量越小、一致性越弱">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .l0 { fill: rgba(251,191,36,0.16); stroke: rgba(251,191,36,0.55); stroke-width: 1.2; }
+      .l1 { fill: rgba(248,113,113,0.14); stroke: rgba(248,113,113,0.48); stroke-width: 1.2; }
+      .l2 { fill: rgba(56,189,248,0.14); stroke: rgba(56,189,248,0.5); stroke-width: 1.2; }
+      .l3 { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.52); stroke-width: 1.2; }
+      .l4 { fill: rgba(52,211,153,0.14); stroke: rgba(52,211,153,0.5); stroke-width: 1.2; }
+      .l5 { fill: rgba(167,139,250,0.16); stroke: rgba(167,139,250,0.52); stroke-width: 1.2; }
+      .t { fill: #e2e8f0; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11.5px; text-anchor: middle; }
+      .tagL { fill: #6ee7b7; font-size: 11.5px; text-anchor: end; }
+      .tagR { fill: #fcd34d; font-size: 11.5px; }
+      .note { fill: #94a3b8; font-size: 12px; }
+      .noteBox { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.13); stroke-width: 1; }
+      .up { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .down { stroke: #f59e0b; stroke-width: 1.8; fill: none; stroke-dasharray: 6 4; }
+      .lbl { fill: #a5b4fc; font-size: 11.5px; }
+      .lblY { fill: #fcd34d; font-size: 11.5px; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f59e0b" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">多级缓存：越靠近用户，越快、越小、一致性越弱</text>
+  <text x="600" y="56" class="sub">目标是让绝大多数读请求在前几层就命中，只有极少数回源到数据库</text>
+
+  <!-- pyramid layers -->
+  <rect class="l0" x="440" y="80" width="320" height="56" rx="10" />
+  <text class="t" x="600" y="103">浏览器缓存</text>
+  <text class="s" x="600" y="122">Cache-Control · ETag · 强缓存</text>
+
+  <rect class="l1" x="380" y="152" width="440" height="56" rx="10" />
+  <text class="t" x="600" y="175">CDN 边缘节点</text>
+  <text class="s" x="600" y="194">静态资源 · 命中率目标 95%+</text>
+
+  <rect class="l2" x="320" y="224" width="560" height="56" rx="10" />
+  <text class="t" x="600" y="247">Nginx 代理缓存</text>
+  <text class="s" x="600" y="266">热点接口 · 短 TTL · 回源加锁</text>
+
+  <rect class="l3" x="260" y="296" width="680" height="56" rx="10" />
+  <text class="t" x="600" y="319">应用本地缓存</text>
+  <text class="s" x="600" y="338">Caffeine · 极热数据 · 跨实例广播失效</text>
+
+  <rect class="l4" x="200" y="368" width="800" height="56" rx="10" />
+  <text class="t" x="600" y="391">Redis Cluster</text>
+  <text class="s" x="600" y="410">会话 · 对象 · 计数 · 排行榜 · 分布式锁</text>
+
+  <rect class="l5" x="140" y="440" width="920" height="56" rx="10" />
+  <text class="t" x="600" y="463">数据库</text>
+  <text class="s" x="600" y="482">最终真相 · 强一致 · 最后兜底</text>
+
+  <!-- left speed annotation -->
+  <text class="tagL" x="425" y="112">最快</text>
+  <text class="tagL" x="365" y="184">快</text>
+  <text class="tagL" x="305" y="256">快</text>
+  <text class="tagL" x="245" y="328">极快</text>
+  <text class="tagL" x="185" y="400">快</text>
+  <text class="tagL" x="125" y="472">慢</text>
+
+  <!-- right consistency annotation -->
+  <text class="tagR" x="775" y="112">一致性弱</text>
+  <text class="tagR" x="835" y="184">可刷新</text>
+  <text class="tagR" x="895" y="256">短 TTL</text>
+  <text class="tagR" x="955" y="328">需广播</text>
+  <text class="tagR" x="1015" y="400">较强</text>
+  <text class="tagR" x="1075" y="472">强</text>
+
+  <!-- arrows -->
+  <line class="up" x1="600" y1="440" x2="600" y2="416" marker-end="url(#a)" />
+  <line class="up" x1="600" y1="368" x2="600" y2="344" marker-end="url(#a)" />
+  <line class="up" x1="600" y1="296" x2="600" y2="272" marker-end="url(#a)" />
+  <line class="up" x1="600" y1="224" x2="600" y2="200" marker-end="url(#a)" />
+  <line class="up" x1="600" y1="152" x2="600" y2="128" marker-end="url(#a)" />
+
+  <text class="lbl" x="952" y="352">读请求逐级向上命中</text>
+  <line class="down" x1="110" y1="100" x2="110" y2="480" marker-end="url(#ay)" />
+  <text class="lblY" x="60" y="300" transform="rotate(-90 60 300)">未命中逐级回源</text>
+
+  <!-- bottom notes -->
+  <rect class="noteBox" x="40" y="520" width="1120" height="84" rx="10" />
+  <text class="note" x="62" y="546">每一层都要有 TTL 和降级策略：不能假设下一层一定可用，也不能让缓存故障直接把流量放到数据库。</text>
+  <text class="note" x="62" y="570">热点 key 用本地缓存兜底 + key 拆分；大 key 要拆分或压缩；穿透用空值缓存/布隆过滤器。</text>
+  <text class="note" x="62" y="594">一致性用 Cache-Aside：先更新 DB，再删除缓存；失败重试或订阅 binlog 补偿；TTL 兜底。</text>
+</svg>

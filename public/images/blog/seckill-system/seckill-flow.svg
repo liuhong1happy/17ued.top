@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 840" width="1200" height="840" role="img" aria-label="秒杀请求时序：前端提交请求，网关限流，服务端校验令牌与幂等，Redis 用 Lua 原子扣库存，消息队列异步落单，未支付通过延迟消息回滚库存">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 19px; font-weight: 600; text-anchor: middle; }
+      .pBox { fill: rgba(99,102,241,0.15); stroke: rgba(129,140,248,0.5); stroke-width: 1.2; }
+      .pBoxG { fill: rgba(52,211,153,0.14); stroke: rgba(52,211,153,0.5); stroke-width: 1.2; }
+      .pBoxY { fill: rgba(251,191,36,0.14); stroke: rgba(251,191,36,0.5); stroke-width: 1.2; }
+      .p { fill: #e2e8f0; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .ps { fill: #94a3b8; font-size: 10.5px; text-anchor: middle; }
+      .life { stroke: rgba(148,163,184,0.32); stroke-width: 1.2; stroke-dasharray: 5 5; }
+      .req { stroke: #818cf8; stroke-width: 1.8; fill: none; }
+      .res { stroke: #38bdf8; stroke-width: 1.6; fill: none; stroke-dasharray: 6 4; }
+      .async { stroke: #34d399; stroke-width: 1.8; fill: none; }
+      .warn { stroke: #f59e0b; stroke-width: 1.8; fill: none; stroke-dasharray: 6 4; }
+      .lbl { fill: #c7d2fe; font-size: 11.5px; }
+      .lblB { fill: #7dd3fc; font-size: 11.5px; }
+      .lblG { fill: #6ee7b7; font-size: 11.5px; }
+      .lblY { fill: #fcd34d; font-size: 11.5px; }
+      .num { fill: #f8fafc; font-size: 11px; font-weight: 600; }
+      .noteBox { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.13); stroke-width: 1; }
+      .note { fill: #94a3b8; font-size: 11.5px; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8" />
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+    <marker id="ay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f59e0b" />
+    </marker>
+  </defs>
+
+  <text x="600" y="30" class="head">一次秒杀请求的完整时序</text>
+
+  <!-- participants -->
+  <rect class="pBox" x="30" y="62" width="140" height="56" rx="9" />
+  <text class="p" x="100" y="86">用户 / 前端</text>
+  <text class="ps" x="100" y="104">静态页 + 倒计时</text>
+
+  <rect class="pBox" x="200" y="62" width="140" height="56" rx="9" />
+  <text class="p" x="270" y="86">网关</text>
+  <text class="ps" x="270" y="104">限流 / 风控 / 签名</text>
+
+  <rect class="pBox" x="370" y="62" width="140" height="56" rx="9" />
+  <text class="p" x="440" y="86">秒杀服务</text>
+  <text class="ps" x="440" y="104">令牌 / 幂等 / 编排</text>
+
+  <rect class="pBoxG" x="540" y="62" width="140" height="56" rx="9" />
+  <text class="p" x="610" y="86">Redis</text>
+  <text class="ps" x="610" y="104">Lua / 库存 / 限购</text>
+
+  <rect class="pBoxY" x="710" y="62" width="140" height="56" rx="9" />
+  <text class="p" x="780" y="86">消息队列</text>
+  <text class="ps" x="780" y="104">削峰 / 延迟消息</text>
+
+  <rect class="pBox" x="880" y="62" width="140" height="56" rx="9" />
+  <text class="p" x="950" y="86">订单服务</text>
+  <text class="ps" x="950" y="104">消费 / 状态机</text>
+
+  <rect class="pBoxG" x="1050" y="62" width="130" height="56" rx="9" />
+  <text class="p" x="1115" y="86">数据库</text>
+  <text class="ps" x="1115" y="104">兜底 / 唯一索引</text>
+
+  <!-- lifelines -->
+  <line class="life" x1="100" y1="118" x2="100" y2="800" />
+  <line class="life" x1="270" y1="118" x2="270" y2="800" />
+  <line class="life" x1="440" y1="118" x2="440" y2="800" />
+  <line class="life" x1="610" y1="118" x2="610" y2="800" />
+  <line class="life" x1="780" y1="118" x2="780" y2="800" />
+  <line class="life" x1="950" y1="118" x2="950" y2="800" />
+  <line class="life" x1="1115" y1="118" x2="1115" y2="800" />
+
+  <!-- steps -->
+  <line class="req" x1="100" y1="158" x2="265" y2="158" marker-end="url(#a)" />
+  <text class="lbl" x="112" y="150">① 提交秒杀请求（带 requestId）</text>
+
+  <line class="req" x1="270" y1="194" x2="435" y2="194" marker-end="url(#a)" />
+  <text class="lbl" x="282" y="186">② 限流 / 风控 / 签名通过</text>
+
+  <line class="req" x1="440" y1="230" x2="605" y2="230" marker-end="url(#a)" />
+  <text class="lbl" x="452" y="222">③ 幂等 + 资格 + 令牌校验</text>
+
+  <line class="res" x1="610" y1="262" x2="445" y2="262" marker-end="url(#ab)" />
+  <text class="lblB" x="456" y="254">④ 校验通过</text>
+
+  <line class="req" x1="440" y1="300" x2="605" y2="300" marker-end="url(#a)" />
+  <text class="lbl" x="452" y="292">⑤ Lua 原子扣库存 + 记录限购</text>
+
+  <line class="res" x1="610" y1="334" x2="445" y2="334" marker-end="url(#ab)" />
+  <text class="lblB" x="452" y="326">⑥ 剩余库存 / 售罄 / 重复购买</text>
+
+  <line class="async" x1="440" y1="372" x2="775" y2="372" marker-end="url(#ag)" />
+  <text class="lblG" x="452" y="364">⑦ 发送下单消息（本地消息表保证不丢）</text>
+
+  <line class="res" x1="440" y1="408" x2="275" y2="408" marker-end="url(#ab)" />
+  <text class="lblB" x="286" y="400">⑧ 返回「排队中」</text>
+
+  <line class="res" x1="270" y1="442" x2="105" y2="442" marker-end="url(#ab)" />
+  <text class="lblB" x="116" y="434">⑨ requestId（前端据此轮询）</text>
+
+  <!-- async consume -->
+  <line class="async" x1="780" y1="486" x2="945" y2="486" marker-end="url(#ag)" />
+  <text class="lblG" x="792" y="478">⑩ 消费（先查订单，幂等）</text>
+
+  <line class="async" x1="950" y1="520" x2="1110" y2="520" marker-end="url(#ag)" />
+  <text class="lblG" x="962" y="512">⑪ UPDATE ... WHERE stock &gt;= 1</text>
+
+  <line class="async" x1="950" y1="554" x2="1110" y2="554" marker-end="url(#ag)" />
+  <text class="lblG" x="962" y="546">⑫ 插入订单（唯一索引防重）</text>
+
+  <line class="async" x1="950" y1="588" x2="615" y2="588" marker-end="url(#ag)" />
+  <text class="lblG" x="627" y="580">⑬ 写入结果，供前端轮询</text>
+
+  <line class="req" x1="100" y1="632" x2="435" y2="632" marker-end="url(#a)" />
+  <text class="lbl" x="112" y="624">⑭ 轮询 /api/result?requestId=...</text>
+
+  <line class="req" x1="440" y1="666" x2="605" y2="666" marker-end="url(#a)" />
+  <text class="lbl" x="452" y="658">⑮ 查询结果</text>
+
+  <!-- timeout path -->
+  <line class="warn" x1="780" y1="720" x2="945" y2="720" marker-end="url(#ay)" />
+  <text class="lblY" x="792" y="712">⑯ 30 分钟延迟消息</text>
+
+  <line class="warn" x1="950" y1="754" x2="1110" y2="754" marker-end="url(#ay)" />
+  <text class="lblY" x="900" y="746">⑰ 未支付 → 关单</text>
+
+  <line class="warn" x1="950" y1="786" x2="615" y2="786" marker-end="url(#ay)" />
+  <text class="lblY" x="627" y="778">⑱ INCRBY 回滚库存 + 移除限购</text>
+
+  <!-- note -->
+  <rect class="noteBox" x="30" y="812" width="1150" height="22" rx="6" />
+  <text class="note" x="600" y="828" style="text-anchor: middle;">同步链路只做「占库存 + 发消息」，落单、通知、超时回滚全部异步；每一步都幂等、可重试、可对账。</text>
+</svg>

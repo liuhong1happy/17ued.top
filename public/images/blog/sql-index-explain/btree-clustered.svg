@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-label="B+ 树与聚簇索引、二级索引：非叶节点只存键和指针，聚簇索引叶子存整行，二级索引叶子存主键，查询非索引列需要回表">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .sectionHead { fill: #c7d2fe; font-size: 15.5px; font-weight: 600; }
+      .note { fill: #94a3b8; font-size: 12.5px; }
+      .root { fill: rgba(167,139,250,0.20); stroke: rgba(167,139,250,0.6); stroke-width: 1.3; }
+      .mid { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.5); stroke-width: 1.2; }
+      .leaf { fill: rgba(56,189,248,0.14); stroke: rgba(56,189,248,0.5); stroke-width: 1.2; }
+      .row { fill: rgba(52,211,153,0.14); stroke: rgba(52,211,153,0.45); stroke-width: 1; }
+      .sec { fill: rgba(251,191,36,0.14); stroke: rgba(251,191,36,0.5); stroke-width: 1.2; }
+      .t { fill: #e2e8f0; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 12px; text-anchor: middle; }
+      .k { fill: #c7d2fe; font-size: 12.5px; text-anchor: middle; }
+      .kk { fill: #fde68a; font-size: 12.5px; text-anchor: middle; }
+      .lbl { fill: #a5b4fc; font-size: 12px; }
+      .lblG { fill: #6ee7b7; font-size: 12px; }
+      .lblY { fill: #fcd34d; font-size: 12px; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .link { stroke: #38bdf8; stroke-width: 2; fill: none; }
+      .back { stroke: #f59e0b; stroke-width: 2.2; fill: none; stroke-dasharray: 7 5; }
+      .box { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.14); stroke-width: 1; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8" />
+    </marker>
+    <marker id="ay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f59e0b" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">B+ 树索引：一次查找 3 次页读取，回表再查一棵树</text>
+
+  <!-- LEFT: clustered index -->
+  <text x="60" y="70" class="sectionHead">聚簇索引（主键 id）</text>
+  <text x="60" y="92" class="note">非叶节点只存键 + 页指针；叶子节点存完整行，并用双向链表相连。</text>
+
+  <rect class="root" x="200" y="118" width="240" height="44" rx="9" />
+  <text class="t" x="320" y="145">根页：键 1 · 500 · 1000</text>
+
+  <line class="flow" x1="270" y1="162" x2="150" y2="212" marker-end="url(#a)" />
+  <line class="flow" x1="320" y1="162" x2="320" y2="212" marker-end="url(#a)" />
+  <line class="flow" x1="370" y1="162" x2="490" y2="212" marker-end="url(#a)" />
+
+  <rect class="mid" x="55" y="216" width="190" height="42" rx="8" />
+  <text class="k" x="150" y="242">键 1 .. 499</text>
+  <rect class="mid" x="225" y="216" width="190" height="42" rx="8" />
+  <text class="k" x="320" y="242">键 500 .. 999</text>
+  <rect class="mid" x="395" y="216" width="190" height="42" rx="8" />
+  <text class="k" x="490" y="242">键 1000 .. 1500</text>
+
+  <line class="flow" x1="150" y1="258" x2="150" y2="306" marker-end="url(#a)" />
+  <line class="flow" x1="320" y1="258" x2="320" y2="306" marker-end="url(#a)" />
+  <line class="flow" x1="490" y1="258" x2="490" y2="306" marker-end="url(#a)" />
+
+  <!-- leaf rows -->
+  <rect class="leaf" x="35" y="310" width="230" height="150" rx="9" />
+  <text class="t" x="150" y="334">叶子页</text>
+  <rect class="row" x="48" y="346" width="204" height="32" rx="5" />
+  <text class="k" x="150" y="367">id=1 · user=7 · ¥99</text>
+  <rect class="row" x="48" y="384" width="204" height="32" rx="5" />
+  <text class="k" x="150" y="405">id=2 · user=9 · ¥35</text>
+  <rect class="row" x="48" y="422" width="204" height="32" rx="5" />
+  <text class="k" x="150" y="443">id=3 · user=7 · ¥18</text>
+
+  <rect class="leaf" x="270" y="310" width="230" height="150" rx="9" />
+  <text class="t" x="385" y="334">叶子页</text>
+  <rect class="row" x="283" y="346" width="204" height="32" rx="5" />
+  <text class="k" x="385" y="367">id=500 · user=3 · ¥66</text>
+  <rect class="row" x="283" y="384" width="204" height="32" rx="5" />
+  <text class="k" x="385" y="405">id=501 · user=7 · ¥20</text>
+  <rect class="row" x="283" y="422" width="204" height="32" rx="5" />
+  <text class="k" x="385" y="443">id=502 · user=8 · ¥12</text>
+
+  <rect class="leaf" x="505" y="310" width="190" height="150" rx="9" />
+  <text class="t" x="600" y="334">叶子页</text>
+  <rect class="row" x="518" y="346" width="164" height="32" rx="5" />
+  <text class="k" x="600" y="367">id=1000 · ¥88</text>
+  <rect class="row" x="518" y="384" width="164" height="32" rx="5" />
+  <text class="k" x="600" y="405">id=1001 · ¥45</text>
+
+  <line class="link" x1="265" y1="385" x2="270" y2="385" marker-end="url(#ab)" />
+  <line class="link" x1="500" y1="385" x2="505" y2="385" marker-end="url(#ab)" />
+  <text class="lbl" x="710" y="400">叶子双向链表</text>
+  <text class="lbl" x="710" y="422">→ 范围扫描 / 排序</text>
+
+  <!-- RIGHT: secondary index -->
+  <text x="60" y="512" class="sectionHead">二级索引 idx_user_created（user_id, created_at）</text>
+
+  <rect class="sec" x="60" y="530" width="250" height="52" rx="8" />
+  <text class="t" x="185" y="552">非叶页</text>
+  <text class="s" x="185" y="570">按 (user_id, created_at) 排序</text>
+
+  <line class="flow" x1="185" y1="582" x2="185" y2="612" marker-end="url(#a)" />
+
+  <rect class="sec" x="45" y="616" width="280" height="56" rx="8" />
+  <text class="t" x="185" y="638">叶子页：索引键 + 主键</text>
+  <text class="kk" x="185" y="658">(user_id=7, 2026-10-01) → id=501</text>
+
+  <!-- back to table arrow -->
+  <path class="back" d="M330 644 C 460 644, 470 540, 470 464" marker-end="url(#ay)" />
+  <text class="lblY" x="486" y="596">回表：拿主键 id=501</text>
+  <text class="lblY" x="486" y="616">再查一次聚簇索引</text>
+
+  <!-- bottom note -->
+  <rect class="box" x="700" y="530" width="450" height="142" rx="10" />
+  <text class="lblG" x="722" y="558">为什么 B+ 树快</text>
+  <text class="note" x="722" y="584">· 非叶节点纯导航：一页约 1170 个键，扇出大、树矮</text>
+  <text class="note" x="722" y="608">· 叶子存全部数据并成链：范围查询顺着链表走</text>
+  <text class="note" x="722" y="632">· 查询路径长度一致：每次都落到叶子，性能稳定</text>
+  <text class="note" x="722" y="656">· 覆盖索引：二级索引已含查询列时，跳过虚线回表</text>
+</svg>

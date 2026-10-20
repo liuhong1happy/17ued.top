@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780" role="img" aria-label="秒杀系统分层架构：CDN 挡住页面流量，网关限流与风控，服务层令牌与幂等，Redis 原子扣减库存，消息队列削峰，数据库最终落单">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .layer { fill: rgba(99,102,241,0.07); stroke: rgba(129,140,248,0.28); stroke-width: 1.1; }
+      .layerTx { fill: #64748b; font-size: 12px; font-weight: 600; }
+      .boxC { fill: rgba(251,191,36,0.14); stroke: rgba(251,191,36,0.5); stroke-width: 1.2; }
+      .boxS { fill: rgba(56,189,248,0.14); stroke: rgba(56,189,248,0.5); stroke-width: 1.2; }
+      .boxP { fill: rgba(167,139,250,0.16); stroke: rgba(167,139,250,0.55); stroke-width: 1.2; }
+      .boxG { fill: rgba(52,211,153,0.14); stroke: rgba(52,211,153,0.5); stroke-width: 1.2; }
+      .boxR { fill: rgba(248,113,113,0.13); stroke: rgba(248,113,113,0.48); stroke-width: 1.2; }
+      .t { fill: #e2e8f0; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11.5px; text-anchor: middle; }
+      .qps { fill: #fcd34d; font-size: 12.5px; font-weight: 600; text-anchor: middle; }
+      .qpsG { fill: #6ee7b7; font-size: 12.5px; font-weight: 600; text-anchor: middle; }
+      .flow { stroke: #818cf8; stroke-width: 2.2; fill: none; }
+      .side { stroke: #64748b; stroke-width: 1.6; fill: none; stroke-dasharray: 6 5; }
+      .lbl { fill: #a5b4fc; font-size: 11.5px; }
+      .lblG { fill: #6ee7b7; font-size: 11.5px; }
+      .lblR { fill: #fca5a5; font-size: 11.5px; }
+      .noteBox { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.13); stroke-width: 1; }
+      .note { fill: #94a3b8; font-size: 12px; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">秒杀系统分层漏斗</text>
+  <text x="600" y="56" class="sub">每一层都在丢掉一部分流量，同时把「库存」保护到最后一刻</text>
+
+  <!-- layer frames -->
+  <rect class="layer" x="40" y="76" width="850" height="94" rx="12" />
+  <rect class="layer" x="40" y="186" width="850" height="94" rx="12" />
+  <rect class="layer" x="40" y="296" width="850" height="108" rx="12" />
+  <rect class="layer" x="40" y="420" width="850" height="108" rx="12" />
+  <rect class="layer" x="40" y="544" width="850" height="94" rx="12" />
+  <rect class="layer" x="40" y="654" width="850" height="94" rx="12" />
+
+  <text class="layerTx" x="58" y="98">① 前端 / CDN</text>
+  <text class="layerTx" x="58" y="208">② 接入层</text>
+  <text class="layerTx" x="58" y="318">③ 服务层</text>
+  <text class="layerTx" x="58" y="442">④ 缓存层</text>
+  <text class="layerTx" x="58" y="566">⑤ 消息层</text>
+  <text class="layerTx" x="58" y="676">⑥ 数据库</text>
+
+  <!-- ① -->
+  <rect class="boxC" x="150" y="98" width="170" height="56" rx="8" />
+  <text class="t" x="235" y="121">静态页面 + CDN</text>
+  <text class="s" x="235" y="139">图片 / JS / 兜底页</text>
+  <rect class="boxC" x="340" y="98" width="170" height="56" rx="8" />
+  <text class="t" x="425" y="121">前端防重</text>
+  <text class="s" x="425" y="139">倒计时校正 / requestId</text>
+  <rect class="boxC" x="530" y="98" width="170" height="56" rx="8" />
+  <text class="t" x="615" y="121">验证码 / 答题</text>
+  <text class="s" x="615" y="139">错峰 + 提高脚本成本</text>
+
+  <line class="flow" x1="250" y1="170" x2="250" y2="186" marker-end="url(#a)" />
+
+  <!-- ② -->
+  <rect class="boxS" x="150" y="208" width="170" height="56" rx="8" />
+  <text class="t" x="235" y="231">多维度限流</text>
+  <text class="s" x="235" y="249">IP / 用户 / 设备 / 接口</text>
+  <rect class="boxS" x="340" y="208" width="170" height="56" rx="8" />
+  <text class="t" x="425" y="231">签名防重放</text>
+  <text class="s" x="425" y="249">timestamp + nonce + sign</text>
+  <rect class="boxS" x="530" y="208" width="170" height="56" rx="8" />
+  <text class="t" x="615" y="231">风控 / 黑名单</text>
+  <text class="s" x="615" y="249">设备指纹 / 行为识别</text>
+
+  <line class="flow" x1="250" y1="280" x2="250" y2="296" marker-end="url(#a)" />
+
+  <!-- ③ -->
+  <rect class="boxP" x="150" y="318" width="160" height="66" rx="8" />
+  <text class="t" x="230" y="342">资格校验</text>
+  <text class="s" x="230" y="360">预约 / 会员 / 地域</text>
+  <rect class="boxP" x="325" y="318" width="160" height="66" rx="8" />
+  <text class="t" x="405" y="342">秒杀令牌</text>
+  <text class="s" x="405" y="360">按库存预分配资格</text>
+  <rect class="boxP" x="500" y="318" width="160" height="66" rx="8" />
+  <text class="t" x="580" y="342">幂等 / 限购</text>
+  <text class="s" x="580" y="360">requestId / 用户 Set</text>
+  <rect class="boxP" x="675" y="318" width="160" height="66" rx="8" />
+  <text class="t" x="755" y="342">无状态扩容</text>
+  <text class="s" x="755" y="360">独立集群 / 线程池隔离</text>
+
+  <line class="flow" x1="250" y1="404" x2="250" y2="420" marker-end="url(#a)" />
+
+  <!-- ④ -->
+  <rect class="boxG" x="150" y="442" width="210" height="66" rx="8" />
+  <text class="t" x="255" y="466">Lua 原子扣减</text>
+  <text class="s" x="255" y="484">查库存 + 判断 + 扣减 + 限购</text>
+  <rect class="boxG" x="380" y="442" width="180" height="66" rx="8" />
+  <text class="t" x="470" y="466">库存预热</text>
+  <text class="s" x="470" y="484">活动前加载 + 过期</text>
+  <rect class="boxG" x="580" y="442" width="180" height="66" rx="8" />
+  <text class="t" x="670" y="466">热点隔离</text>
+  <text class="s" x="670" y="484">分段库存 / 独立节点</text>
+  <rect class="boxR" x="780" y="442" width="95" height="66" rx="8" />
+  <text class="t" x="827" y="466">故障</text>
+  <text class="s" x="827" y="484">降级</text>
+
+  <line class="flow" x1="250" y1="528" x2="250" y2="544" marker-end="url(#a)" />
+
+  <!-- ⑤ -->
+  <rect class="boxS" x="150" y="566" width="210" height="56" rx="8" />
+  <text class="t" x="255" y="589">异步下单消息</text>
+  <text class="s" x="255" y="607">本地消息表 / 事务消息</text>
+  <rect class="boxS" x="380" y="566" width="180" height="56" rx="8" />
+  <text class="t" x="470" y="589">削峰</text>
+  <text class="s" x="470" y="607">按消费能力匀速放行</text>
+  <rect class="boxS" x="580" y="566" width="180" height="56" rx="8" />
+  <text class="t" x="670" y="589">延迟关单</text>
+  <text class="s" x="670" y="607">30 分钟未支付回滚</text>
+
+  <line class="flow" x1="250" y1="638" x2="250" y2="654" marker-end="url(#a)" />
+
+  <!-- ⑥ -->
+  <rect class="boxR" x="150" y="676" width="210" height="56" rx="8" />
+  <text class="t" x="255" y="699">条件更新兜底</text>
+  <text class="s" x="255" y="717">WHERE stock &gt;= 1</text>
+  <rect class="boxR" x="380" y="676" width="180" height="56" rx="8" />
+  <text class="t" x="470" y="699">唯一索引</text>
+  <text class="s" x="470" y="717">request_id / 限购</text>
+  <rect class="boxR" x="580" y="676" width="180" height="56" rx="8" />
+  <text class="t" x="670" y="699">分库分表 / 归档</text>
+  <text class="s" x="670" y="717">按 activity_id 分片</text>
+
+  <!-- QPS funnel on right -->
+  <rect class="noteBox" x="920" y="76" width="240" height="672" rx="12" />
+  <text class="t" x="1040" y="104">流量漏斗（示例）</text>
+
+  <rect class="boxC" x="940" y="126" width="200" height="44" rx="7" />
+  <text class="qps" x="1040" y="153">100 万 PV</text>
+  <rect class="boxS" x="955" y="192" width="170" height="44" rx="7" />
+  <text class="qps" x="1040" y="219">10 万 QPS</text>
+  <rect class="boxP" x="970" y="302" width="140" height="44" rx="7" />
+  <text class="qps" x="1040" y="329">1.2 万 QPS</text>
+  <rect class="boxG" x="985" y="448" width="110" height="44" rx="7" />
+  <text class="qpsG" x="1040" y="475">1 万库存</text>
+  <rect class="boxS" x="985" y="570" width="110" height="44" rx="7" />
+  <text class="qpsG" x="1040" y="597">3000 TPS</text>
+  <rect class="boxR" x="985" y="682" width="110" height="44" rx="7" />
+  <text class="qpsG" x="1040" y="709">1 万单</text>
+
+  <line class="side" x1="890" y1="148" x2="935" y2="148" marker-end="url(#ag)" />
+  <line class="side" x1="890" y1="214" x2="950" y2="214" marker-end="url(#ag)" />
+  <line class="side" x1="890" y1="324" x2="965" y2="324" marker-end="url(#ag)" />
+  <line class="side" x1="890" y1="470" x2="980" y2="470" marker-end="url(#ag)" />
+  <line class="side" x1="890" y1="592" x2="980" y2="592" marker-end="url(#ag)" />
+  <line class="side" x1="890" y1="704" x2="980" y2="704" marker-end="url(#ag)" />
+
+  <text class="note" x="1040" y="760" style="text-anchor: middle;">数字仅示意，实际以压测为准</text>
+</svg>

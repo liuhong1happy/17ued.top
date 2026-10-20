@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="秒杀库存最终一致性：Redis 原子扣减后写本地消息表，经消息队列异步落库；发送失败重试、消费失败进死信、未支付回滚，对账任务以数据库为准修正">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 19px; font-weight: 600; text-anchor: middle; }
+      .section { fill: #c7d2fe; font-size: 14px; font-weight: 600; }
+      .sectionR { fill: #fca5a5; font-size: 14px; font-weight: 600; }
+      .boxG { fill: rgba(52,211,153,0.15); stroke: rgba(52,211,153,0.52); stroke-width: 1.2; }
+      .boxB { fill: rgba(56,189,248,0.14); stroke: rgba(56,189,248,0.5); stroke-width: 1.2; }
+      .boxP { fill: rgba(167,139,250,0.15); stroke: rgba(167,139,250,0.52); stroke-width: 1.2; }
+      .boxY { fill: rgba(251,191,36,0.13); stroke: rgba(251,191,36,0.48); stroke-width: 1.2; }
+      .boxR { fill: rgba(248,113,113,0.13); stroke: rgba(248,113,113,0.48); stroke-width: 1.2; }
+      .boxN { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.14); stroke-width: 1; }
+      .t { fill: #e2e8f0; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11px; text-anchor: middle; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .comp { stroke: #f59e0b; stroke-width: 1.8; fill: none; stroke-dasharray: 6 4; }
+      .ok { stroke: #34d399; stroke-width: 2.2; fill: none; }
+      .lbl { fill: #c7d2fe; font-size: 11px; }
+      .lblY { fill: #fcd34d; font-size: 11px; }
+      .lblR { fill: #fca5a5; font-size: 11px; }
+      .lblG { fill: #6ee7b7; font-size: 11px; }
+      .note { fill: #94a3b8; font-size: 11.5px; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+    <marker id="ay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f59e0b" />
+    </marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f87171" />
+    </marker>
+  </defs>
+
+  <text x="600" y="30" class="head">库存的最终一致性：主链路 + 补偿链路 + 对账</text>
+
+  <!-- happy path -->
+  <text x="40" y="68" class="section">主链路（同步只到 Redis，异步落库）</text>
+
+  <rect class="boxG" x="40" y="86" width="170" height="62" rx="9" />
+  <text class="t" x="125" y="110">Redis Lua 扣减</text>
+  <text class="s" x="125" y="128">原子：查 / 判 / 扣 / 限购</text>
+
+  <line class="ok" x1="210" y1="117" x2="255" y2="117" marker-end="url(#ag)" />
+
+  <rect class="boxB" x="260" y="86" width="170" height="62" rx="9" />
+  <text class="t" x="345" y="110">本地消息表</text>
+  <text class="s" x="345" y="128">与业务同事务写入</text>
+
+  <line class="ok" x1="430" y1="117" x2="475" y2="117" marker-end="url(#ag)" />
+
+  <rect class="boxY" x="480" y="86" width="150" height="62" rx="9" />
+  <text class="t" x="555" y="110">消息队列</text>
+  <text class="s" x="555" y="128">削峰 + 持久化</text>
+
+  <line class="ok" x1="630" y1="117" x2="675" y2="117" marker-end="url(#ag)" />
+
+  <rect class="boxP" x="680" y="86" width="165" height="62" rx="9" />
+  <text class="t" x="762" y="110">订单消费者</text>
+  <text class="s" x="762" y="128">幂等：先查后写</text>
+
+  <line class="ok" x1="845" y1="117" x2="890" y2="117" marker-end="url(#ag)" />
+
+  <rect class="boxG" x="895" y="86" width="265" height="62" rx="9" />
+  <text class="t" x="1027" y="110">数据库事务</text>
+  <text class="s" x="1027" y="128">扣库存（stock &gt;= 1）+ 建订单（唯一索引）</text>
+
+  <text class="note" x="895" y="162">成功：Redis 剩余 = DB 剩余 + 待支付订单占用</text>
+
+  <!-- compensation -->
+  <text x="40" y="206" class="sectionR">补偿链路（允许短暂少卖，不允许超卖）</text>
+
+  <rect class="boxR" x="40" y="224" width="240" height="62" rx="9" />
+  <text class="t" x="160" y="248">发送 MQ 失败</text>
+  <text class="s" x="160" y="266">本地消息表 status=待发送</text>
+
+  <rect class="boxR" x="310" y="224" width="240" height="62" rx="9" />
+  <text class="t" x="430" y="248">消费失败 / 重复</text>
+  <text class="s" x="430" y="266">重试 → 死信 → 人工 / 自动补偿</text>
+
+  <rect class="boxR" x="580" y="224" width="250" height="62" rx="9" />
+  <text class="t" x="705" y="248">DB 扣减失败</text>
+  <text class="s" x="705" y="266">回滚 Redis 库存，标记请求失败</text>
+
+  <rect class="boxR" x="860" y="224" width="300" height="62" rx="9" />
+  <text class="t" x="1010" y="248">超时未支付</text>
+  <text class="s" x="1010" y="266">延迟消息 → 关单 → INCRBY 回滚库存</text>
+
+  <line class="comp" x1="160" y1="286" x2="160" y2="330" marker-end="url(#ay)" />
+  <line class="comp" x1="430" y1="286" x2="430" y2="330" marker-end="url(#ay)" />
+  <line class="comp" x1="705" y1="286" x2="705" y2="330" marker-end="url(#ay)" />
+  <line class="comp" x1="1010" y1="286" x2="1010" y2="330" marker-end="url(#ay)" />
+
+  <!-- reconciliation -->
+  <rect class="boxN" x="40" y="334" width="1120" height="94" rx="10" />
+  <text class="section" x="60" y="360">对账任务（以数据库为准）</text>
+  <text class="note" x="60" y="384">① Redis 已扣数量 vs 有效订单数：差值 → 补单或回滚</text>
+  <text class="note" x="60" y="404">② DB 库存 + 有效订单占用 vs 初始库存：不平 → 告警并冻结活动</text>
+  <text class="note" x="60" y="424">③ 「Redis 已扣但无订单」超过阈值：自动回滚 + 记录审计日志</text>
+  <text class="lblR" x="700" y="384">所有修正操作必须幂等、可追溯</text>
+  <text class="lblY" x="700" y="404">差异超过阈值 → 人工介入</text>
+
+  <!-- bottom principles -->
+  <rect class="boxN" x="40" y="452" width="1120" height="140" rx="10" />
+  <text class="section" x="60" y="478">三条底线</text>
+
+  <rect class="boxG" x="60" y="494" width="340" height="76" rx="8" />
+  <text class="t" x="230" y="518">不超卖</text>
+  <text class="note" x="230" y="540" style="text-anchor: middle;">Redis Lua 原子 + DB 条件更新双保险</text>
+  <text class="note" x="230" y="558" style="text-anchor: middle;">Redis 丢数据也不能穿透到 DB 超卖</text>
+
+  <rect class="boxY" x="425" y="494" width="340" height="76" rx="8" />
+  <text class="t" x="595" y="518">不少卖（最终）</text>
+  <text class="note" x="595" y="540" style="text-anchor: middle;">消息不丢、消费重试、超时回滚</text>
+  <text class="note" x="595" y="558" style="text-anchor: middle;">短暂少卖可接受，对账后修复</text>
+
+  <rect class="boxB" x="790" y="494" width="350" height="76" rx="8" />
+  <text class="t" x="965" y="518">可观测 / 可补偿</text>
+  <text class="note" x="965" y="540" style="text-anchor: middle;">每一步有流水、traceId、状态</text>
+  <text class="note" x="965" y="558" style="text-anchor: middle;">能定位到具体请求并修复</text>
+</svg>

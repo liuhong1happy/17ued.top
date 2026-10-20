@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="OFFSET 分页与游标分页对比：OFFSET 需要扫描并丢弃前面所有行，游标分页用上一页最后一条记录的排序键直接定位起点">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .panelR { fill: rgba(248,113,113,0.07); stroke: rgba(248,113,113,0.35); stroke-width: 1.2; }
+      .panelG { fill: rgba(52,211,153,0.07); stroke: rgba(52,211,153,0.35); stroke-width: 1.2; }
+      .titleR { fill: #fca5a5; font-size: 15px; font-weight: 600; }
+      .titleG { fill: #6ee7b7; font-size: 15px; font-weight: 600; }
+      .rowDiscard { fill: rgba(248,113,113,0.20); stroke: rgba(248,113,113,0.42); stroke-width: 1; }
+      .rowReturn { fill: rgba(52,211,153,0.22); stroke: rgba(52,211,153,0.55); stroke-width: 1; }
+      .idx { fill: rgba(56,189,248,0.14); stroke: rgba(56,189,248,0.45); stroke-width: 1; }
+      .rowHit { fill: rgba(52,211,153,0.24); stroke: rgba(52,211,153,0.6); stroke-width: 1; }
+      .t { fill: #e2e8f0; font-size: 12.5px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11.5px; text-anchor: middle; }
+      .r { fill: #fca5a5; font-size: 12px; }
+      .g { fill: #6ee7b7; font-size: 12px; }
+      .y { fill: #fcd34d; font-size: 12px; }
+      .note { fill: #94a3b8; font-size: 12px; }
+      .flowR { stroke: #f87171; stroke-width: 2; fill: none; }
+      .flowG { stroke: #34d399; stroke-width: 2.4; fill: none; }
+      .brace { stroke: #f87171; stroke-width: 1.6; fill: none; }
+      .box { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.13); stroke-width: 1; }
+    </style>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f87171" />
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">深分页为什么慢：OFFSET 与游标分页</text>
+
+  <!-- left -->
+  <rect class="panelR" x="40" y="60" width="540" height="500" rx="12" />
+  <text class="titleR" x="62" y="92">OFFSET 分页：扫描并丢弃前面所有行</text>
+  <text class="s" x="62" y="116" style="text-anchor: start;">LIMIT 1000000, 20 —— 先产生 1000020 行，再丢掉前 1000000 行</text>
+
+  <!-- rows stack -->
+  <rect class="rowDiscard" x="70" y="140" width="300" height="28" rx="4" />
+  <text class="r" x="82" y="159">第 1 行</text>
+  <rect class="rowDiscard" x="70" y="174" width="300" height="28" rx="4" />
+  <rect class="rowDiscard" x="70" y="208" width="300" height="28" rx="4" />
+  <rect class="rowDiscard" x="70" y="242" width="300" height="28" rx="4" />
+  <text class="r" x="82" y="261">…… 一路扫描 ……</text>
+  <rect class="rowDiscard" x="70" y="276" width="300" height="28" rx="4" />
+  <rect class="rowDiscard" x="70" y="310" width="300" height="28" rx="4" />
+  <text class="r" x="82" y="329">第 1,000,000 行</text>
+
+  <path class="brace" d="M392 140 L404 140 L404 338 L392 338" />
+  <text class="r" x="414" y="226">全部扫描</text>
+  <text class="r" x="414" y="246">全部丢弃</text>
+  <text class="r" x="414" y="266">代价 O(offset)</text>
+
+  <rect class="rowReturn" x="70" y="360" width="300" height="28" rx="4" />
+  <text class="g" x="82" y="379">第 1,000,001 行</text>
+  <rect class="rowReturn" x="70" y="394" width="300" height="28" rx="4" />
+  <rect class="rowReturn" x="70" y="428" width="300" height="28" rx="4" />
+  <text class="g" x="82" y="447">第 1,000,020 行</text>
+
+  <path class="brace" d="M392 360 L404 360 L404 456 L392 456" />
+  <text class="g" x="414" y="398">最终只返回</text>
+  <text class="g" x="414" y="418">20 行</text>
+
+  <text class="note" x="70" y="498">页码越深，扫描和丢弃的行越多，代价线性增长。</text>
+  <text class="note" x="70" y="520">即使走了索引，OFFSET 的语义也绕不开。</text>
+  <text class="note" x="70" y="542">延迟关联只能减少回表，不能消除前面的扫描。</text>
+
+  <!-- right -->
+  <rect class="panelG" x="620" y="60" width="540" height="500" rx="12" />
+  <text class="titleG" x="642" y="92">游标分页：直接从排序键定位起点</text>
+  <text class="s" x="642" y="116" style="text-anchor: start;">WHERE (created_at, id) &lt; (上一页最后一条) ORDER BY ... LIMIT 20</text>
+
+  <!-- index axis -->
+  <text class="s" x="642" y="152" style="text-anchor: start;">联合索引 (created_at, id) 有序</text>
+
+  <rect class="idx" x="660" y="170" width="420" height="34" rx="6" />
+  <text class="s" x="870" y="192">… 10-01 10:00 · id 500100 …</text>
+  <rect class="idx" x="660" y="212" width="420" height="34" rx="6" />
+  <text class="s" x="870" y="234">10-01 12:00 · id 500123  ← 上一页最后一条</text>
+  <rect class="rowHit" x="660" y="254" width="420" height="34" rx="6" />
+  <text class="t" x="870" y="276">B+ 树直接定位到这里</text>
+
+  <line class="flowG" x1="660" y1="288" x2="660" y2="332" marker-end="url(#ag)" />
+
+  <rect class="rowHit" x="660" y="336" width="420" height="30" rx="5" />
+  <text class="g" x="672" y="356">下一条：10-01 12:00 · id 500124</text>
+  <rect class="rowHit" x="660" y="372" width="420" height="30" rx="5" />
+  <text class="g" x="672" y="392">再下一条：10-01 12:01 · id 500125</text>
+  <rect class="rowHit" x="660" y="408" width="420" height="30" rx="5" />
+  <text class="s" x="672" y="428">…… 顺序读 20 行</text>
+
+  <text class="g" x="642" y="476">代价 O(log N + limit)，与页码无关</text>
+  <text class="note" x="642" y="500">前提：排序键稳定且唯一（用 id 兜底），只能「下一页」。</text>
+  <text class="note" x="642" y="522">必须跳页的后台，用延迟关联 + 限制最大页码。</text>
+  <text class="note" x="642" y="544">业务上限往往比任何 SQL 技巧都有效。</text>
+</svg>

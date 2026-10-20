@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" width="1200" height="640" role="img" aria-label="四组易混模式的对比：策略由客户端选择算法，状态由对象内部切换；代理控制访问，装饰器增强功能">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 19px; font-weight: 600; text-anchor: middle; }
+      .panel { fill: rgba(99,102,241,0.08); stroke: rgba(129,140,248,0.35); stroke-width: 1.2; }
+      .panel2 { fill: rgba(56,189,248,0.07); stroke: rgba(56,189,248,0.32); stroke-width: 1.2; }
+      .title { fill: #c7d2fe; font-size: 15px; font-weight: 600; }
+      .titleB { fill: #7dd3fc; font-size: 15px; font-weight: 600; }
+      .box { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.18); stroke-width: 1.1; }
+      .client { fill: rgba(251,191,36,0.15); stroke: rgba(251,191,36,0.5); stroke-width: 1.2; }
+      .ctx { fill: rgba(167,139,250,0.17); stroke: rgba(167,139,250,0.55); stroke-width: 1.2; }
+      .impl { fill: rgba(52,211,153,0.14); stroke: rgba(52,211,153,0.5); stroke-width: 1.2; }
+      .t { fill: #e2e8f0; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11.5px; text-anchor: middle; }
+      .y { fill: #fcd34d; font-size: 12px; }
+      .g { fill: #6ee7b7; font-size: 12px; }
+      .p { fill: #c4b5fd; font-size: 12px; }
+      .flow { stroke: #818cf8; stroke-width: 1.8; fill: none; }
+      .flowY { stroke: #f59e0b; stroke-width: 1.8; fill: none; }
+      .flowG { stroke: #34d399; stroke-width: 1.8; fill: none; }
+      .note { fill: #94a3b8; font-size: 12px; }
+      .divider { stroke: rgba(255,255,255,0.12); stroke-width: 1; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f59e0b" />
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">四组最容易混淆的模式：结构像，意图不同</text>
+
+  <!-- strategy panel -->
+  <rect class="panel" x="40" y="60" width="545" height="250" rx="12" />
+  <text class="title" x="62" y="90">策略 Strategy：客户端选算法</text>
+
+  <rect class="client" x="70" y="112" width="130" height="56" rx="8" />
+  <text class="t" x="135" y="135">客户端</text>
+  <text class="s" x="135" y="153">主动选择</text>
+
+  <line class="flowY" x1="200" y1="140" x2="248" y2="140" marker-end="url(#ay)" />
+
+  <rect class="ctx" x="252" y="112" width="140" height="56" rx="8" />
+  <text class="t" x="322" y="135">上下文</text>
+  <text class="s" x="322" y="153">持有 Strategy 接口</text>
+
+  <line class="flow" x1="322" y1="168" x2="322" y2="196" marker-end="url(#a)" />
+
+  <rect class="impl" x="62" y="200" width="112" height="52" rx="8" />
+  <text class="t" x="118" y="222">算法 A</text>
+  <text class="s" x="118" y="239">支付宝</text>
+  <rect class="impl" x="190" y="200" width="112" height="52" rx="8" />
+  <text class="t" x="246" y="222">算法 B</text>
+  <text class="s" x="246" y="239">微信</text>
+  <rect class="impl" x="318" y="200" width="112" height="52" rx="8" />
+  <text class="t" x="374" y="222">算法 C</text>
+  <text class="s" x="374" y="239">银行卡</text>
+
+  <line class="flow" x1="322" y1="196" x2="118" y2="200" marker-end="url(#a)" />
+  <line class="flow" x1="322" y1="196" x2="374" y2="200" marker-end="url(#a)" />
+
+  <text class="note" x="62" y="280">算法之间互不知道，可随时替换；选择权在外部。</text>
+
+  <!-- state panel -->
+  <rect class="panel" x="615" y="60" width="545" height="250" rx="12" />
+  <text class="title" x="637" y="90">状态 State：对象自己走流程</text>
+
+  <rect class="client" x="645" y="112" width="130" height="56" rx="8" />
+  <text class="t" x="710" y="135">客户端</text>
+  <text class="s" x="710" y="153">只发事件</text>
+
+  <line class="flowY" x1="775" y1="140" x2="823" y2="140" marker-end="url(#ay)" />
+
+  <rect class="ctx" x="827" y="112" width="140" height="56" rx="8" />
+  <text class="t" x="897" y="135">订单</text>
+  <text class="s" x="897" y="153">持有当前状态</text>
+
+  <line class="flowG" x1="897" y1="168" x2="897" y2="192" marker-end="url(#ag)" />
+
+  <rect class="impl" x="635" y="196" width="120" height="48" rx="8" />
+  <text class="t" x="695" y="216">待支付</text>
+  <text class="s" x="695" y="232">pay → 已支付</text>
+  <rect class="impl" x="775" y="196" width="120" height="48" rx="8" />
+  <text class="t" x="835" y="216">已支付</text>
+  <text class="s" x="835" y="232">ship → 已发货</text>
+  <rect class="impl" x="915" y="196" width="120" height="48" rx="8" />
+  <text class="t" x="975" y="216">已发货</text>
+  <text class="s" x="975" y="232">confirm → 完成</text>
+
+  <line class="flowG" x1="755" y1="220" x2="775" y2="220" marker-end="url(#ag)" />
+  <line class="flowG" x1="895" y1="220" x2="915" y2="220" marker-end="url(#ag)" />
+
+  <text class="note" x="637" y="280">状态内部知道下一步转移到哪里；客户端不选状态。</text>
+
+  <!-- proxy panel -->
+  <rect class="panel2" x="40" y="334" width="545" height="250" rx="12" />
+  <text class="titleB" x="62" y="364">代理 Proxy：控制访问</text>
+
+  <rect class="client" x="70" y="386" width="120" height="52" rx="8" />
+  <text class="t" x="130" y="408">客户端</text>
+  <text class="s" x="130" y="425">不知道代理存在</text>
+
+  <line class="flowY" x1="190" y1="412" x2="238" y2="412" marker-end="url(#ay)" />
+
+  <rect class="ctx" x="242" y="386" width="150" height="52" rx="8" />
+  <text class="t" x="317" y="408">代理</text>
+  <text class="s" x="317" y="425">权限 / 懒加载 / 事务</text>
+
+  <line class="flow" x1="317" y1="438" x2="317" y2="470" marker-end="url(#a)" />
+
+  <rect class="impl" x="242" y="474" width="150" height="52" rx="8" />
+  <text class="t" x="317" y="496">真实对象</text>
+  <text class="s" x="317" y="513">业务逻辑</text>
+
+  <rect class="box" x="420" y="386" width="145" height="140" rx="8" />
+  <text class="note" x="436" y="410">添加的是「访问控制」：</text>
+  <text class="note" x="436" y="432">· 远程调用</text>
+  <text class="note" x="436" y="454">· 权限校验</text>
+  <text class="note" x="436" y="476">· 事务 / 日志</text>
+  <text class="note" x="436" y="498">· 延迟初始化</text>
+
+  <text class="note" x="62" y="558">接口不变，但目标通常是「保护 / 控制」而非「增强功能」。</text>
+
+  <!-- decorator panel -->
+  <rect class="panel2" x="615" y="334" width="545" height="250" rx="12" />
+  <text class="titleB" x="637" y="364">装饰器 Decorator：叠加功能</text>
+
+  <rect class="client" x="645" y="386" width="120" height="52" rx="8" />
+  <text class="t" x="705" y="408">客户端</text>
+  <text class="s" x="705" y="425">主动组合</text>
+
+  <line class="flowY" x1="765" y1="412" x2="805" y2="412" marker-end="url(#ay)" />
+
+  <rect class="ctx" x="809" y="386" width="135" height="52" rx="8" />
+  <text class="t" x="876" y="408">装饰器 B</text>
+  <text class="s" x="876" y="425">加缓冲</text>
+
+  <line class="flow" x1="876" y1="438" x2="876" y2="462" marker-end="url(#a)" />
+
+  <rect class="ctx" x="809" y="466" width="135" height="52" rx="8" />
+  <text class="t" x="876" y="488">装饰器 A</text>
+  <text class="s" x="876" y="505">加压缩</text>
+
+  <line class="flow" x1="876" y1="518" x2="876" y2="542" marker-end="url(#a)" />
+
+  <rect class="impl" x="809" y="546" width="135" height="30" rx="7" />
+  <text class="t" x="876" y="566">核心对象</text>
+
+  <rect class="box" x="960" y="386" width="175" height="140" rx="8" />
+  <text class="note" x="976" y="410">每层实现同一接口：</text>
+  <text class="note" x="976" y="432">· 可任意嵌套</text>
+  <text class="note" x="976" y="454">· 可运行期组合</text>
+  <text class="note" x="976" y="476">· 顺序影响结果</text>
+  <text class="note" x="976" y="498">· Java IO 是典型</text>
+
+  <text class="note" x="637" y="600" style="text-anchor: middle;">代理是「替身」，装饰器是「加料」；两者都实现同一接口，区别在意图。</text>
+</svg>

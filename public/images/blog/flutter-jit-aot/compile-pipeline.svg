@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" role="img" aria-label="Flutter Dart 编译链路：源码经 CFE 生成 Kernel，Debug 把 Kernel 打进 kernel_blob.bin 由 Dart VM JIT 执行，Profile/Release 经 Tree Shaking 和 gen_snapshot 生成 libapp.so 或 App.framework 由预编译运行时执行">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .src { fill: rgba(56,189,248,0.14); stroke: rgba(56,189,248,0.5); stroke-width: 1.2; }
+      .kernel { fill: rgba(251,191,36,0.15); stroke: rgba(251,191,36,0.52); stroke-width: 1.2; }
+      .jit { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.55); stroke-width: 1.2; }
+      .aot { fill: rgba(52,211,153,0.14); stroke: rgba(52,211,153,0.5); stroke-width: 1.2; }
+      .engine { fill: rgba(148,163,184,0.12); stroke: rgba(148,163,184,0.42); stroke-width: 1.2; }
+      .panelJ { fill: rgba(99,102,241,0.06); stroke: rgba(129,140,248,0.28); stroke-width: 1.1; }
+      .panelA { fill: rgba(52,211,153,0.06); stroke: rgba(52,211,153,0.28); stroke-width: 1.1; }
+      .t { fill: #e2e8f0; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11px; text-anchor: middle; }
+      .p { fill: #c4b5fd; font-size: 11.5px; }
+      .g { fill: #6ee7b7; font-size: 11.5px; }
+      .y { fill: #fcd34d; font-size: 11.5px; }
+      .b { fill: #7dd3fc; font-size: 11.5px; }
+      .note { fill: #94a3b8; font-size: 11.5px; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .flowJ { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .flowA { stroke: #34d399; stroke-width: 2; fill: none; }
+      .hot { stroke: #f59e0b; stroke-width: 1.8; fill: none; stroke-dasharray: 6 4; }
+      .lbl { fill: #c7d2fe; font-size: 11px; }
+      .lblG { fill: #6ee7b7; font-size: 11px; }
+      .lblY { fill: #fcd34d; font-size: 11px; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+    <marker id="ay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f59e0b" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">Flutter 的 Dart 编译链路</text>
+  <text x="600" y="56" class="sub">同一份 Kernel，Debug 运行时 JIT，Profile/Release 构建时 AOT</text>
+
+  <!-- common top -->
+  <rect class="src" x="470" y="80" width="260" height="54" rx="9" />
+  <text class="t" x="600" y="103">Dart 源码 (.dart)</text>
+  <text class="s" x="600" y="122">Widget / 业务逻辑 / 插件 Dart 侧</text>
+
+  <line class="flow" x1="600" y1="134" x2="600" y2="154" marker-end="url(#a)" />
+
+  <rect class="src" x="450" y="158" width="300" height="54" rx="9" />
+  <text class="t" x="600" y="181">CFE / frontend_server</text>
+  <text class="s" x="600" y="200">解析 · 类型检查 · 生成 Kernel</text>
+
+  <line class="flow" x1="600" y1="212" x2="600" y2="232" marker-end="url(#a)" />
+
+  <rect class="kernel" x="440" y="236" width="320" height="58" rx="9" />
+  <text class="t" x="600" y="260">Kernel IR (.dill)</text>
+  <text class="s" x="600" y="280">中间表示：类型信息 + 函数体</text>
+
+  <!-- split -->
+  <path class="flowJ" d="M540 294 L300 294 L300 330" marker-end="url(#a)" />
+  <path class="flowA" d="M660 294 L900 294 L900 330" marker-end="url(#ag)" />
+
+  <!-- debug / JIT panel -->
+  <rect class="panelJ" x="40" y="334" width="520" height="270" rx="12" />
+  <text class="t" x="300" y="362">Debug：JIT</text>
+  <text class="p" x="62" y="388">运行时编译，支持 Hot Reload</text>
+
+  <rect class="jit" x="70" y="404" width="460" height="54" rx="8" />
+  <text class="t" x="300" y="427">kernel_blob.bin</text>
+  <text class="s" x="300" y="446">打包进 assets/flutter_assets</text>
+
+  <line class="flowJ" x1="300" y1="458" x2="300" y2="478" marker-end="url(#a)" />
+
+  <rect class="jit" x="70" y="482" width="460" height="54" rx="8" />
+  <text class="t" x="300" y="505">Dart VM 在设备上 JIT</text>
+  <text class="s" x="300" y="524">惰性编译 · 类型反馈 · 热点优化</text>
+
+  <line class="flowJ" x1="300" y1="536" x2="300" y2="556" marker-end="url(#a)" />
+
+  <rect class="jit" x="70" y="560" width="460" height="34" rx="7" />
+  <text class="t" x="300" y="582">运行时机器码（含 JIT 代码缓存）</text>
+
+  <path class="hot" d="M530 500 C 570 500, 570 360, 540 360" marker-end="url(#ay)" />
+  <text class="lblY" x="540" y="410">Hot Reload</text>
+  <text class="lblY" x="540" y="428">增量 Kernel</text>
+
+  <!-- AOT panel -->
+  <rect class="panelA" x="640" y="334" width="520" height="270" rx="12" />
+  <text class="t" x="900" y="362">Profile / Release：AOT</text>
+  <text class="g" x="662" y="388">构建时全程序编译，无运行时 JIT</text>
+
+  <rect class="aot" x="670" y="404" width="460" height="54" rx="8" />
+  <text class="t" x="900" y="427">全程序分析 + Tree Shaking</text>
+  <text class="s" x="900" y="446">从入口标记可达代码，删除不可达代码</text>
+
+  <line class="flowA" x1="900" y1="458" x2="900" y2="478" marker-end="url(#ag)" />
+
+  <rect class="aot" x="670" y="482" width="460" height="54" rx="8" />
+  <text class="t" x="900" y="505">gen_snapshot</text>
+  <text class="s" x="900" y="524">生成目标架构的 AOT snapshot</text>
+
+  <line class="flowA" x1="900" y1="536" x2="900" y2="556" marker-end="url(#ag)" />
+
+  <rect class="aot" x="670" y="560" width="460" height="34" rx="7" />
+  <text class="t" x="900" y="582">libapp.so（Android）/ App.framework（iOS）</text>
+
+  <!-- bottom engine note -->
+  <rect class="engine" x="40" y="628" width="1120" height="52" rx="10" />
+  <text class="note" x="62" y="650">无论 Debug 还是 Release，Flutter 引擎的 C++ 部分（libflutter.so / Flutter.framework）都是预编译产物；JIT/AOT 只决定 Dart 代码如何变成机器码。</text>
+  <text class="note" x="62" y="670">Profile 和 Release 都是 AOT；Profile 额外保留 Timeline/DevTools 等性能追踪能力。</text>
+
+  <!-- bottom key -->
+  <rect class="engine" x="40" y="696" width="1120" height="48" rx="10" />
+  <text class="y" x="600" y="716" style="text-anchor: middle;">关键区别：Debug 的 Kernel 在设备上编译；Release 的机器码在构建机上生成。</text>
+  <text class="note" x="600" y="736" style="text-anchor: middle;">所以 Debug 能 Hot Reload，Release 不能；Debug 性能也不代表线上。</text>
+</svg>

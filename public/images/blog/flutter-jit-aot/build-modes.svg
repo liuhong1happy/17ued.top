@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="Flutter 三种构建模式对比：Debug 使用 JIT、开启断言和 Hot Reload，Profile 使用 AOT 并保留性能追踪，Release 使用 AOT、关闭断言并做 Tree Shaking">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .cardD { fill: rgba(56,189,248,0.07); stroke: rgba(56,189,248,0.35); stroke-width: 1.2; }
+      .cardP { fill: rgba(251,191,36,0.07); stroke: rgba(251,191,36,0.35); stroke-width: 1.2; }
+      .cardR { fill: rgba(52,211,153,0.07); stroke: rgba(52,211,153,0.35); stroke-width: 1.2; }
+      .hD { fill: rgba(56,189,248,0.17); stroke: rgba(56,189,248,0.55); stroke-width: 1.2; }
+      .hP { fill: rgba(251,191,36,0.16); stroke: rgba(251,191,36,0.52); stroke-width: 1.2; }
+      .hR { fill: rgba(52,211,153,0.15); stroke: rgba(52,211,153,0.52); stroke-width: 1.2; }
+      .row { fill: rgba(255,255,255,0.035); stroke: rgba(255,255,255,0.10); stroke-width: 1; }
+      .tD { fill: #7dd3fc; font-size: 16px; font-weight: 700; text-anchor: middle; }
+      .tP { fill: #fcd34d; font-size: 16px; font-weight: 700; text-anchor: middle; }
+      .tR { fill: #6ee7b7; font-size: 16px; font-weight: 700; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11px; text-anchor: middle; }
+      .k { fill: #64748b; font-size: 11px; }
+      .v { fill: #e2e8f0; font-size: 12px; font-weight: 600; }
+      .yes { fill: #6ee7b7; font-size: 12px; font-weight: 600; }
+      .no { fill: #fca5a5; font-size: 12px; font-weight: 600; }
+      .note { fill: #94a3b8; font-size: 11.5px; }
+      .box { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.13); stroke-width: 1; }
+    </style>
+  </defs>
+
+  <text x="600" y="32" class="head">Flutter 的三种构建模式</text>
+  <text x="600" y="56" class="sub">Debug 用 JIT 换开发效率，Profile/Release 用 AOT 换运行确定性</text>
+
+  <!-- Debug -->
+  <rect class="cardD" x="40" y="80" width="350" height="440" rx="12" />
+  <rect class="hD" x="40" y="80" width="350" height="66" rx="12" />
+  <text class="tD" x="215" y="108">Debug</text>
+  <text class="s" x="215" y="130">flutter run</text>
+
+  <rect class="row" x="60" y="164" width="310" height="48" rx="7" />
+  <text class="k" x="74" y="184">Dart 执行</text>
+  <text class="v" x="74" y="202">JIT</text>
+  <rect class="row" x="60" y="220" width="310" height="48" rx="7" />
+  <text class="k" x="74" y="240">断言</text>
+  <text class="yes" x="74" y="258">开启</text>
+  <rect class="row" x="60" y="276" width="310" height="48" rx="7" />
+  <text class="k" x="74" y="296">Hot Reload</text>
+  <text class="yes" x="74" y="314">支持</text>
+  <rect class="row" x="60" y="332" width="310" height="48" rx="7" />
+  <text class="k" x="74" y="352">产物</text>
+  <text class="v" x="74" y="370">kernel_blob.bin</text>
+  <rect class="row" x="60" y="388" width="310" height="48" rx="7" />
+  <text class="k" x="74" y="408">性能数据</text>
+  <text class="no" x="74" y="426">不具代表性</text>
+  <rect class="row" x="60" y="444" width="310" height="48" rx="7" />
+  <text class="k" x="74" y="464">用途</text>
+  <text class="v" x="74" y="482">开发 / 调试</text>
+
+  <!-- Profile -->
+  <rect class="cardP" x="425" y="80" width="350" height="440" rx="12" />
+  <rect class="hP" x="425" y="80" width="350" height="66" rx="12" />
+  <text class="tP" x="600" y="108">Profile</text>
+  <text class="s" x="600" y="130">flutter run --profile</text>
+
+  <rect class="row" x="445" y="164" width="310" height="48" rx="7" />
+  <text class="k" x="459" y="184">Dart 执行</text>
+  <text class="v" x="459" y="202">AOT</text>
+  <rect class="row" x="445" y="220" width="310" height="48" rx="7" />
+  <text class="k" x="459" y="240">断言</text>
+  <text class="no" x="459" y="258">关闭</text>
+  <rect class="row" x="445" y="276" width="310" height="48" rx="7" />
+  <text class="k" x="459" y="296">Hot Reload</text>
+  <text class="no" x="459" y="314">不支持</text>
+  <rect class="row" x="445" y="332" width="310" height="48" rx="7" />
+  <text class="k" x="459" y="352">产物</text>
+  <text class="v" x="459" y="370">libapp.so / App.framework</text>
+  <rect class="row" x="445" y="388" width="310" height="48" rx="7" />
+  <text class="k" x="459" y="408">性能数据</text>
+  <text class="yes" x="459" y="426">可分析（Timeline）</text>
+  <rect class="row" x="445" y="444" width="310" height="48" rx="7" />
+  <text class="k" x="459" y="464">用途</text>
+  <text class="v" x="459" y="482">真机性能分析</text>
+
+  <!-- Release -->
+  <rect class="cardR" x="810" y="80" width="350" height="440" rx="12" />
+  <rect class="hR" x="810" y="80" width="350" height="66" rx="12" />
+  <text class="tR" x="985" y="108">Release</text>
+  <text class="s" x="985" y="130">flutter build apk / ipa --release</text>
+
+  <rect class="row" x="830" y="164" width="310" height="48" rx="7" />
+  <text class="k" x="844" y="184">Dart 执行</text>
+  <text class="v" x="844" y="202">AOT</text>
+  <rect class="row" x="830" y="220" width="310" height="48" rx="7" />
+  <text class="k" x="844" y="240">断言</text>
+  <text class="no" x="844" y="258">关闭</text>
+  <rect class="row" x="830" y="276" width="310" height="48" rx="7" />
+  <text class="k" x="844" y="296">Hot Reload</text>
+  <text class="no" x="844" y="314">不支持</text>
+  <rect class="row" x="830" y="332" width="310" height="48" rx="7" />
+  <text class="k" x="844" y="352">产物</text>
+  <text class="v" x="844" y="370">libapp.so / App.framework</text>
+  <rect class="row" x="830" y="388" width="310" height="48" rx="7" />
+  <text class="k" x="844" y="408">优化</text>
+  <text class="yes" x="844" y="426">Tree Shaking / 混淆 / 拆 ABI</text>
+  <rect class="row" x="830" y="444" width="310" height="48" rx="7" />
+  <text class="k" x="844" y="464">用途</text>
+  <text class="v" x="844" y="482">生产发布</text>
+
+  <!-- bottom -->
+  <rect class="box" x="40" y="540" width="1120" height="56" rx="10" />
+  <text class="note" x="62" y="562">Debug 的性能数据不要用来下结论；性能优化用 Profile，最终验证用 Release，且尽量在真机上测。</text>
+  <text class="note" x="62" y="584">模拟器/仿真器通常不能反映真实 AOT 性能；Profile/Release 在 iOS 上架版本必须使用 AOT。</text>
+</svg>

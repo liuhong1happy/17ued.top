@@ -31,6 +31,7 @@ import typescriptSyntaxAdvanced from "../assets/posts/typescript-syntax-advanced
 import flutterLifecycle from "../assets/posts/flutter-lifecycle.md?raw";
 import flutterAsync from "../assets/posts/flutter-async.md?raw";
 import flutterWebviewPlugin from "../assets/posts/flutter-webview-plugin.md?raw";
+import flutterJitAot from "../assets/posts/flutter-jit-aot.md?raw";
 
 export interface Post {
   slug: string;
@@ -340,6 +341,15 @@ const POSTS_BY_ADDED: Post[] = [
       "从零实现一个 Flutter WebView 插件：Dart 侧提供 SimpleWebView 与 Controller，Android 用 WebView、iOS 用 WKWebView，通过 PlatformView 嵌入视图、每个 View 独立的 MethodChannel 双向通信。含插件目录、注册方式、Kotlin/Swift 完整代码、消息协议、PlatformView 渲染模式、JS 桥接、调试测试与常见问题排查。",
     tags: ["Flutter", "WebView", "PlatformView", "MethodChannel", "Android", "iOS", "插件"],
   },
+  {
+    slug: "flutter-jit-aot",
+    title: "Flutter 中的 JIT 与 AOT：从 Dart 编译链路到性能与包体积",
+    date: "2026-10-21",
+    readTime: "约 40 分钟",
+    excerpt:
+      "Flutter 是 JIT 还是 AOT？答案是看构建模式。本文把 Dart 编译链路讲透：源码如何经 CFE 生成 Kernel，Debug 的 kernel_blob.bin 如何由 Dart VM JIT 执行，Profile/Release 如何经 Tree Shaking 和 gen_snapshot 生成 libapp.so / App.framework。并解释 Hot Reload 的边界、iOS 为何必须 AOT、AOT 与反射/Isolate/FFI 的限制、包体积优化、崩溃符号化，附 15 道面试题。",
+    tags: ["Flutter", "Dart", "JIT", "AOT", "编译原理", "性能优化", "包体积"],
+  },
 ];
 
 /**
@@ -388,4 +398,5 @@ export const POST_CONTENT: Record<string, string> = {
   "flutter-lifecycle": flutterLifecycle,
   "flutter-async": flutterAsync,
   "flutter-webview-plugin": flutterWebviewPlugin,
+  "flutter-jit-aot": flutterJitAot,
 };

@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-label="Flutter WebView 插件架构：Dart 的 Widget 和 Controller 通过每个 View 独立的 MethodChannel，与 Android PlatformView/WebView 或 iOS FlutterPlatformView/WKWebView 双向通信">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .band { fill: rgba(99,102,241,0.06); stroke: rgba(129,140,248,0.22); stroke-width: 1; }
+      .bandTx { fill: #64748b; font-size: 12px; font-weight: 600; }
+      .dart { fill: rgba(56,189,248,0.14); stroke: rgba(56,189,248,0.5); stroke-width: 1.2; }
+      .chan { fill: rgba(251,191,36,0.15); stroke: rgba(251,191,36,0.52); stroke-width: 1.2; }
+      .pv { fill: rgba(167,139,250,0.16); stroke: rgba(167,139,250,0.55); stroke-width: 1.2; }
+      .native { fill: rgba(52,211,153,0.14); stroke: rgba(52,211,153,0.5); stroke-width: 1.2; }
+      .t { fill: #e2e8f0; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11.5px; text-anchor: middle; }
+      .y { fill: #fcd34d; font-size: 11.5px; }
+      .g { fill: #6ee7b7; font-size: 11.5px; }
+      .p { fill: #c4b5fd; font-size: 11.5px; }
+      .note { fill: #94a3b8; font-size: 11.5px; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .back { stroke: #34d399; stroke-width: 1.8; fill: none; stroke-dasharray: 6 4; }
+      .bidir { stroke: #f59e0b; stroke-width: 1.8; fill: none; stroke-dasharray: 5 4; }
+      .lbl { fill: #a5b4fc; font-size: 11px; }
+      .lblG { fill: #6ee7b7; font-size: 11px; }
+      .lblY { fill: #fcd34d; font-size: 11px; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+    <marker id="ay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f59e0b" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">PlatformView + MethodChannel 的插件分层</text>
+  <text x="600" y="56" class="sub">PlatformView 负责「看得见」，MethodChannel 负责「说得上话」</text>
+
+  <!-- Dart band -->
+  <rect class="band" x="40" y="76" width="1120" height="120" rx="12" />
+  <text class="bandTx" x="56" y="98">Dart 侧</text>
+
+  <rect class="dart" x="70" y="110" width="230" height="66" rx="9" />
+  <text class="t" x="185" y="136">SimpleWebView</text>
+  <text class="s" x="185" y="156">AndroidView / UiKitView</text>
+
+  <line class="flow" x1="300" y1="143" x2="340" y2="143" marker-end="url(#a)" />
+
+  <rect class="dart" x="345" y="110" width="280" height="66" rx="9" />
+  <text class="t" x="485" y="136">SimpleWebViewController</text>
+  <text class="s" x="485" y="156">方法封装 + 事件解析</text>
+
+  <line class="flow" x1="625" y1="143" x2="665" y2="143" marker-end="url(#a)" />
+
+  <rect class="dart" x="670" y="110" width="270" height="66" rx="9" />
+  <text class="t" x="805" y="136">MethodChannel</text>
+  <text class="s" x="805" y="156">simple_webview/$viewId</text>
+
+  <rect class="dart" x="965" y="110" width="165" height="66" rx="9" />
+  <text class="t" x="1047" y="136">Stream&lt;Event&gt;</text>
+  <text class="s" x="1047" y="156">页面事件流</text>
+  <line class="flow" x1="940" y1="143" x2="960" y2="143" marker-end="url(#a)" />
+
+  <!-- channel bridge -->
+  <line class="bidir" x1="780" y1="196" x2="780" y2="246" marker-end="url(#ay)" />
+  <line class="bidir" x1="830" y1="246" x2="830" y2="196" marker-end="url(#ay)" />
+  <text class="lblY" x="846" y="212">原生 → Dart：onPageStarted / onPageFinished</text>
+  <text class="lblY" x="846" y="230">onProgress / onTitle / onError</text>
+
+  <rect class="chan" x="420" y="250" width="650" height="56" rx="9" />
+  <text class="t" x="745" y="274">Platform Channel（每个 View 独立）</text>
+  <text class="s" x="745" y="293">方法名 + Map 参数；Dart 调原生 invokeMethod，原生回调也用 invokeMethod</text>
+
+  <line class="bidir" x1="780" y1="306" x2="780" y2="356" marker-end="url(#ay)" />
+  <line class="bidir" x1="830" y1="356" x2="830" y2="306" marker-end="url(#ay)" />
+  <text class="lbl" x="600" y="326">Dart → 原生：loadUrl / reload / evaluateJavascript / canGoBack</text>
+
+  <!-- PlatformView band -->
+  <rect class="band" x="40" y="360" width="1120" height="130" rx="12" />
+  <text class="bandTx" x="56" y="382">平台视图层</text>
+
+  <rect class="pv" x="70" y="396" width="500" height="80" rx="9" />
+  <text class="t" x="320" y="424">Android：SimpleWebViewPlatformView</text>
+  <text class="s" x="320" y="445">PlatformViewFactory 创建 · getView() 返回 WebView</text>
+  <text class="s" x="320" y="463">dispose() 停加载 / 清回调 / destroy</text>
+
+  <rect class="pv" x="630" y="396" width="500" height="80" rx="9" />
+  <text class="t" x="880" y="424">iOS：SimpleWebViewPlatformView</text>
+  <text class="s" x="880" y="445">FlutterPlatformViewFactory 创建 · view() 返回 WKWebView</text>
+  <text class="s" x="880" y="463">deinit / destroy 清理 delegate / KVO</text>
+
+  <line class="flow" x1="320" y1="490" x2="320" y2="532" marker-end="url(#a)" />
+  <line class="flow" x1="880" y1="490" x2="880" y2="532" marker-end="url(#a)" />
+
+  <!-- native band -->
+  <rect class="band" x="40" y="536" width="1120" height="116" rx="12" />
+  <text class="bandTx" x="56" y="558">原生 WebView</text>
+
+  <rect class="native" x="70" y="572" width="500" height="64" rx="9" />
+  <text class="t" x="320" y="598">android.webkit.WebView</text>
+  <text class="s" x="320" y="618">WebViewClient · WebChromeClient · Settings</text>
+
+  <rect class="native" x="630" y="572" width="500" height="64" rx="9" />
+  <text class="t" x="880" y="598">WKWebView</text>
+  <text class="s" x="880" y="618">WKNavigationDelegate · WKUIDelegate · KVO</text>
+
+  <!-- bottom notes -->
+  <rect class="band" x="40" y="668" width="1120" height="38" rx="9" />
+  <text class="note" x="60" y="692">创建参数（initialUrl、javaScriptEnabled）通过 creationParams 传入；不要在原生构造函数里提前 load，等 Dart 设好 handler 再调用。</text>
+</svg>

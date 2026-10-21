@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="1200" height="680" role="img" aria-label="Dart Isolate 事件循环：取一个事件执行，然后清空微任务队列，再取下一个事件；Future 回调、await 续体进入微任务队列，Timer、I/O、用户输入进入事件队列；Flutter 还有 Raster、IO 和平台线程">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .panel { fill: rgba(99,102,241,0.05); stroke: rgba(129,140,248,0.25); stroke-width: 1.1; }
+      .event { fill: rgba(56,189,248,0.14); stroke: rgba(56,189,248,0.5); stroke-width: 1.2; }
+      .micro { fill: rgba(251,191,36,0.14); stroke: rgba(251,191,36,0.5); stroke-width: 1.2; }
+      .run { fill: rgba(167,139,250,0.16); stroke: rgba(167,139,250,0.55); stroke-width: 1.2; }
+      .drain { fill: rgba(52,211,153,0.14); stroke: rgba(52,211,153,0.5); stroke-width: 1.2; }
+      .thread { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.16); stroke-width: 1; }
+      .t { fill: #e2e8f0; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11px; text-anchor: middle; }
+      .k { fill: #c7d2fe; font-size: 11.5px; }
+      .y { fill: #fcd34d; font-size: 11.5px; }
+      .g { fill: #6ee7b7; font-size: 11.5px; }
+      .b { fill: #7dd3fc; font-size: 11.5px; }
+      .note { fill: #94a3b8; font-size: 11.5px; }
+      .chip { fill: rgba(255,255,255,0.06); stroke: rgba(255,255,255,0.18); stroke-width: 1; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .flowY { stroke: #f59e0b; stroke-width: 2; fill: none; }
+      .loop { stroke: #34d399; stroke-width: 2; fill: none; stroke-dasharray: 6 4; }
+      .box { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.13); stroke-width: 1; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f59e0b" />
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">Dart Isolate：一个事件循环，两个队列</text>
+  <text x="600" y="56" class="sub">取一个事件执行 → 清空所有微任务 → 再取下一个事件</text>
+
+  <!-- left event loop panel -->
+  <rect class="panel" x="40" y="80" width="720" height="540" rx="12" />
+  <text class="k" x="62" y="108">单个 Isolate（单线程）</text>
+
+  <rect class="event" x="70" y="130" width="250" height="86" rx="9" />
+  <text class="t" x="195" y="156">事件队列 Event Queue</text>
+  <text class="s" x="195" y="178">Timer · I/O · 用户输入</text>
+  <text class="s" x="195" y="196">Isolate 消息 · Future(...)</text>
+
+  <rect class="micro" x="480" y="130" width="250" height="86" rx="9" />
+  <text class="t" x="605" y="156">微任务队列 Microtask</text>
+  <text class="s" x="605" y="178">Future.microtask · await 续体</text>
+  <text class="s" x="605" y="196">scheduleMicrotask</text>
+
+  <line class="flow" x1="195" y1="216" x2="195" y2="266" marker-end="url(#a)" />
+  <line class="flowY" x1="605" y1="216" x2="605" y2="266" marker-end="url(#ay)" />
+
+  <rect class="run" x="120" y="270" width="560" height="72" rx="9" />
+  <text class="t" x="400" y="298">执行当前任务（同步代码）</text>
+  <text class="s" x="400" y="320">build / 事件回调 / Future 续体都在这里运行</text>
+
+  <line class="flow" x1="400" y1="342" x2="400" y2="380" marker-end="url(#a)" />
+
+  <rect class="drain" x="120" y="384" width="560" height="72" rx="9" />
+  <text class="t" x="400" y="412">清空微任务队列</text>
+  <text class="s" x="400" y="434">微任务执行中新增的微任务也会在本轮清空</text>
+
+  <path class="loop" d="M680 420 L700 420 L700 250 L690 250" marker-end="url(#ag)" />
+  <text class="g" x="706" y="250" style="text-anchor: start;">下一轮</text>
+  <text class="g" x="706" y="270" style="text-anchor: start;">取事件</text>
+
+  <rect class="box" x="70" y="484" width="660" height="112" rx="9" />
+  <text class="k" x="88" y="510">执行顺序示例</text>
+  <text class="note" x="88" y="534">print('1'); Future(() => print('2')); Future.microtask(() => print('3'));</text>
+  <text class="note" x="88" y="556">scheduleMicrotask(() => print('4')); print('5');</text>
+  <text class="y" x="88" y="580">输出：1 → 5 → 3 → 4 → 2</text>
+
+  <!-- right threads -->
+  <rect class="panel" x="780" y="80" width="380" height="540" rx="12" />
+  <text class="k" x="802" y="108">Flutter 引擎线程分工</text>
+
+  <rect class="thread" x="810" y="130" width="320" height="82" rx="8" />
+  <text class="t" x="970" y="156">UI / Dart Isolate</text>
+  <text class="s" x="970" y="178">build · layout · paint 指令</text>
+  <text class="s" x="970" y="196">你的 Dart 代码默认在这里</text>
+
+  <line class="flow" x1="970" y1="212" x2="970" y2="238" marker-end="url(#a)" />
+
+  <rect class="thread" x="810" y="242" width="320" height="72" rx="8" />
+  <text class="t" x="970" y="268">Raster 线程</text>
+  <text class="s" x="970" y="290">把绘制指令光栅化成 GPU 纹理</text>
+
+  <rect class="thread" x="810" y="330" width="320" height="72" rx="8" />
+  <text class="t" x="970" y="356">IO 线程</text>
+  <text class="s" x="970" y="378">图片解码 · 部分文件 I/O</text>
+
+  <rect class="thread" x="810" y="418" width="320" height="72" rx="8" />
+  <text class="t" x="970" y="444">Platform 线程</text>
+  <text class="s" x="970" y="466">原生 UI · MethodChannel 回调</text>
+
+  <text class="note" x="810" y="522">Isolate 之间不共享内存；</text>
+  <text class="note" x="810" y="542">CPU 密集任务用 Isolate.run / compute，</text>
+  <text class="note" x="810" y="562">不要阻塞 UI Isolate。</text>
+  <text class="note" x="810" y="590">async/await 不会创建新线程。</text>
+</svg>

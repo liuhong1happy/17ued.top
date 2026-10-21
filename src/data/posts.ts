@@ -27,6 +27,10 @@ import designPatterns from "../assets/posts/design-patterns.md?raw";
 import sqlIndexExplain from "../assets/posts/sql-index-explain.md?raw";
 import billionTrafficSystem from "../assets/posts/billion-traffic-system.md?raw";
 import millionRowQuery from "../assets/posts/million-row-query.md?raw";
+import typescriptSyntaxAdvanced from "../assets/posts/typescript-syntax-advanced.md?raw";
+import flutterLifecycle from "../assets/posts/flutter-lifecycle.md?raw";
+import flutterAsync from "../assets/posts/flutter-async.md?raw";
+import flutterWebviewPlugin from "../assets/posts/flutter-webview-plugin.md?raw";
 
 export interface Post {
   slug: string;
@@ -300,6 +304,42 @@ const POSTS_BY_ADDED: Post[] = [
       "百万行本身不是问题，一次扫掉百万行才是。本文按「先测量、再改 SQL、再改索引、再改表结构、最后改架构」的成本顺序，讲清扫描行数/回表/排序的诊断方法、深分页与 JOIN 改写、覆盖索引与联合索引、冷热分离与分区、分库分表的时机，以及缓存、读写分离、ES、OLAP 的选型，附 20 道面试题和检查清单。",
     tags: ["SQL 优化", "百万数据", "慢查询", "索引", "分页", "分库分表", "系统设计"],
   },
+  {
+    slug: "typescript-syntax-advanced",
+    title: "TypeScript 语法与高级用法：从类型系统到工程实践",
+    date: "2026-10-21",
+    readTime: "约 45 分钟",
+    excerpt:
+      "TypeScript 的类型只在编译期存在，运行时仍是 JavaScript。本文从结构化类型、any/unknown/never 讲起，覆盖联合与交叉、泛型、类型收窄、条件类型与 infer、映射类型、模板字面量、常用工具类型、satisfies 与 as const、品牌类型，再落到 strict 配置、边界运行时校验、可辨识联合与 React 类型模式，附 20 道面试题和常见坑清单。",
+    tags: ["TypeScript", "类型系统", "泛型", "类型体操", "前端", "工程化"],
+  },
+  {
+    slug: "flutter-lifecycle",
+    title: "Flutter App 生命周期与 StatefulWidget 生命周期详解",
+    date: "2026-10-21",
+    readTime: "约 35 分钟",
+    excerpt:
+      "Flutter 有两套生命周期：应用级的 detached/resumed/inactive/hidden/paused，以及 StatefulWidget 的 createState/initState/didChangeDependencies/build/didUpdateWidget/deactivate/dispose。本文讲清它们的调用时机、Android/iOS 映射、与异步和路由的配合，以及 setState after dispose、initState 依赖 InheritedWidget、列表 Key 错位等常见坑，附 15 道面试题。",
+    tags: ["Flutter", "生命周期", "StatefulWidget", "AppLifecycleState", "路由", "移动端"],
+  },
+  {
+    slug: "flutter-async",
+    title: "Flutter 如何实现异步：Event Loop、Future、Stream 与 Isolate",
+    date: "2026-10-21",
+    readTime: "约 35 分钟",
+    excerpt:
+      "async/await 不会创建新线程，Dart 靠单线程事件循环调度任务。本文从 Isolate、微任务与事件队列讲起，覆盖 Future 的状态与并发组合、Stream 的单订阅/广播与背压、Isolate.run/compute 的使用边界，再落到 initState 异步、mounted 检查、FutureBuilder、防抖和帧调度等 Flutter 实战，附 15 道面试题。",
+    tags: ["Flutter", "Dart", "异步", "Future", "Stream", "Isolate", "事件循环"],
+  },
+  {
+    slug: "flutter-webview-plugin",
+    title: "Flutter 实现一个简易 WebView 插件：PlatformView + MethodChannel",
+    date: "2026-10-21",
+    readTime: "约 40 分钟",
+    excerpt:
+      "从零实现一个 Flutter WebView 插件：Dart 侧提供 SimpleWebView 与 Controller，Android 用 WebView、iOS 用 WKWebView，通过 PlatformView 嵌入视图、每个 View 独立的 MethodChannel 双向通信。含插件目录、注册方式、Kotlin/Swift 完整代码、消息协议、PlatformView 渲染模式、JS 桥接、调试测试与常见问题排查。",
+    tags: ["Flutter", "WebView", "PlatformView", "MethodChannel", "Android", "iOS", "插件"],
+  },
 ];
 
 /**
@@ -344,4 +384,8 @@ export const POST_CONTENT: Record<string, string> = {
   "sql-index-explain": sqlIndexExplain,
   "billion-traffic-system": billionTrafficSystem,
   "million-row-query": millionRowQuery,
+  "typescript-syntax-advanced": typescriptSyntaxAdvanced,
+  "flutter-lifecycle": flutterLifecycle,
+  "flutter-async": flutterAsync,
+  "flutter-webview-plugin": flutterWebviewPlugin,
 };

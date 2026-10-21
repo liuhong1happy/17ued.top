@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" role="img" aria-label="Flutter WebView 插件时序：Widget 创建 PlatformView，原生创建 WebView 和 MethodChannel，Dart 设置 handler 后加载 URL，页面事件经 Channel 回到 Controller，最后销毁视图">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 19px; font-weight: 600; text-anchor: middle; }
+      .pBox { fill: rgba(56,189,248,0.14); stroke: rgba(56,189,248,0.5); stroke-width: 1.2; }
+      .pBoxP { fill: rgba(167,139,250,0.15); stroke: rgba(167,139,250,0.52); stroke-width: 1.2; }
+      .pBoxY { fill: rgba(251,191,36,0.14); stroke: rgba(251,191,36,0.5); stroke-width: 1.2; }
+      .pBoxG { fill: rgba(52,211,153,0.14); stroke: rgba(52,211,153,0.5); stroke-width: 1.2; }
+      .p { fill: #e2e8f0; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .ps { fill: #94a3b8; font-size: 10.5px; text-anchor: middle; }
+      .life { stroke: rgba(148,163,184,0.32); stroke-width: 1.2; stroke-dasharray: 5 5; }
+      .req { stroke: #818cf8; stroke-width: 1.8; fill: none; }
+      .res { stroke: #38bdf8; stroke-width: 1.6; fill: none; stroke-dasharray: 6 4; }
+      .async { stroke: #34d399; stroke-width: 1.7; fill: none; }
+      .warn { stroke: #f59e0b; stroke-width: 1.7; fill: none; stroke-dasharray: 6 4; }
+      .lbl { fill: #c7d2fe; font-size: 11.5px; }
+      .lblB { fill: #7dd3fc; font-size: 11.5px; }
+      .lblG { fill: #6ee7b7; font-size: 11.5px; }
+      .lblY { fill: #fcd34d; font-size: 11.5px; }
+      .noteBox { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.13); stroke-width: 1; }
+      .note { fill: #94a3b8; font-size: 11.5px; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8" />
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+    <marker id="ay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f59e0b" />
+    </marker>
+  </defs>
+
+  <text x="600" y="30" class="head">一次 WebView 插件调用的完整时序</text>
+
+  <!-- participants -->
+  <rect class="pBox" x="30" y="62" width="150" height="56" rx="9" />
+  <text class="p" x="105" y="86">SimpleWebView</text>
+  <text class="ps" x="105" y="104">Dart Widget</text>
+
+  <rect class="pBox" x="220" y="62" width="150" height="56" rx="9" />
+  <text class="p" x="295" y="86">Controller</text>
+  <text class="ps" x="295" y="104">方法 + 事件流</text>
+
+  <rect class="pBoxY" x="410" y="62" width="150" height="56" rx="9" />
+  <text class="p" x="485" y="86">MethodChannel</text>
+  <text class="ps" x="485" y="104">simple_webview/$id</text>
+
+  <rect class="pBoxP" x="600" y="62" width="150" height="56" rx="9" />
+  <text class="p" x="675" y="86">PlatformView</text>
+  <text class="ps" x="675" y="104">Factory / PlatformView</text>
+
+  <rect class="pBoxG" x="790" y="62" width="150" height="56" rx="9" />
+  <text class="p" x="865" y="86">WebView</text>
+  <text class="ps" x="865" y="104">Android / iOS</text>
+
+  <!-- lifelines -->
+  <line class="life" x1="105" y1="118" x2="105" y2="700" />
+  <line class="life" x1="295" y1="118" x2="295" y2="700" />
+  <line class="life" x1="485" y1="118" x2="485" y2="700" />
+  <line class="life" x1="675" y1="118" x2="675" y2="700" />
+  <line class="life" x1="865" y1="118" x2="865" y2="700" />
+
+  <!-- steps -->
+  <line class="req" x1="105" y1="158" x2="670" y2="158" marker-end="url(#a)" />
+  <text class="lbl" x="117" y="150">① 创建视图：viewType + creationParams</text>
+
+  <line class="req" x1="675" y1="196" x2="860" y2="196" marker-end="url(#a)" />
+  <text class="lbl" x="687" y="188">② Factory 创建 PlatformView 与 WebView</text>
+
+  <line class="res" x1="675" y1="234" x2="110" y2="234" marker-end="url(#ab)" />
+  <text class="lblB" x="121" y="226">③ onPlatformViewCreated(id)</text>
+
+  <line class="req" x1="105" y1="272" x2="290" y2="272" marker-end="url(#a)" />
+  <text class="lbl" x="117" y="264">④ new SimpleWebViewController(id)</text>
+
+  <line class="req" x1="295" y1="310" x2="480" y2="310" marker-end="url(#a)" />
+  <text class="lbl" x="307" y="302">⑤ setMethodCallHandler（先设 handler）</text>
+
+  <line class="req" x1="295" y1="348" x2="480" y2="348" marker-end="url(#a)" />
+  <text class="lbl" x="307" y="340">⑥ loadUrl(url)</text>
+
+  <line class="req" x1="485" y1="382" x2="670" y2="382" marker-end="url(#a)" />
+  <text class="lbl" x="497" y="374">⑦ invokeMethod('loadUrl')</text>
+
+  <line class="req" x1="675" y1="414" x2="860" y2="414" marker-end="url(#a)" />
+  <text class="lbl" x="687" y="406">⑧ webView.loadUrl(url)</text>
+
+  <line class="async" x1="865" y1="452" x2="680" y2="452" marker-end="url(#ag)" />
+  <text class="lblG" x="692" y="444">⑨ onPageStarted / onProgress</text>
+
+  <line class="async" x1="675" y1="486" x2="490" y2="486" marker-end="url(#ag)" />
+  <text class="lblG" x="502" y="478">⑩ channel.invokeMethod(...)</text>
+
+  <line class="async" x1="485" y1="520" x2="300" y2="520" marker-end="url(#ag)" />
+  <text class="lblG" x="312" y="512">⑪ 解析参数，写入 Stream</text>
+
+  <line class="req" x1="295" y1="558" x2="480" y2="558" marker-end="url(#a)" />
+  <text class="lbl" x="307" y="550">⑫ evaluateJavascript(script)</text>
+
+  <line class="req" x1="485" y1="592" x2="670" y2="592" marker-end="url(#a)" />
+  <text class="lbl" x="497" y="584">⑬ 执行脚本，回调结果</text>
+
+  <line class="warn" x1="105" y1="630" x2="290" y2="630" marker-end="url(#ay)" />
+  <text class="lblY" x="117" y="622">⑭ Widget dispose → Controller.dispose</text>
+
+  <line class="warn" x1="295" y1="662" x2="670" y2="662" marker-end="url(#ay)" />
+  <text class="lblY" x="307" y="654">⑮ 清 handler、关 Stream，PlatformView.dispose</text>
+
+  <line class="warn" x1="675" y1="692" x2="860" y2="692" marker-end="url(#ay)" />
+  <text class="lblY" x="687" y="684">⑯ stopLoading / destroy</text>
+
+  <rect class="noteBox" x="30" y="716" width="1140" height="30" rx="7" />
+  <text class="note" x="600" y="736" style="text-anchor: middle;">关键顺序：先创建 View，再设 Channel handler，最后才 loadUrl；销毁时先清 handler，再 destroy WebView。</text>
+</svg>

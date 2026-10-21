@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-label="StatefulWidget 生命周期：createState、initState、didChangeDependencies、build、didUpdateWidget、deactivate、dispose，以及 setState、父组件重建、GlobalKey 重插和热重载的循环">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .main { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.55); stroke-width: 1.3; }
+      .build { fill: rgba(52,211,153,0.15); stroke: rgba(52,211,153,0.55); stroke-width: 1.3; }
+      .end { fill: rgba(248,113,113,0.13); stroke: rgba(248,113,113,0.45); stroke-width: 1.2; }
+      .side { fill: rgba(251,191,36,0.13); stroke: rgba(251,191,36,0.48); stroke-width: 1.2; }
+      .sideB { fill: rgba(56,189,248,0.13); stroke: rgba(56,189,248,0.48); stroke-width: 1.2; }
+      .t { fill: #e2e8f0; font-size: 13.5px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 10.5px; text-anchor: middle; }
+      .note { fill: #94a3b8; font-size: 11.5px; }
+      .g { fill: #6ee7b7; font-size: 11.5px; }
+      .y { fill: #fcd34d; font-size: 11.5px; }
+      .r { fill: #fca5a5; font-size: 11.5px; }
+      .b { fill: #7dd3fc; font-size: 11.5px; }
+      .lbl { fill: #c7d2fe; font-size: 11px; }
+      .flow { stroke: #818cf8; stroke-width: 2; fill: none; }
+      .loop { stroke: #f59e0b; stroke-width: 1.8; fill: none; stroke-dasharray: 6 4; }
+      .dash { stroke: #38bdf8; stroke-width: 1.8; fill: none; stroke-dasharray: 6 4; }
+      .box { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.13); stroke-width: 1; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f59e0b" />
+    </marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">StatefulWidget / State 生命周期</text>
+  <text x="600" y="56" class="sub">Widget 是不可变配置，State 是可复用的持久对象；build 可能执行很多次</text>
+
+  <!-- main spine -->
+  <rect class="main" x="400" y="80" width="280" height="58" rx="9" />
+  <text class="t" x="540" y="105">createState()</text>
+  <text class="s" x="540" y="124">返回 State，只调用一次</text>
+
+  <line class="flow" x1="540" y1="138" x2="540" y2="156" marker-end="url(#a)" />
+
+  <rect class="main" x="400" y="160" width="280" height="58" rx="9" />
+  <text class="t" x="540" y="185">initState()</text>
+  <text class="s" x="540" y="204">创建 Controller/订阅，不能 async</text>
+
+  <line class="flow" x1="540" y1="218" x2="540" y2="236" marker-end="url(#a)" />
+
+  <rect class="main" x="400" y="240" width="280" height="58" rx="9" />
+  <text class="t" x="540" y="265">didChangeDependencies()</text>
+  <text class="s" x="540" y="284">读取 InheritedWidget，可多次调用</text>
+
+  <line class="flow" x1="540" y1="298" x2="540" y2="316" marker-end="url(#a)" />
+
+  <rect class="build" x="400" y="320" width="280" height="64" rx="9" />
+  <text class="t" x="540" y="346">build()</text>
+  <text class="s" x="540" y="366">纯函数：只根据 widget + state 生成 UI</text>
+
+  <line class="flow" x1="540" y1="384" x2="540" y2="486" marker-end="url(#a)" />
+  <text class="lbl" x="552" y="440">从树中移除</text>
+
+  <rect class="end" x="400" y="490" width="280" height="58" rx="9" />
+  <text class="t" x="540" y="515">deactivate()</text>
+  <text class="s" x="540" y="534">暂时移除，可能被重新插入</text>
+
+  <line class="flow" x1="540" y1="548" x2="540" y2="566" marker-end="url(#a)" />
+
+  <rect class="end" x="400" y="570" width="280" height="64" rx="9" />
+  <text class="t" x="540" y="596">dispose()</text>
+  <text class="s" x="540" y="616">取消订阅、释放 Controller，同步执行</text>
+
+  <!-- right: setState -->
+  <rect class="sideB" x="760" y="270" width="230" height="76" rx="9" />
+  <text class="t" x="875" y="298">setState()</text>
+  <text class="s" x="875" y="320">标记 dirty → 下一帧 build</text>
+  <line class="loop" x1="760" y1="330" x2="684" y2="346" marker-end="url(#ay)" />
+
+  <!-- right: didUpdateWidget -->
+  <rect class="side" x="760" y="400" width="230" height="76" rx="9" />
+  <text class="t" x="875" y="428">didUpdateWidget()</text>
+  <text class="s" x="875" y="450">比较 oldWidget，更新监听器</text>
+
+  <rect class="sideB" x="1020" y="400" width="150" height="76" rx="9" />
+  <text class="t" x="1095" y="428">父组件重建</text>
+  <text class="s" x="1095" y="450">相同 key/type</text>
+
+  <line class="loop" x1="1020" y1="438" x2="995" y2="438" marker-end="url(#ay)" />
+  <path class="loop" d="M760 420 C 700 420, 700 380, 684 366" marker-end="url(#ay)" />
+  <text class="y" x="704" y="394">再 build</text>
+
+  <!-- left: hot reload -->
+  <rect class="side" x="60" y="330" width="230" height="70" rx="9" />
+  <text class="t" x="175" y="356">reassemble()</text>
+  <text class="s" x="175" y="378">Hot Reload，State 保留</text>
+  <line class="dash" x1="290" y1="350" x2="396" y2="350" marker-end="url(#ab)" />
+
+  <!-- left: global key reactivate -->
+  <rect class="side" x="60" y="470" width="230" height="70" rx="9" />
+  <text class="t" x="175" y="496">activate()</text>
+  <text class="s" x="175" y="518">GlobalKey 重新插入时</text>
+  <path class="dash" d="M290 490 C 340 490, 340 382, 396 374" marker-end="url(#ab)" />
+  <line class="dash" x1="400" y1="520" x2="294" y2="505" marker-end="url(#ab)" />
+  <text class="b" x="300" y="558">deactivate → activate</text>
+
+  <!-- bottom notes -->
+  <rect class="box" x="60" y="650" width="1110" height="56" rx="9" />
+  <text class="note" x="80" y="672">build 可能执行很多次，State 始终是同一个；initState 只有一次。父组件换 key/type 会 dispose 旧 State 并 createState 新 State。</text>
+  <text class="note" x="80" y="694">dispose 必须取消 Timer、StreamSubscription、Controller、FocusNode，并移除 WidgetsBindingObserver / RouteAware。</text>
+</svg>

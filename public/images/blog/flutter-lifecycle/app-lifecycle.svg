@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="1200" height="680" role="img" aria-label="Flutter 应用生命周期状态机：detached、resumed、inactive、hidden、paused 五个状态随前后台切换流转，并映射到 Android 和 iOS 的系统回调">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .st { fill: rgba(99,102,241,0.16); stroke: rgba(129,140,248,0.55); stroke-width: 1.3; }
+      .stG { fill: rgba(52,211,153,0.15); stroke: rgba(52,211,153,0.55); stroke-width: 1.3; }
+      .stY { fill: rgba(251,191,36,0.14); stroke: rgba(251,191,36,0.5); stroke-width: 1.2; }
+      .stR { fill: rgba(248,113,113,0.14); stroke: rgba(248,113,113,0.48); stroke-width: 1.2; }
+      .stN { fill: rgba(148,163,184,0.12); stroke: rgba(148,163,184,0.42); stroke-width: 1.2; }
+      .t { fill: #e2e8f0; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11px; text-anchor: middle; }
+      .map { fill: #a5b4fc; font-size: 11px; }
+      .note { fill: #94a3b8; font-size: 11.5px; }
+      .warn { fill: #fca5a5; font-size: 11.5px; }
+      .g { fill: #6ee7b7; font-size: 11.5px; }
+      .flow { stroke: #818cf8; stroke-width: 1.8; fill: none; }
+      .back { stroke: #34d399; stroke-width: 1.8; fill: none; stroke-dasharray: 6 4; }
+      .box { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.13); stroke-width: 1; }
+      .lbl { fill: #c7d2fe; font-size: 10.5px; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">Flutter 应用生命周期状态机</text>
+  <text x="600" y="56" class="sub">按「当前是否可见 / 可交互」判断业务，不要假设一定经过所有中间状态</text>
+
+  <!-- states -->
+  <rect class="stN" x="30" y="100" width="170" height="76" rx="10" />
+  <text class="t" x="115" y="130">detached</text>
+  <text class="s" x="115" y="152">引擎未附着 / 销毁</text>
+
+  <rect class="stG" x="260" y="100" width="180" height="76" rx="10" />
+  <text class="t" x="350" y="130">resumed</text>
+  <text class="s" x="350" y="152">前台 · 可交互</text>
+
+  <rect class="stY" x="500" y="100" width="180" height="76" rx="10" />
+  <text class="t" x="590" y="130">inactive</text>
+  <text class="s" x="590" y="152">可见 · 失去焦点</text>
+
+  <rect class="stY" x="740" y="100" width="180" height="76" rx="10" />
+  <text class="t" x="830" y="130">hidden</text>
+  <text class="s" x="830" y="152">不可见 · 过渡态</text>
+
+  <rect class="stR" x="980" y="100" width="180" height="76" rx="10" />
+  <text class="t" x="1070" y="130">paused</text>
+  <text class="s" x="1070" y="152">后台 · 不可见</text>
+
+  <!-- arrows -->
+  <line class="flow" x1="200" y1="138" x2="256" y2="138" marker-end="url(#a)" />
+  <line class="back" x1="260" y1="158" x2="204" y2="158" marker-end="url(#ag)" />
+  <text class="lbl" x="206" y="126">启动</text>
+  <text class="lbl" x="206" y="176">销毁</text>
+
+  <line class="flow" x1="440" y1="128" x2="496" y2="128" marker-end="url(#a)" />
+  <line class="back" x1="500" y1="150" x2="444" y2="150" marker-end="url(#ag)" />
+  <text class="lbl" x="446" y="116">失焦</text>
+  <text class="lbl" x="446" y="168">获焦</text>
+
+  <line class="flow" x1="680" y1="128" x2="736" y2="128" marker-end="url(#a)" />
+  <line class="back" x1="740" y1="150" x2="684" y2="150" marker-end="url(#ag)" />
+  <text class="lbl" x="686" y="116">不可见</text>
+  <text class="lbl" x="686" y="168">可见</text>
+
+  <line class="flow" x1="920" y1="128" x2="976" y2="128" marker-end="url(#a)" />
+  <line class="back" x1="980" y1="150" x2="924" y2="150" marker-end="url(#ag)" />
+  <text class="lbl" x="926" y="116">进后台</text>
+  <text class="lbl" x="926" y="168">回前台</text>
+
+  <!-- platform mapping -->
+  <text class="map" x="30" y="214">Android</text>
+  <text class="note" x="30" y="236">onDestroy</text>
+  <text class="note" x="30" y="254">引擎 detach</text>
+
+  <text class="map" x="260" y="214">Android</text>
+  <text class="note" x="260" y="236">onResume</text>
+  <text class="map" x="260" y="258">iOS</text>
+  <text class="note" x="260" y="278">didBecomeActive</text>
+
+  <text class="map" x="500" y="214">Android</text>
+  <text class="note" x="500" y="236">onPause</text>
+  <text class="map" x="500" y="258">iOS</text>
+  <text class="note" x="500" y="278">willResignActive</text>
+
+  <text class="map" x="740" y="214">Android</text>
+  <text class="note" x="740" y="236">onStop 前的过渡</text>
+  <text class="map" x="740" y="258">iOS</text>
+  <text class="note" x="740" y="278">后台过渡（可能合成）</text>
+
+  <text class="map" x="980" y="214">Android</text>
+  <text class="note" x="980" y="236">onStop</text>
+  <text class="map" x="980" y="258">iOS</text>
+  <text class="note" x="980" y="278">didEnterBackground</text>
+
+  <!-- what to do -->
+  <rect class="box" x="30" y="320" width="530" height="150" rx="11" />
+  <text class="g" x="52" y="348">在 resumed / inactive 该做什么</text>
+  <text class="note" x="52" y="374">resumed：恢复视频/动画/轮询；刷新可见数据；重新订阅</text>
+  <text class="note" x="52" y="398">inactive：隐藏敏感信息（金额、聊天内容）；暂停高耗互动</text>
+  <text class="note" x="52" y="422">注意：通知栏、权限弹窗、分屏失焦也会进入 inactive</text>
+  <text class="warn" x="52" y="450">不要把 inactive 当成「退到后台」</text>
+
+  <rect class="box" x="590" y="320" width="570" height="150" rx="11" />
+  <text class="g" x="612" y="348">在 hidden / paused / detached 该做什么</text>
+  <text class="note" x="612" y="374">paused：暂停音视频、停止轮询、保存草稿、断开长连接</text>
+  <text class="note" x="612" y="398">hidden：停止不可见的渲染任务，记录「不可见」埋点</text>
+  <text class="note" x="612" y="422">detached：释放引擎级资源，但不要依赖它做关键持久化</text>
+  <text class="warn" x="612" y="450">进程可能被系统直接杀死，重要数据要提前保存</text>
+
+  <!-- timeline -->
+  <rect class="box" x="30" y="500" width="1130" height="140" rx="11" />
+  <text class="g" x="52" y="528">典型前后台序列</text>
+  <text class="note" x="52" y="554">切到后台：resumed → inactive → hidden → paused</text>
+  <text class="note" x="52" y="578">回到前台：paused → hidden → inactive → resumed</text>
+  <text class="note" x="52" y="602">分屏/画中画/多窗口/系统弹窗可能跳过或合并状态；不同平台和版本行为不同。</text>
+  <text class="warn" x="52" y="626">业务判断优先用「是否可见/可交互」，不要依赖固定状态序列。</text>
+</svg>

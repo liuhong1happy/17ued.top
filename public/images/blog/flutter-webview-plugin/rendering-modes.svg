@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="Android PlatformView 三种渲染模式：Virtual Display 通过虚拟显示和纹理拷贝，Hybrid Composition 让原生 View 直接参与合成，Texture Layer Hybrid Composition 通过纹理层折中">
+  <defs>
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .head { fill: #e2e8f0; font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-size: 12.5px; text-anchor: middle; }
+      .panel1 { fill: rgba(248,113,113,0.07); stroke: rgba(248,113,113,0.35); stroke-width: 1.2; }
+      .panel2 { fill: rgba(52,211,153,0.07); stroke: rgba(52,211,153,0.35); stroke-width: 1.2; }
+      .panel3 { fill: rgba(56,189,248,0.07); stroke: rgba(56,189,248,0.35); stroke-width: 1.2; }
+      .t1 { fill: #fca5a5; font-size: 15px; font-weight: 600; }
+      .t2 { fill: #6ee7b7; font-size: 15px; font-weight: 600; }
+      .t3 { fill: #7dd3fc; font-size: 15px; font-weight: 600; }
+      .boxR { fill: rgba(248,113,113,0.14); stroke: rgba(248,113,113,0.45); stroke-width: 1.1; }
+      .boxG { fill: rgba(52,211,153,0.13); stroke: rgba(52,211,153,0.45); stroke-width: 1.1; }
+      .boxB { fill: rgba(56,189,248,0.13); stroke: rgba(56,189,248,0.45); stroke-width: 1.1; }
+      .boxN { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.16); stroke-width: 1; }
+      .t { fill: #e2e8f0; font-size: 12.5px; font-weight: 600; text-anchor: middle; }
+      .s { fill: #94a3b8; font-size: 11px; text-anchor: middle; }
+      .good { fill: #6ee7b7; font-size: 11.5px; }
+      .bad { fill: #fca5a5; font-size: 11.5px; }
+      .note { fill: #94a3b8; font-size: 11.5px; }
+      .flow { stroke: #818cf8; stroke-width: 1.8; fill: none; }
+      .flowR { stroke: #f87171; stroke-width: 1.8; fill: none; }
+      .flowG { stroke: #34d399; stroke-width: 1.8; fill: none; }
+      .flowB { stroke: #38bdf8; stroke-width: 1.8; fill: none; }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#818cf8" />
+    </marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f87171" />
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+
+  <text x="600" y="32" class="head">Android PlatformView 的三种渲染模式</text>
+  <text x="600" y="56" class="sub">WebView 属于重输入、重滚动的原生 View，优先选择混合合成</text>
+
+  <!-- panel 1 -->
+  <rect class="panel1" x="35" y="80" width="360" height="470" rx="12" />
+  <text class="t1" x="57" y="110">Virtual Display</text>
+  <text class="s" x="57" y="132" style="text-anchor: start;">虚拟显示 + 纹理拷贝</text>
+
+  <rect class="boxN" x="70" y="152" width="290" height="46" rx="8" />
+  <text class="t" x="215" y="180">Flutter 引擎</text>
+  <line class="flowR" x1="215" y1="198" x2="215" y2="224" marker-end="url(#ar)" />
+  <rect class="boxR" x="70" y="228" width="290" height="46" rx="8" />
+  <text class="t" x="215" y="256">AndroidView / PlatformView</text>
+  <line class="flowR" x1="215" y1="274" x2="215" y2="300" marker-end="url(#ar)" />
+  <rect class="boxR" x="70" y="304" width="290" height="46" rx="8" />
+  <text class="t" x="215" y="332">Virtual Display</text>
+  <line class="flowR" x1="215" y1="350" x2="215" y2="376" marker-end="url(#ar)" />
+  <rect class="boxR" x="70" y="380" width="290" height="46" rx="8" />
+  <text class="t" x="215" y="408">纹理 → Flutter 合成器</text>
+
+  <text class="bad" x="57" y="458">✗ 额外纹理拷贝，性能差</text>
+  <text class="bad" x="57" y="480">✗ 软键盘 / IME / 触摸问题多</text>
+  <text class="bad" x="57" y="502">✗ 视频全屏、输入框易失效</text>
+  <text class="note" x="57" y="526">适合：非常简单的原生 View</text>
+
+  <!-- panel 2 -->
+  <rect class="panel2" x="420" y="80" width="360" height="470" rx="12" />
+  <text class="t2" x="442" y="110">Hybrid Composition</text>
+  <text class="s" x="442" y="132" style="text-anchor: start;">原生 View 直接参与合成</text>
+
+  <rect class="boxN" x="455" y="152" width="290" height="46" rx="8" />
+  <text class="t" x="600" y="180">Flutter 引擎</text>
+  <line class="flowG" x1="600" y1="198" x2="600" y2="224" marker-end="url(#ag)" />
+  <rect class="boxG" x="455" y="228" width="290" height="46" rx="8" />
+  <text class="t" x="600" y="256">AndroidView（SurfaceView）</text>
+  <line class="flowG" x1="600" y1="274" x2="600" y2="300" marker-end="url(#ag)" />
+  <rect class="boxG" x="455" y="304" width="290" height="46" rx="8" />
+  <text class="t" x="600" y="332">原生 View 层级</text>
+  <line class="flowG" x1="600" y1="350" x2="600" y2="376" marker-end="url(#ag)" />
+  <rect class="boxG" x="455" y="380" width="290" height="46" rx="8" />
+  <text class="t" x="600" y="408">与 Flutter 一起合成</text>
+
+  <text class="good" x="442" y="458">✓ 输入、滚动、键盘行为自然</text>
+  <text class="good" x="442" y="480">✓ 无额外纹理拷贝</text>
+  <text class="good" x="442" y="502">✓ WebView 的推荐路径</text>
+  <text class="note" x="442" y="526">注意：层级、裁剪、圆角更复杂</text>
+
+  <!-- panel 3 -->
+  <rect class="panel3" x="805" y="80" width="360" height="470" rx="12" />
+  <text class="t3" x="827" y="110">Texture Layer HC</text>
+  <text class="s" x="827" y="132" style="text-anchor: start;">纹理层混合合成</text>
+
+  <rect class="boxN" x="840" y="152" width="290" height="46" rx="8" />
+  <text class="t" x="985" y="180">Flutter 引擎</text>
+  <line class="flowB" x1="985" y1="198" x2="985" y2="224" marker-end="url(#ab)" />
+  <rect class="boxB" x="840" y="228" width="290" height="46" rx="8" />
+  <text class="t" x="985" y="256">AndroidView</text>
+  <line class="flowB" x1="985" y1="274" x2="985" y2="300" marker-end="url(#ab)" />
+  <rect class="boxB" x="840" y="304" width="290" height="46" rx="8" />
+  <text class="t" x="985" y="332">Texture Layer</text>
+  <line class="flowB" x1="985" y1="350" x2="985" y2="376" marker-end="url(#ab)" />
+  <rect class="boxB" x="840" y="380" width="290" height="46" rx="8" />
+  <text class="t" x="985" y="408">Flutter 合成器</text>
+
+  <text class="note" x="827" y="458">介于两者之间：</text>
+  <text class="note" x="827" y="480">· 比 Virtual Display 少一次拷贝</text>
+  <text class="note" x="827" y="502">· 兼容性与性能折中</text>
+  <text class="note" x="827" y="526">具体默认值随 Flutter 版本变化</text>
+
+  <!-- bottom note -->
+  <rect class="boxN" x="35" y="566" width="1130" height="34" rx="8" />
+  <text class="note" x="600" y="588" style="text-anchor: middle;">实践：优先用 AndroidView / UiKitView；需要显式控制时用 PlatformViewLink + initSurfaceAndroidView / initExpensiveAndroidView。</text>
+</svg>
